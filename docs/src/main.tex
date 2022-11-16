@@ -21,17 +21,28 @@
 \usepackage{refstyle}
 \usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
 \usepackage{imakeidx}
+\makeindex
 
 \graphicspath{ {images/} }
-\makeindex
 \loadglsentries{glossary.tex}
 \makeglossaries
 
 % Document
 \begin{document}
 
-    Hello\index{Hello}, world\index{world} and~\gls{aws} ~\citep{cc_overview}
+    \date{\today}
+    \author{Callum John Spiller}
 
+    \title{%
+        Spatialisation as a Service (SaaS) \\
+        \large Project Definition }
+
+    \maketitle
+    \newpage
+    \tableofcontents
+    \newpage
+
+    Hello\index{Hello}, world\index{world} and~\gls{aws} ~\citep{cc_overview}
 
     \bibliography{main}
     \bibliographystyle{plain}
