@@ -20,19 +20,21 @@
 \usepackage{longtable}
 \usepackage{refstyle}
 \usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
+\usepackage{imakeidx}
 
 \graphicspath{ {images/} }
-
+\makeindex
 \loadglsentries{glossary.tex}
 \makeglossaries
 
 % Document
 \begin{document}
 
-    Hello, world ~\citep{cc_overview}
+    Hello\index{Hello}, world\index{world} and~\gls{aws} ~\citep{cc_overview}
 
 
     \bibliography{main}
     \bibliographystyle{plain}
+    \printindex
 
 \end{document}
