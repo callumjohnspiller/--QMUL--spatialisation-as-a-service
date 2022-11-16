@@ -1,0 +1,38 @@
+%! Author = cspiller
+%! Date = 16/11/2022
+
+% Preamble
+\documentclass[12pt, british]{article}
+
+% Packages
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[automake]{glossaries-extra}
+\usepackage{longtable}
+\usepackage{refstyle}
+\usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
+
+\graphicspath{ {images/} }
+
+\loadglsentries{glossary.tex}
+\makeglossaries
+
+% Document
+\begin{document}
+
+    Hello, world ~\citep{cc_overview}
+
+
+    \bibliography{main}
+    \bibliographystyle{plain}
+
+\end{document}
