@@ -29,21 +29,26 @@
 
 % Document
 \begin{document}
-
+%    Title Page
     \input{titlepage.tex}
     \newpage
 
+%    Abstract Page
     \input{abstract.tex}
     \newpage
 
+%    Contents
     \tableofcontents
     \newpage
 
+%    Glossary
     \printglossaries
     \newpage
 
-    Hello\index{Hello}, world\index{world} and~\gls{aws} ~\citep{cc_overview}
+%    Main Content
+    \input{sections/introduction.tex}
 
+%    Appendices
     \newpage
     \phantomsection
     \addcontentsline{toc}{section}{References}
