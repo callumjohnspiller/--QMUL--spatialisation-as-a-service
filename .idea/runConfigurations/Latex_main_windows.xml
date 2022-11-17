@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Latex_main" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
+  <configuration default="false" name="Latex_main_windows" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
     <texify>
       <compiler>LATEXMK</compiler>
       <compiler-path />
@@ -10,10 +10,10 @@
       <envs />
       <main-file>$PROJECT_DIR$/docs/src/main.tex</main-file>
       <output-path>$PROJECT_DIR$/docs/out</output-path>
-      <auxil-path>{projectDir}/auxil</auxil-path>
+      <auxil-path>$PROJECT_DIR$/docs/auxil</auxil-path>
       <compile-twice>false</compile-twice>
       <output-format>PDF</output-format>
-      <latex-distribution>TEXLIVE</latex-distribution>
+      <latex-distribution>MIKTEX</latex-distribution>
       <has-been-run>true</has-been-run>
       <bib-run-config>[]</bib-run-config>
       <makeindex-run-config>[]</makeindex-run-config>
