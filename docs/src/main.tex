@@ -18,6 +18,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[automake]{glossaries-extra}
 \usepackage{longtable}
+\usepackage{listofitems}
 \usepackage{refstyle}
 \usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
 \usepackage{glossaries}
@@ -26,6 +27,10 @@
 \makeglossaries
 \usepackage{imakeidx}
 \makeindex
+
+\newcommand{\wordcount}{\input{./sections/introduction.tex}}
+\setsepchar{ }
+\readlist\wordcounts{\wordcount}
 
 % Document
 \begin{document}
@@ -45,11 +50,11 @@
     \printglossaries
 
 %    Main Content
-    \input{./sections/introduction.tex}
-    \input{./sections/literature-review.tex}
-    \input{./sections/risk-assessment.tex}
-    \input{./sections/project-plan.tex}
-    \input{./sections/summary-of-progress.tex}
+    \include{./sections/introduction}
+    \include{./sections/literature-review}
+    \include{./sections/risk-assessment}
+    \include{./sections/project-plan}
+    \include{./sections/summary-of-progress}
 
 %    Appendices
     \newpage
