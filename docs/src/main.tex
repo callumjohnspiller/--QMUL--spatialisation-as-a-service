@@ -20,32 +20,39 @@
 \usepackage{longtable}
 \usepackage{refstyle}
 \usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
-\usepackage{imakeidx}
-\makeindex
-
+\usepackage{glossaries}
 \graphicspath{ {images/} }
 \loadglsentries{glossary.tex}
 \makeglossaries
+\usepackage{imakeidx}
+\makeindex
 
 % Document
 \begin{document}
 
-    \date{\today}
-    \author{Callum John Spiller}
-
-    \title{%
-        Spatialisation as a Service (SaaS) \\
-        \large Project Definition }
-
-    \maketitle
+    \input{titlepage.tex}
     \newpage
+
+    \input{abstract.tex}
+    \newpage
+
     \tableofcontents
+    \newpage
+
+    \printglossaries
     \newpage
 
     Hello\index{Hello}, world\index{world} and~\gls{aws} ~\citep{cc_overview}
 
+    \newpage
+    \phantomsection
+    \addcontentsline{toc}{section}{References}
     \bibliography{main}
     \bibliographystyle{plain}
+
+    \newpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Index}
     \printindex
 
 \end{document}
