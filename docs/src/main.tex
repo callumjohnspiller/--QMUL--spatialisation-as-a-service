@@ -6,31 +6,24 @@
 
 % Packages
 \usepackage[british]{babel}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia,pagebackref=true]{hyperref}
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{caption}
-\usepackage{wrapfig}
-\usepackage{lscape}
-\usepackage{rotating}
-\usepackage{epstopdf}
 \usepackage{enumitem}
 \usepackage{natbib}
-\usepackage[dvipsnames]{xcolor}
+\usepackage{glossaries}
 \usepackage[automake]{glossaries-extra}
 \usepackage{longtable}
-\usepackage{listofitems}
 \usepackage{refstyle}
-\usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia]{hyperref}
-\usepackage{glossaries}
+
 \graphicspath{ {images/} }
 \loadglsentries{glossary.tex}
 \makeglossaries
+
 \usepackage{imakeidx}
 \makeindex
-
-\newcommand{\wordcount}{\input{./sections/introduction.tex}}
-\setsepchar{ }
-\readlist\wordcounts{\wordcount}
 
 % Document
 \begin{document}
@@ -60,8 +53,8 @@
     \newpage
     \phantomsection
     \addcontentsline{toc}{section}{References}
+    \bibliographystyle{plainnat}
     \bibliography{main}
-    \bibliographystyle{plain}
 
     \newpage
     \phantomsection
