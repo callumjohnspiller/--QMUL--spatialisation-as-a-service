@@ -13,17 +13,15 @@
 \usepackage{caption}
 \usepackage{enumitem}
 \usepackage{natbib}
-\usepackage{glossaries}
-\usepackage[automake]{glossaries-extra}
+\usepackage[automake,abbreviations]{glossaries-extra}
 \usepackage{longtable}
 \usepackage{refstyle}
+\usepackage{textcomp}
 
 \graphicspath{ {images/} }
+
 \loadglsentries{glossary.tex}
 \makeglossaries
-
-\usepackage{imakeidx}
-\makeindex
 
 % Document
 \begin{document}
@@ -55,10 +53,5 @@
     \addcontentsline{toc}{section}{References}
     \bibliographystyle{plainnat}
     \bibliography{main}
-
-    \newpage
-    \phantomsection
-    \addcontentsline{toc}{section}{Index}
-    \printindex
 
 \end{document}

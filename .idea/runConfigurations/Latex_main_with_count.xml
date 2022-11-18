@@ -19,6 +19,7 @@
       <makeindex-run-config>[]</makeindex-run-config>
     </texify>
     <method v="2">
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_makeglossaries" />
       <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_texcount" />
     </method>
   </configuration>
