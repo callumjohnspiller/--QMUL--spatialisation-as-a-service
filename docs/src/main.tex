@@ -2,29 +2,44 @@
 %! Date = 16/11/2022
 
 % Preamble
-\documentclass[12pt, british]{article}
+\documentclass[12pt, english]{article}
 
 % Packages
-\usepackage[british]{babel}
+% -- Typographic rules
+\usepackage[english]{babel}
+% -- Extended colors
 \usepackage[dvipsnames]{xcolor}
+% -- Embedded hyperlinks
 \usepackage[colorlinks=true,linkcolor=BrickRed,citecolor=Fuchsia,pagebackref=true]{hyperref}
-\usepackage[nopatch=eqnum]{microtype}
+% -- Better text justification
+\usepackage[nopatch=eqnum, auto=true, babel]{microtype}
+% -- Images from file
 \usepackage{graphicx}
-\usepackage{caption}
+% -- Better lists
 \usepackage{enumitem}
+% -- Bibliography format and access
 \usepackage{natbib}
 \usepackage{usebib}
+% -- Glossary build
 \usepackage[abbreviations]{glossaries-extra}
+% -- Allow tables to cross pages
 \usepackage{longtable}
-\usepackage{refstyle}
-\usepackage[autostyle, english = american]{csquotes}
-\usepackage{relsize,etoolbox}
+% -- Inline and display quotations
+\usepackage[autostyle]{csquotes}
+% -- Defines relative textsize commands
+\usepackage{relsize}
+% -- Used for AtBeginEnvironment hook
+\usepackage{etoolbox}
+% -- Adds extra symbols for quotations
+\usepackage{textcomp}
+
+% Makes display quotation smaller
 \AtBeginEnvironment{quotation}{\smaller}
-
+% Path to store image files for use in the document
 \graphicspath{ {images/} }
-
+% Import bibliography file
 \bibinput{main}
-
+% Glossary setup
 \loadglsentries{glossary.tex}
 \makeglossaries
 
