@@ -13,12 +13,17 @@
 \usepackage{caption}
 \usepackage{enumitem}
 \usepackage{natbib}
+\usepackage{usebib}
 \usepackage[abbreviations]{glossaries-extra}
 \usepackage{longtable}
 \usepackage{refstyle}
-\usepackage{textcomp}
+\usepackage[autostyle, english = american]{csquotes}
+\usepackage{relsize,etoolbox}
+\AtBeginEnvironment{quotation}{\smaller}
 
 \graphicspath{ {images/} }
+
+\bibinput{main}
 
 \loadglsentries{glossary.tex}
 \makeglossaries
