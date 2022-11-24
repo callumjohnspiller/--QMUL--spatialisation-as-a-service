@@ -11,38 +11,50 @@ A risk is defined by the~\citet{pmi_2021} as~\textquote{an uncertain event or co
 The effective management of project risk across a number of risk-management frameworks involves the prior identification of said risks~\citep{goman_risk}.
 This report seeks to perform a risk assessment across three major categories as a means of improving the likelihood of the project meeting its objectives as laid out in~\ref{subsec:project-objectives}.
 
-This assessment will take the form of three tabular diagrams with columns evaluating each risk’s impact and likelihood, as well as preventative actions being taken as a result of this identification.
+This assessment will take the form of three tabular risk registers with columns evaluating each risk’s impact and likelihood, as well as preventative actions being taken as a result of this identification.
 It is important to note that these risks will be subject to ongoing monitoring, therefore they may change as the project develops.
 
 \subsection{Project Risks}\label{subsec:project-risks}
 
 These risks would affect the project’s schedule and affect the project’s ability to be finished within a given timeframe.
 
-\begin{tabularx}{\textwidth}{XXXXX}
+\begin{tabularx}{\textwidth}{sbssb}
     \caption{Project Risks}\label{tab:project-risks}\\
     \hline
     \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
     Failure to access required information & Lack full understanding of the background material & Low & Medium & Be diligent in identifying alternative sources, as well as making use of the Queen Mary Library’s resource-purchasing facility \\\hline
+    Scope creep & During development the scope of the project may increase and what is attempted goes beyond what is realistically capable over the duration of the project & Medium & Low & Clearly define the scope at the outset of the project, have a roadmap in place and be accountable for sticking to it \\\hline
+    Low productivity & When work on projects slow, any delays can cascade and cause the project to miss its objectives by the end of the project duration & Medium & Medium & Be diligent in creating and sticking to a project plan - additionally communicate frequently with the project supervisor in order to be accountable and to resolve any issues promptly \\\hline
+    Lose access to~\gls{aws} & Given that the project is hosted in the cloud, losing access to administrate the service would result in a severe delay in development & Low & High & Make sure that all credentials are up to date before starting development - check company policy surrounding credential expiry \\\hline
+
 \end{tabularx}
 
 \subsection{Product Risks}\label{subsec:product-risks}
 
 These risks pose threats to the quality, or performance of the prototype.
 
-\begin{tabularx}{\textwidth}{XXXXX}
+\begin{tabularx}{\textwidth}{sbssb}
     \caption{Product Risks}\label{tab:product-risks}\\
     \hline
     \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
     Insufficient prototype testing & The product does not meet functional and non-functional requirements & Medium & High & Specify a framework for testing as soon as possible in the development process, automate testing where possible using a~\gls{ci} pipeline\\\hline
+    \gls{aws} instability & In the event of the cloud hosting and processing services going down, the product's service will be unavailable & Low & High & Make use of different availability zones within~\gls{aws} so that in the event of failure in a single area, the project can be spun up again elsewhere \\\hline
+    Code issues & If the project contains code that lacks quality, then bugs and unstable performance may cause the product to fail & Medium & High & Conform to best-practice coding standards, frequently test code in regression and unit tests, ensure any bugs are promptly patched \\\hline
+    Insufficient research & When a product is made without properly researching the best methods to do so, that product can be insufficient in comparison to competition in a business environment & Low & Medium & Ensure that enough time is scheduled to experimenting with different technology and researching pertinent literature before proceeding with development
+
 \end{tabularx}
 
 \subsection{Business Risks}\label{subsec:business-risks}
 Since this project is being undertaken as a part of a degree apprenticeship, there will be associated business risks:
 
-\begin{tabularx}{\textwidth}{XXXXX}
+\begin{tabularx}{\textwidth}{sbssb}
     \caption{Business Risks}\label{tab:business-risks}\\
     \hline
     \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
     Unauthorised use of proprietary materials & Business-critical materials are leaked and cost~\gls{sie} competitive advantage & Low & Critical & Never use any material developed by~\gls{sie} as a part of business activity, use only open-source libraries\\\hline
+    Large~\gls{aws} fees & The project causes cloud fees charged to~\gls{sie} to spiral out of control, costing the company far more than budgeted for & Medium & Medium & Make proper use of the~\gls{aws} cost centre, define a budget, and set limits and alerts for budget usage in the~\gls{aws} console \\\hline
+    Cyber-security attack & In the event that the cloud app has a security vulnerability, the rest of the~\gls{sie} tech stack may be at risk of being compromised & High & High & Utilise domain allow-listing, parameterization of user credentials, and routinely check the vulnerabilities of external dependencies - additionally, develop a breach response plan \\\hline
+    Data mishandling & In the event that the product stores user data that it does not have permission to, then the company may be liable for severe penalties under the~\gls{gdpr}\footnote{\Citet{powers-supervisory-authorities}} & Low & High & Keep stored user data to a minimum - in the case that user data is required, ensure that it is handled and disposed correctly, obtaining permission to do so
+
 \end{tabularx}
 

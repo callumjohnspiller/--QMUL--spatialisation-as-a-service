@@ -34,7 +34,20 @@
 \usepackage{textcomp}
 % -- Adds better formatting for captions
 \usepackage{caption}
+% -- Visualise and change page layout
+\usepackage{layout}
+\usepackage{geometry}
 
+% Setup table column sizes (big and small)
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.5\hsize}X}
+% Setup page geometry
+\geometry{
+    a4paper,
+    total={165mm,252mm},
+    left=25mm,
+    top=25mm,
+}
 % Makes display quotation smaller
 \AtBeginEnvironment{quotation}{\smaller}
 % Path to store image files for use in the document
