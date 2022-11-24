@@ -6,3 +6,43 @@
 \section{Risk Assessment}\label{sec:risk-assessment}
 
 \normalsize
+
+A risk is defined by the~\citet{pmi_2021} as~\textquote{an uncertain event or condition that, if it occurs, can have a positive or negative effect on one or more objectives}~\footnote{\citep{pmi_2021}}.
+The effective management of project risk across a number of risk-management frameworks involves the prior identification of said risks~\citep{goman_risk}.
+This report seeks to perform a risk assessment across three major categories as a means of improving the likelihood of the project meeting its objectives as laid out in~\ref{subsec:project-objectives}.
+
+This assessment will take the form of three tabular diagrams with columns evaluating each risk’s impact and likelihood, as well as preventative actions being taken as a result of this identification.
+It is important to note that these risks will be subject to ongoing monitoring, therefore they may change as the project develops.
+
+\subsection{Project Risks}\label{subsec:project-risks}
+
+These risks would affect the project’s schedule and affect the project’s ability to be finished within a given timeframe.
+
+\begin{tabularx}{\textwidth}{XXXXX}
+    \caption{Project Risks}\label{tab:project-risks}\\
+    \hline
+    \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
+    Failure to access required information & Lack full understanding of the background material & Low & Medium & Be diligent in identifying alternative sources, as well as making use of the Queen Mary Library’s resource-purchasing facility \\\hline
+\end{tabularx}
+
+\subsection{Product Risks}\label{subsec:product-risks}
+
+These risks pose threats to the quality, or performance of the prototype.
+
+\begin{tabularx}{\textwidth}{XXXXX}
+    \caption{Product Risks}\label{tab:product-risks}\\
+    \hline
+    \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
+    Insufficient prototype testing & The product does not meet functional and non-functional requirements & Medium & High & Specify a framework for testing as soon as possible in the development process, automate testing where possible using a~\gls{ci} pipeline\\\hline
+\end{tabularx}
+
+\subsection{Business Risks}\label{subsec:business-risks}
+Since this project is being undertaken as a part of a degree apprenticeship, there will be associated business risks:
+
+\begin{tabularx}{\textwidth}{XXXXX}
+    \caption{Business Risks}\label{tab:business-risks}\\
+    \hline
+    \textbf{Risk} & \textbf{Impact} & \textbf{Likelihood rating} & \textbf{Impact rating} & \textbf{Preventative actions} \\\hline
+    Unauthorised use of proprietary materials & Business-critical materials are leaked and cost~\gls{sie} competitive advantage & Low & Critical & Never use any material developed by~\gls{sie} as a part of business activity, use only open-source libraries\\\hline
+\end{tabularx}
+
