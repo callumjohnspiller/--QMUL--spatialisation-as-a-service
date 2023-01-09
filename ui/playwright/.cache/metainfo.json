@@ -1,0 +1,75 @@
+{
+  "version": "1.29.2",
+  "viteVersion": "3.2.5",
+  "registerSourceHash": "503cef9adf3fe70056bef31ce472320fe2b40e62",
+  "components": [
+    {
+      "fullName": "_Users_cspiller_Documents_uni_spatialisation_as_a_service_ui_src_App_tsx",
+      "importPath": "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/App.tsx",
+      "isModuleOrAlias": false
+    },
+    {
+      "fullName": "_Users_cspiller_Documents_uni_spatialisation_as_a_service_ui_src_components_Header_index_tsx",
+      "importPath": "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/components/Header/index.tsx",
+      "isModuleOrAlias": false
+    }
+  ],
+  "tests": {
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/App.spec.tsx": {
+      "timestamp": 1673289304979.7876,
+      "components": [
+        "_Users_cspiller_Documents_uni_spatialisation_as_a_service_ui_src_App_tsx"
+      ]
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/components/Header/index.spec.tsx": {
+      "timestamp": 1673289346214.5872,
+      "components": [
+        "_Users_cspiller_Documents_uni_spatialisation_as_a_service_ui_src_components_Header_index_tsx"
+      ]
+    }
+  },
+  "sources": {
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/playwright/index.html": {
+      "timestamp": 1673288416523.3464
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/playwright/index.ts": {
+      "timestamp": 1673288416523.6584
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react/index.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react-dom/index.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/App.tsx": {
+      "timestamp": 1673289304976.2656
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/components/Header/index.tsx": {
+      "timestamp": 1673287699939.952
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react/cjs/react.production.min.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react-dom/cjs/react-dom.production.min.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react/jsx-runtime.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/scheduler/index.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/react/cjs/react-jsx-runtime.production.min.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/node_modules/scheduler/cjs/scheduler.production.min.js": {
+      "timestamp": 499162500000
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/stylesheets/styles.scss": {
+      "timestamp": 1673284494646.5024
+    },
+    "/Users/cspiller/Documents/uni/spatialisation-as-a-service/ui/src/components/Header/header.module.scss": {
+      "timestamp": 1673287992197.6335
+    }
+  }
+}
