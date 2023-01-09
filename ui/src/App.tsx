@@ -5,7 +5,7 @@ import Header from "./components/Header";
 
 export default function App() {
     return (
-        <div className={"App"}>
+        <div id="react-app" className={"App"}>
             <Header navPosition={"center"}/>
         </div>
     )
