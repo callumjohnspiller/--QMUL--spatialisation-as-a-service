@@ -6,7 +6,7 @@ using namespace std;
 
 const int sampleRate = 44100;
 const int bitDepth = 16;
-const int numberOfChannels = 2;
+const int numberOfChannels = 1;
 
 //Test oscillator to make sound
 
