@@ -1,0 +1,5 @@
+musdb
+museval
+spleeter==${SPLEETER_VERSION}
+boto3
+awslambdaric
