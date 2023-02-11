@@ -1,5 +1,6 @@
 # Docker Instructions
 
+0. Ensure that pre-trained models have been added to the ```app/pretrained_models``` directory prior to building the image.
 1. Build docker image by running ```docker build -t spleeter-lambda .``` from this directory.
     * The built image lets you test the function invocation locally: run the command ```docker run -p 9000:8080  spleeter-lambda:latest``` then:
     * run the mock call: ```curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'```
