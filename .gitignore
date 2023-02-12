@@ -280,3 +280,5 @@ lambda/source-separation/app/pretrained_models/*
 .idea/*
 
 *.DS_Store
+
+lambda/spatialisation/config
