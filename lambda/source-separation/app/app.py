@@ -1,12 +1,12 @@
 import boto3
-import os
 from spleeter.separator import Separator
 
-ACCESS_KEY = os.environ['ACCESS_KEY']
-SECRET_KEY = os.environ['SECRET_KEY']
+ACCESS_KEY = 'AKIAQLPYILXDYNE5EFLP'
+SECRET_KEY = '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'
 
 
 def handler(event, context):
+
     session = boto3.Session(
         aws_access_key_id=ACCESS_KEY,
         aws_secret_access_key=SECRET_KEY,
