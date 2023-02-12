@@ -279,5 +279,5 @@ auxil/
 lambda/source-separation/app/pretrained_models/*
 
 *.DS_Store
-idea/
-*/idea/
+.idea/
+*/.idea/
