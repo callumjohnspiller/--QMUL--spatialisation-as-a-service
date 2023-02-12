@@ -277,3 +277,5 @@ TSWLatexianTemp*
 out/
 auxil/
 lambda/source-separation/app/pretrained_models/*
+
+*.DS_Store
