@@ -280,4 +280,3 @@ lambda/source-separation/app/pretrained_models/*
 
 *.DS_Store
 .idea/
-*/.idea/
