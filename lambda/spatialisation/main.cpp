@@ -1,4 +1,10 @@
 #include <aws/lambda-runtime/runtime.h>
+#include <iostream>
+#include <vector>
+#include "BinauralSpatializer/3DTI_BinauralSpatializer.h"
+#include "HRTF/HRTFFactory.h"
+#include "ILD/ILDCereal.h"
+#include "AudioFile.h"
 
 using namespace aws::lambda_runtime;
 

@@ -24,16 +24,32 @@ RUN git clone https://github.com/awslabs/aws-lambda-cpp-runtime.git && \
     -DCMAKE_INSTALL_PREFIX=~/install \
     && make && make install
 
+RUN mkdir src
+
+#Get 3Dti toolkit and dependencies
+RUN cd src && git clone https://github.com/3DTune-In/3dti_AudioToolkit.git && \
+    cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/ && \
+    git clone https://github.com/USCiLab/cereal.git cereal && \
+    rm -rf sofacoustics && \
+    git clone https://github.com/sofacoustics/API_Cpp.git sofacoustics && \
+    rm sofacoustics/libsofa/lib/libsofa.a
+
+RUN cd src/3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
+    make CONFIG=Release
+
 #copy source files
 COPY main.cpp ./src/
+COPY AudioFile.h ./src/
 COPY CMakeLists.txt ./src/
 COPY config ./root/.aws/
 
-#Build deployment package
+# Build source files
 RUN mkdir build && cd build && \
     cmake3 ../src -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=~/install \
-    && make && make aws-lambda-package-spatialiser
+    -DCMAKE_INSTALL_PREFIX=~/install
+
+#Build deployment package
+RUN cd build && make && make aws-lambda-package-spatialiser
 
 # Unzip deployment package
 RUN cd build && unzip spatialiser.zip -d unpacked
