@@ -56,3 +56,4 @@ RUN cd build && unzip spatialiser.zip -d unpacked
 
 # Point to compiled function
 ENTRYPOINT ["/build/unpacked/bin/spatialiser"]
+#CMD ["/usr/sbin/init"]

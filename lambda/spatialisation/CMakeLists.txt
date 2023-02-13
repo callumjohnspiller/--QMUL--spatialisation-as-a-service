@@ -26,7 +26,7 @@ add_executable(${PROJECT_NAME} "main.cpp" ${SOURCES})
 find_package(aws-lambda-runtime REQUIRED)
 find_package(AWSSDK COMPONENTS s3)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_LINK_LIBRARIES} sofa netcdf hdf5_hl curl hdf5 netcdf netcdf_c++4 z)
+target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_LINK_LIBRARIES} sofa netcdf hdf5_hl hdf5 netcdf netcdf_c++4 z)
 
 target_compile_options(${PROJECT_NAME} PRIVATE
         "-Wall"
