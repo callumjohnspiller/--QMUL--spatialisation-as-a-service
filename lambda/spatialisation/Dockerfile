@@ -1,52 +1,62 @@
 # Pull latest amazon linux image
 FROM amazonlinux:latest
+RUN yum update -y
+RUN yum install -y yum-utils
 
 # Install required tools
 RUN yum -y groupinstall "Development tools"
-RUN yum install -y gcc-c++ libcurl-devel openssl-devel openssl-static zlib-devel cmake3 git
+RUN yum install -y gcc-c++ zlib-devel cmake3
+ENV CC=gcc CXX=g++
+
+RUN yum clean -y metadata
+
+RUN yum install -y libcurl-devel
+RUN yum install -y openssl-devel
+RUN yum install -y pulseaudio-libs-devel
+
 RUN pip3 install awscli
 
-# Install AWS C++ SDK (S3 only)
-RUN mkdir ~/install && git clone https://github.com/aws/aws-sdk-cpp.git && \
-    cd aws-sdk-cpp && sh prefetch_crt_dependency.sh && mkdir build  && cd build && \
-    cmake3 .. -DBUILD_ONLY="s3" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=OFF \
-    -DCUSTOM_MEMORY_MANAGEMENT=OFF \
-    -DCMAKE_INSTALL_PREFIX=~/install \
-    && make && make install
-
-# Build the and install the AWS C++ runtime
 RUN git clone https://github.com/awslabs/aws-lambda-cpp-runtime.git && \
     cd aws-lambda-cpp-runtime && mkdir build && cd build && \
     cmake3 .. -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_INSTALL_PREFIX=~/install \
-    && make && make install
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    && make -j8 && make install
 
-RUN mkdir src
+# Install AWS C++ SDK (S3 only)
+RUN git clone https://github.com/aws/aws-sdk-cpp.git --recursive aws-sdk-cpp && \
+    cd aws-sdk-cpp && mkdir build && cd build && \
+    cmake3 .. -DBUILD_ONLY=s3 \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DENABLE_UNITY_BUILD=ON \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    && make -j8 && make install
 
 #Get 3Dti toolkit and dependencies
-RUN cd src && git clone https://github.com/3DTune-In/3dti_AudioToolkit.git && \
+RUN git clone https://github.com/3DTune-In/3dti_AudioToolkit.git 3dti_AudioToolkit && \
     cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/ && \
     git clone https://github.com/USCiLab/cereal.git cereal && \
     rm -rf sofacoustics && \
     git clone https://github.com/sofacoustics/API_Cpp.git sofacoustics && \
     rm sofacoustics/libsofa/lib/libsofa.a
 
-RUN cd src/3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
+RUN cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
     make CONFIG=Release
+
+RUN mkdir src
 
 #copy source files
 COPY main.cpp ./src/
 COPY AudioFile.h ./src/
 COPY CMakeLists.txt ./src/
-COPY config ./root/.aws/
+COPY config .aws/
 
 # Build source files
 RUN mkdir build && cd build && \
     cmake3 ../src -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=~/install
+    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_INSTALL_PREFIX=/usr
 
 #Build deployment package
 RUN cd build && make && make aws-lambda-package-spatialiser

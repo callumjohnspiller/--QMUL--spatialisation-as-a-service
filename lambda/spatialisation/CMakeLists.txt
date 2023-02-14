@@ -2,17 +2,17 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
 project(spatialiser LANGUAGES CXX)
 
-include_directories("3dti_AudioToolkit/3dti_Toolkit")
-include_directories("3dti_AudioToolkit/3dti_ResourceManager")
-include_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/boost_circular_buffer")
-include_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/cereal/include")
-include_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/src")
-include_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/include")
+include_directories("../3dti_AudioToolkit/3dti_Toolkit")
+include_directories("../3dti_AudioToolkit/3dti_ResourceManager")
+include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/boost_circular_buffer")
+include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/cereal/include")
+include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/src")
+include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/include")
 
-link_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/lib")
-link_directories("3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/lib/linux")
+link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/lib")
+link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/lib/linux")
 
-link_libraries(sofa curl hdf5 hdf5_hl netcdf netcdf_c++4 z)
+link_libraries(sofa hdf5 hdf5_hl netcdf netcdf_c++4 z)
 
 file(GLOB_RECURSE SOURCES
         3dti_AudioToolkit/3dti_Toolkit/BinauralSpatializer/*.cpp
