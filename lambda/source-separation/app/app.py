@@ -1,6 +1,9 @@
 import boto3
 import os
+import soundfile as sf
+import numpy as np
 from spleeter.separator import Separator
+from spleeter.audio.adapter import AudioAdapter
 
 ACCESS_KEY = os.environ['ACCESS_KEY']
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -12,34 +15,33 @@ def handler(event, context):
         aws_secret_access_key=SECRET_KEY,
     )
 
+    FILENAME = 'confusion'
+
     s3 = session.client('s3')
 
     s3.download_file(Bucket="saas-deposit",
-                     Key="test-files/confusion.mp3", Filename="/tmp/confusion.mp3")
+                     Key=f"test-files/{FILENAME}.mp3", Filename=f"/tmp/{FILENAME}.mp3")
 
-    separator = Separator('spleeter:2stems', multiprocess=False)
-    # separator4 = Separator('spleeter:4stems', multiprocess=False)
-    # separator5 = Separator('spleeter:5stems', multiprocess=False)
-    separator.separate_to_file(
-        '/tmp/confusion.mp3', '/tmp', filename_format='{filename}_{instrument}.{codec}'
-    )
-    # separator4.separate_to_file(
-    #     '/tmp/confusion.mp3', '/tmp', filename_format='{filename}_{instrument}.{codec}'
-    # )
-    # separator5.separate_to_file(
-    #     '/tmp/confusion.mp3', '/tmp', filename_format='{filename}_{instrument}.{codec}'
-    # )
+    separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
+    # separator = Separator('spleeter:4stems', multiprocess=False, stft_backend='tensorflow')
+    # separator = Separator('spleeter:5stems', multiprocess=False, stft_backend='tensorflow')
 
-    s3.upload_file(
-        Filename="/tmp/confusion_accompaniment.wav",
-        Bucket="saas-deposit",
-        Key="test-files/confusion_accompaniment.wav",
-    )
+    audio_loader = AudioAdapter.default()
+    sample_rate = 44100
+    waveform, _ = audio_loader.load(f'/tmp/{FILENAME}.mp3', sample_rate=sample_rate)
 
-    s3.upload_file(
-        Filename="/tmp/confusion_vocals.wav",
-        Bucket="saas-deposit",
-        Key="test-files/confusion_vocals.wav",
-    )
+    prediction = separator.separate(waveform)
+    file_paths = []
+
+    for instrument, data in prediction.items():
+        file_paths.append(f'{FILENAME}_{instrument}.wav')
+        sf.write(f"/tmp/{file_paths[-1]}", np.mean(data, axis=1), sample_rate)
+
+    for path in file_paths:
+        s3.upload_file(
+            Filename=f"/tmp/{path}",
+            Bucket="saas-deposit",
+            Key=f"test-files/{path}",
+        )
 
     return 'Finished separating'

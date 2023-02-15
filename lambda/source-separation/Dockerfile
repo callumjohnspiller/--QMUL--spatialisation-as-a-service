@@ -19,17 +19,16 @@ RUN apt-get update && \
 ARG SPLEETER_VERSION=2.3.2
 ENV MODEL_PATH app/pretrained_models
 ARG FUNCTION_DIR
-
-# Create directories and copy app files
 RUN mkdir -p ${FUNCTION_DIR}
-COPY app/ ${FUNCTION_DIR}
 
 # Install pip dependencies from reqirements file
 COPY requirements.txt .
-
 RUN pip install \
     --target ${FUNCTION_DIR} \
     -r requirements.txt
+
+# Copy app files
+COPY app/ ${FUNCTION_DIR}
 
 # Pull clean image for second stage
 FROM ${BASE}
@@ -40,7 +39,7 @@ RUN apt-get update && \
     ffmpeg \
     libsndfile1
 
-# Copy output from build image into working directory
+# Copy output from 1st build image into working directory
 ARG FUNCTION_DIR
 WORKDIR ${FUNCTION_DIR}
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
@@ -51,7 +50,7 @@ COPY ./entry_script.sh /entry_script.sh
 # Add the lambda runtime mocking for testing locally
 ADD aws-lambda-rie-x86_64 /usr/local/bin/aws-lambda-rie
 
-#Edit permissions to allow to run
+#Edit permissions to allow entry script to run
 RUN chmod 755 /usr/local/bin/aws-lambda-rie /entry_script.sh
 
 #Declare entry points for the function and the lambda handler command
