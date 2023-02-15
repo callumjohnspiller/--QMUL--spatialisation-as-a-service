@@ -1,7 +1,4 @@
 #include <aws/core/Aws.h>
-#include <aws/core/utils/logging/LogLevel.h>
-#include <aws/core/utils/logging/ConsoleLogSystem.h>
-#include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/HashingUtils.h>
 #include <aws/core/platform/Environment.h>
@@ -20,6 +17,7 @@
 #include "HRTF/HRTFFactory.h"
 #include "ILD/ILDCereal.h"
 #include "AudioFile.h"
+#include "utils/ConsoleLogger.h"
 
 
 using namespace aws::lambda_runtime;
@@ -35,15 +33,15 @@ static invocation_response my_handler(invocation_request const &req, Aws::Client
         return invocation_response::failure("Failed to parse input JSON", "InvalidJSON");
     }
 
-    auto v = json.View();
+    auto payloadView = json.View();
 
-    if (!v.ValueExists("s3bucket") || !v.ValueExists("s3key") || !v.GetObject("s3bucket").IsString() ||
-        !v.GetObject("s3key").IsString()) {
+    if (!payloadView.ValueExists("s3bucket") || !payloadView.ValueExists("s3key") || !payloadView.GetObject("s3bucket").IsString() ||
+        !payloadView.GetObject("s3key").IsString()) {
         return invocation_response::failure("Missing input value s3bucket or s3key", "InvalidJSON");
     }
 
-    auto bucket = v.GetString("s3bucket");
-    auto key = v.GetString("s3key");
+    auto bucket = payloadView.GetString("s3bucket");
+    auto key = payloadView.GetString("s3key");
 
     AWS_LOGSTREAM_INFO(TAG, "Attempting to download file from s3://" << bucket << "/" << key);
 
@@ -69,13 +67,6 @@ static invocation_response my_handler(invocation_request const &req, Aws::Client
     }
 }
 
-std::function<std::shared_ptr<Aws::Utils::Logging::LogSystemInterface>()> GetConsoleLoggerFactory() {
-    return [] {
-        return Aws::MakeShared<Aws::Utils::Logging::ConsoleLogSystem>(
-                "console_logger", Aws::Utils::Logging::LogLevel::Trace);
-    };
-}
-
 int main() {
 
     using namespace Aws;
@@ -95,6 +86,7 @@ int main() {
 
         run_handler(handler_fn);
     }
+
     ShutdownAPI(options);
     return 0;
 }

@@ -9,6 +9,8 @@ include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libra
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/src")
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/include")
 
+add_subdirectory(utils)
+
 link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/lib")
 link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/lib/linux")
 
@@ -26,7 +28,16 @@ add_executable(${PROJECT_NAME} "main.cpp" ${SOURCES})
 find_package(aws-lambda-runtime REQUIRED)
 find_package(AWSSDK COMPONENTS s3)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_LINK_LIBRARIES} sofa netcdf hdf5_hl hdf5 netcdf netcdf_c++4 z)
+target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_LINK_LIBRARIES}
+        sofa
+        netcdf
+        hdf5_hl
+        hdf5
+        netcdf
+        netcdf_c++4
+        z
+        ConsoleLogger
+        )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
         "-Wall"

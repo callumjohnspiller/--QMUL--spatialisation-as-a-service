@@ -1,0 +1,1 @@
+add_library(ConsoleLogger ConsoleLogger.cpp)

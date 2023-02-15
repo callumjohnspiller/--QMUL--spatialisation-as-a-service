@@ -44,10 +44,11 @@ RUN git clone https://github.com/3DTune-In/3dti_AudioToolkit.git 3dti_AudioToolk
 RUN cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
     make CONFIG=Release
 
-RUN mkdir src
+RUN mkdir -p src/utils
 
 #copy source files
 COPY main.cpp ./src/
+ADD utils ./src/utils
 COPY AudioFile.h ./src/
 COPY CMakeLists.txt ./src/
 COPY config .aws/
