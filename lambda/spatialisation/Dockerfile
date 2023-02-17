@@ -26,7 +26,7 @@ RUN git clone https://github.com/awslabs/aws-lambda-cpp-runtime.git && \
 # Install AWS C++ SDK (S3 only)
 RUN git clone https://github.com/aws/aws-sdk-cpp.git --recursive aws-sdk-cpp && \
     cd aws-sdk-cpp && mkdir build && cd build && \
-    cmake3 .. -DBUILD_ONLY=s3 \
+    cmake3 .. -DBUILD_ONLY="s3;transfer" \
     -DBUILD_SHARED_LIBS=OFF \
     -DENABLE_UNITY_BUILD=ON \
     -DCMAKE_BUILD_TYPE=Release \
@@ -48,6 +48,8 @@ RUN mkdir -p src/utils
 
 #copy source files
 COPY main.cpp ./src/
+COPY spatialiser.cpp ./src/
+COPY spatialiser.h ./src/
 ADD utils ./src/utils
 COPY AudioFile.h ./src/
 COPY CMakeLists.txt ./src/

@@ -5,66 +5,64 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
 #include <aws/s3/S3Client.h>
-#include <aws/s3/model/GetObjectRequest.h>
 #include <aws/lambda-runtime/runtime.h>
+#include <aws/transfer/TransferManager.h>
 
 #include <iostream>
 #include <fstream>
 #include <memory>
 #include <vector>
 
-#include "BinauralSpatializer/3DTI_BinauralSpatializer.h"
-#include "HRTF/HRTFFactory.h"
-#include "ILD/ILDCereal.h"
-#include "AudioFile.h"
 #include "utils/ConsoleLogger.h"
+#include "utils/VerifyRequest.h"
+#include "spatialiser.h"
 
-
+using namespace Aws;
+using namespace Aws::Transfer;
 using namespace aws::lambda_runtime;
 
 char const TAG[] = "LAMBDA_ALLOC";
 
 static invocation_response my_handler(invocation_request const &req, Aws::Client::ClientConfiguration const &clientConfig) {
 
+    if (verifyRequest(req)) {
+        AWS_LOGSTREAM_INFO(TAG, "Good request");
+    } else {
+        return invocation_response::failure("Invalid request", "InvalidJSON");
+    }
+
     using namespace Aws::Utils::Json;
     JsonValue json(req.payload);
 
-    if (!json.WasParseSuccessful()) {
-        return invocation_response::failure("Failed to parse input JSON", "InvalidJSON");
-    }
-
     auto payloadView = json.View();
-
-    if (!payloadView.ValueExists("s3bucket") || !payloadView.ValueExists("s3key") || !payloadView.GetObject("s3bucket").IsString() ||
-        !payloadView.GetObject("s3key").IsString()) {
-        return invocation_response::failure("Missing input value s3bucket or s3key", "InvalidJSON");
-    }
 
     auto bucket = payloadView.GetString("s3bucket");
     auto key = payloadView.GetString("s3key");
 
+    auto s3_client = MakeShared<S3::S3Client>( "S3Client", clientConfig);
+    auto executor = Aws::MakeShared<Aws::Utils::Threading::PooledThreadExecutor>("executor", 25);
+    Aws::Transfer::TransferManagerConfiguration transfer_config(executor.get());
+    transfer_config.s3Client = s3_client;
+
+    auto transfer_manager = Aws::Transfer::TransferManager::Create(transfer_config);
+
+    auto transfer_handle = transfer_manager->DownloadFile(bucket,key,"/tmp/stem.wav");
     AWS_LOGSTREAM_INFO(TAG, "Attempting to download file from s3://" << bucket << "/" << key);
+    transfer_handle->WaitUntilFinished();
+    bool success = transfer_handle->GetStatus() == TransferStatus::COMPLETED;
 
-    Aws::S3::S3Client client(clientConfig);
-
-    Aws::S3::Model::GetObjectRequest request;
-    request.SetBucket(bucket);
-    request.SetKey(key);
-
-    Aws::S3::Model::GetObjectOutcome outcome = client.GetObject(request);
-
-    if (!outcome.IsSuccess()) {
-        const Aws::S3::S3Error &err = outcome.GetError();
-        std::cerr << "Error: GetObject: " <<
-                  err.GetExceptionName() << ": " << err.GetMessage() << std::endl;
-        return invocation_response::failure("you suck", "DownloadFailure");
+    if(success) {
+        AWS_LOGSTREAM_INFO(TAG, "success!");
+    } else
+    {
+        AWS_LOGSTREAM_INFO(TAG, transfer_handle->GetLastError());
     }
-    else {
-        std::cout << "Successfully retrieved '" << key << "' from '"
-                  << bucket << "'." << std::endl;
-        return invocation_response::success("you did it fucko" /*payload*/,
-                                            "application/json" /*MIME type*/);
-    }
+
+    auto result = render();
+
+    return invocation_response::success("you did it!" /*payload*/,
+                                        "application/json" /*MIME type*/);
+
 }
 
 int main() {
