@@ -44,9 +44,12 @@ RUN git clone https://github.com/3DTune-In/3dti_AudioToolkit.git 3dti_AudioToolk
 RUN cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
     make CONFIG=Release
 
-RUN mkdir -p src/utils
+RUN git clone https://github.com/gabime/spdlog.git && \
+    cd spdlog && mkdir build && cd build && \
+    cmake3 .. && make -j && make install
 
 #copy source files
+RUN mkdir -p src/utils
 COPY main.cpp ./src/
 COPY spatialiser.cpp ./src/
 COPY spatialiser.h ./src/

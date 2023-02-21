@@ -23,6 +23,10 @@ file(GLOB_RECURSE SOURCES
         ../3dti_AudioToolkit/3dti_ResourceManager/ILD/*.cpp
         )
 
+if(NOT TARGET spdlog)
+    find_package(spdlog REQUIRED)
+endif()
+
 add_executable(${PROJECT_NAME} "main.cpp" "spatialiser.cpp" "spatialiser.h" ${SOURCES})
 
 find_package(aws-lambda-runtime REQUIRED)
@@ -38,6 +42,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_L
         z
         ConsoleLogger
         VerifyRequest
+        spdlog::spdlog
         )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

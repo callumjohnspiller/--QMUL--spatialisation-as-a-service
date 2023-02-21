@@ -60,6 +60,10 @@ static invocation_response my_handler(invocation_request const &req, Aws::Client
 
     auto result = render();
 
+    auto uploadHandle = transfer_manager->UploadFile("tmp/binaural.wav", bucket, "result.wav", "wav", Aws::Map<Aws::String, Aws::String>());
+            uploadHandle->WaitUntilFinished();
+            bool success2 = uploadHandle->GetStatus() == Transfer::TransferStatus::COMPLETED;
+
     return invocation_response::success("you did it!" /*payload*/,
                                         "application/json" /*MIME type*/);
 

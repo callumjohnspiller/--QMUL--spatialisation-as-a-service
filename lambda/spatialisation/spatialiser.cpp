@@ -11,6 +11,7 @@
 
 
 int render() {
+
     Binaural::CCore renderer;
     int sampleRate = 44100;
     int bufferSize = 8192;
@@ -28,9 +29,9 @@ int render() {
     if (ildLoaded) { std::cout << "ILD Near Field Effect simulation file has been loaded successfully" << std::endl; }
 
     // Optional: change listener position (in case of head movement)
-//    Common::CTransform listenerTransform;
-//    listenerTransform.SetOrientation(Common::CQuaternion(1, 0, 0, 0));
-//    listener->SetListenerTransform(listenerTransform);
+    // Common::CTransform listenerTransform;
+    // listenerTransform.SetOrientation(Common::CQuaternion(1, 0, 0, 0));
+    // listener->SetListenerTransform(listenerTransform);
 
     // Source
     std::shared_ptr<Binaural::CSingleSourceDSP> source = renderer.CreateSingleSourceDSP();
@@ -45,24 +46,23 @@ int render() {
     sourceFile.load("/tmp/stem.wav");
     size_t numSamples = sourceFile.getNumSamplesPerChannel();
 
-    // Create binaural stereo file to store result in memory
     AudioFile<double> binauralFile;
     binauralFile.setSampleRate(sampleRate);
     binauralFile.setBitDepth(16);
-    binauralFile.setAudioBufferSize(2, sourceFile.getNumSamplesPerChannel());
+    binauralFile.setAudioBufferSize(2, numSamples);
 
-    // Blockwise rendering of binaural audio and accumulation into stereo file
     CMonoBuffer<float> inputBuffer(bufferSize);
     CMonoBuffer<float> leftBuffer(bufferSize);
     CMonoBuffer<float> rightBuffer(bufferSize);
-    for (size_t start = 0; start < numSamples; start += bufferSize) {
+
+    for (size_t start = 0; start < numSamples - bufferSize; start += bufferSize) {
         inputBuffer.assign(&sourceFile.samples[0][start], &sourceFile.samples[0][start]+bufferSize);
         source->SetBuffer(inputBuffer);
         source->ProcessAnechoic(leftBuffer, rightBuffer);
-        std::copy(&leftBuffer[0], &leftBuffer[0]+bufferSize, &binauralFile.samples[0][start]);
-        std::copy(&rightBuffer[0], &rightBuffer[0]+bufferSize, &binauralFile.samples[1][start]);
+        std::copy(leftBuffer.begin(), leftBuffer.begin()+bufferSize, &binauralFile.samples[0][start]);
+        std::copy(rightBuffer.begin(), rightBuffer.begin()+bufferSize, &binauralFile.samples[1][start]);
     }
-    // Save resulting wave file to disk
+
     binauralFile.save("tmp/binaural.wav");
 
     return 0;
