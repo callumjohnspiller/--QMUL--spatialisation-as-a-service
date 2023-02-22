@@ -6,16 +6,18 @@ RUN yum install -y yum-utils
 # Install required tools
 RUN yum -y groupinstall "Development tools"
 RUN yum install -y gcc-c++ zlib-devel cmake3
+
+# Specify compilers
 ENV CC=gcc CXX=g++
 
+# Install required tools
 RUN yum clean -y metadata
-
 RUN yum install -y libcurl-devel
 RUN yum install -y openssl-devel
 RUN yum install -y pulseaudio-libs-devel
-
 RUN pip3 install awscli
 
+# Fetch and install AWS Lambda Runtime for C++
 RUN git clone https://github.com/awslabs/aws-lambda-cpp-runtime.git && \
     cd aws-lambda-cpp-runtime && mkdir build && cd build && \
     cmake3 .. -DCMAKE_BUILD_TYPE=Release \
@@ -23,7 +25,7 @@ RUN git clone https://github.com/awslabs/aws-lambda-cpp-runtime.git && \
     -DCMAKE_INSTALL_PREFIX=/usr \
     && make -j8 && make install
 
-# Install AWS C++ SDK (S3 only)
+# Fetch and install AWS C++ SDK (S3 and transfer libraries only)
 RUN git clone https://github.com/aws/aws-sdk-cpp.git --recursive aws-sdk-cpp && \
     cd aws-sdk-cpp && mkdir build && cd build && \
     cmake3 .. -DBUILD_ONLY="s3;transfer" \
@@ -33,7 +35,7 @@ RUN git clone https://github.com/aws/aws-sdk-cpp.git --recursive aws-sdk-cpp && 
     -DCMAKE_INSTALL_PREFIX=/usr/local \
     && make -j8 && make install
 
-#Get 3Dti toolkit and dependencies
+# Fetch 3DTI toolkit and dependencies
 RUN git clone https://github.com/3DTune-In/3dti_AudioToolkit.git 3dti_AudioToolkit && \
     cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/ && \
     git clone https://github.com/USCiLab/cereal.git cereal && \
@@ -41,20 +43,19 @@ RUN git clone https://github.com/3DTune-In/3dti_AudioToolkit.git 3dti_AudioToolk
     git clone https://github.com/sofacoustics/API_Cpp.git sofacoustics && \
     rm sofacoustics/libsofa/lib/libsofa.a
 
+# Build 3DTI toolkit
 RUN cd 3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/build/linux && \
     make CONFIG=Release
 
+# Fetch and install C++ logger
 RUN git clone https://github.com/gabime/spdlog.git && \
     cd spdlog && mkdir build && cd build && \
     cmake3 .. && make -j && make install
 
-#copy source files
-RUN mkdir -p src/utils
-COPY main.cpp ./src/
-COPY spatialiser.cpp ./src/
-COPY spatialiser.h ./src/
-ADD utils ./src/utils
-COPY AudioFile.h ./src/
+# Copy program source files
+RUN mkdir -p src
+ADD src ./src/
+ADD utils ./src/
 COPY CMakeLists.txt ./src/
 COPY config .aws/
 
@@ -64,12 +65,14 @@ RUN mkdir build && cd build && \
     -DBUILD_SHARED_LIBS=OFF \
     -DCMAKE_INSTALL_PREFIX=/usr
 
-#Build deployment package
-RUN cd build && make && make aws-lambda-package-spatialiser
+#Build AWS deployment package
+RUN cd build && make && make aws-lambda-package-spatialisation
 
 # Unzip deployment package
-RUN cd build && unzip spatialiser.zip -d unpacked
+RUN cd build && unzip spatialisation.zip -d unpacked
 
 # Point to compiled function
-ENTRYPOINT ["/build/unpacked/bin/spatialiser"]
+ENTRYPOINT ["/build/unpacked/bin/spatialisation"]
+
+# Uncomment line below for Docker Image Debugging
 #CMD ["/usr/sbin/init"]

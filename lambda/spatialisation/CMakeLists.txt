@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
-project(spatialiser LANGUAGES CXX)
+project(spatialisation LANGUAGES CXX)
 
 include_directories("../3dti_AudioToolkit/3dti_Toolkit")
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager")
@@ -8,8 +8,6 @@ include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libra
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/cereal/include")
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/src")
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/include")
-
-add_subdirectory(utils)
 
 link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/lib")
 link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/lib/linux")
@@ -23,16 +21,19 @@ file(GLOB_RECURSE SOURCES
         ../3dti_AudioToolkit/3dti_ResourceManager/ILD/*.cpp
         )
 
-if(NOT TARGET spdlog)
+if (NOT TARGET spdlog)
     find_package(spdlog REQUIRED)
-endif()
+endif ()
 
-add_executable(${PROJECT_NAME} "main.cpp" "spatialiser.cpp" "spatialiser.h" ${SOURCES})
+add_executable(${PROJECT_NAME} "main.cpp" "spatialiser.cpp" "verify_request.cpp" "lambda_handler.cpp" ${SOURCES})
 
 find_package(aws-lambda-runtime REQUIRED)
 find_package(AWSSDK COMPONENTS s3 transfer)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_LINK_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+        AWS::aws-lambda-runtime
+        ${AWSSDK_LINK_LIBRARIES}
         sofa
         netcdf
         hdf5_hl
@@ -40,8 +41,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE AWS::aws-lambda-runtime ${AWSSDK_L
         netcdf
         netcdf_c++4
         z
-        ConsoleLogger
-        VerifyRequest
         spdlog::spdlog
         )
 

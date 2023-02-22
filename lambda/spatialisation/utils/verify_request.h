@@ -1,0 +1,6 @@
+#ifndef SPATIALISATION_VERIFYREQUEST_H
+#define SPATIALISATION_VERIFYREQUEST_H
+
+bool verifyRequest(Aws::Utils::Json::JsonValue &json);
+
+#endif //SPATIALISATION_VERIFYREQUEST_H

@@ -1,2 +1,0 @@
-add_library(ConsoleLogger ConsoleLogger.cpp)
-add_library(VerifyRequest VerifyRequest.cpp)
