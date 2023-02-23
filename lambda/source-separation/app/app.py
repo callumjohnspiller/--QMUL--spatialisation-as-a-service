@@ -41,7 +41,7 @@ def handler(event, context):
     for path in file_paths:
         s3.upload_file(
             Filename=f"/tmp/{path}",
-            Bucket="saas-deposit",
+            Bucket="saas-",
             Key=f"{KEY}/{path}",
         )
 
