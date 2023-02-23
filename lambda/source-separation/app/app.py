@@ -17,19 +17,26 @@ def handler(event, context):
 
     BUCKET_NAME = event['detail']['bucket']['name']
     KEY = event['detail']['object']['key']
+    LOCAL_FILENAME = "/tmp/input"
+    OUTPUT_BUCKET_NAME = "saas-separation-output"
 
     s3 = session.client('s3')
 
     s3.download_file(Bucket=BUCKET_NAME,
-                     Key=KEY, Filename=f"/tmp/input")
+                     Key=KEY, Filename=LOCAL_FILENAME)
 
-    separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
-    # separator = Separator('spleeter:4stems', multiprocess=False, stft_backend='tensorflow')
-    # separator = Separator('spleeter:5stems', multiprocess=False, stft_backend='tensorflow')
+    if event['stem-count'] == 2:
+        separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
+    elif event['stem-count'] == 4:
+        separator = Separator('spleeter:4stems', multiprocess=False, stft_backend='tensorflow')
+    elif event['stem-count'] == 5:
+        separator = Separator('spleeter:5stems', multiprocess=False, stft_backend='tensorflow')
+    else:
+        separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
 
     audio_loader = AudioAdapter.default()
     sample_rate = 44100
-    waveform, _ = audio_loader.load(f"/tmp/input", sample_rate=sample_rate)
+    waveform, _ = audio_loader.load(LOCAL_FILENAME, sample_rate=sample_rate)
 
     prediction = separator.separate(waveform)
     file_paths = []
@@ -41,8 +48,8 @@ def handler(event, context):
     for path in file_paths:
         s3.upload_file(
             Filename=f"/tmp/{path}",
-            Bucket="saas-",
+            Bucket=OUTPUT_BUCKET_NAME,
             Key=f"{KEY}/{path}",
         )
 
-    return 'Finished separating'
+    return {"output-bucket": OUTPUT_BUCKET_NAME, "output-folder": KEY}
