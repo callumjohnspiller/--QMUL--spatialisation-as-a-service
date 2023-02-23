@@ -8,7 +8,7 @@ type HeaderProps = {
 const Header: React.FunctionComponent<HeaderProps> = ({navPosition}) => {
 
     return (
-        <header id={"page-header"} className={sty.header}>Hello johan
+        <header id={"page-header"} className={sty.header}>
         </header>
     );
 };
