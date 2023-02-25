@@ -7,12 +7,16 @@ interface BodyProps {
     uuid: string
 }
 
-const [hasUploaded, setUploaded] = useState<boolean>(false);
-
 function Body(props:BodyProps) {
+    const [hasUploaded, setUploaded] = useState<boolean>(false);
+
     return (
         <div>
-            <Uploader uuid={props.uuid} hasUploaded={hasUploaded} setUpload={() => setUploaded(true)}></Uploader>
+            <Uploader
+                uuid={props.uuid}
+                hasUploaded={hasUploaded}
+                setUpload={() => setUploaded(true)}
+            />
             <div>{hasUploaded ? "state passed successfully" : "you can do it!"}</div>
         </div>
     )
