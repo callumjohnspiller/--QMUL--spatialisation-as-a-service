@@ -6,6 +6,8 @@ import Uploader from "./components/Upload";
 import {SubscribeCommand} from "@aws-sdk/client-sns";
 import {snsClient} from "./libs/snsClient";
 
+const [hasUploaded, setUploaded] = useState<boolean>(false);
+
 export default class App extends React.Component<{}, { uuid: string }> {
     constructor(props: {}) {
         super(props);
@@ -15,7 +17,6 @@ export default class App extends React.Component<{}, { uuid: string }> {
     }
 
     render() {
-        const [hasUploaded, setUploaded] = useState<boolean>(false);
         return (
             <div id="react-app" className={"App"}>
                 <Header navPosition={"center"}/>
