@@ -1,13 +1,15 @@
 import React, {ChangeEvent, useState} from 'react';
 import sty from "./upload.module.scss";
-import { v4 as uuidv4 } from 'uuid';
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client } from "../../libs/s3Client";
 
-type UploaderProps = {};
+interface UploaderProps {
+    uuid: string
+}
 
-const Uploader: React.FunctionComponent<UploaderProps> = () => {
+function Uploader(props:UploaderProps) {
     const [file, setFile] = useState<File>();
+    const [hasUploaded, setUploaded] = useState<boolean>();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -20,17 +22,15 @@ const Uploader: React.FunctionComponent<UploaderProps> = () => {
             return;
         }
 
-        const uploadId = uuidv4();
-
         const params = {
             Bucket: 'saas-deposit',
-            Key: 'upload_' + uploadId,
+            Key: 'upload_' + props.uuid,
             Body: file
         }
 
         try {
             const results = await s3Client.send(new PutObjectCommand(params));
-            console.log(results)
+            setUploaded(true);
             return results;
         } catch (err) {
             console.log("Error", err);
@@ -40,10 +40,11 @@ const Uploader: React.FunctionComponent<UploaderProps> = () => {
     return (
         <div className={sty.upload}>
             <input type="file" onChange={handleFileChange}/>
-
             <div>{file && `${file.name} - ${file.type}`}</div>
-
             <button onClick={handleUploadClick}>Upload</button>
+            <div>
+                {hasUploaded ? "file uploaded successfully" : "AWAITING FILE"}
+            </div>
         </div>
     );
 }
