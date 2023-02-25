@@ -2,11 +2,7 @@ import React, {useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 import "./stylesheets/styles.scss";
 import Header from "./components/Header";
-import Uploader from "./components/Upload";
-import {SubscribeCommand} from "@aws-sdk/client-sns";
-import {snsClient} from "./libs/snsClient";
-
-const [hasUploaded, setUploaded] = useState<boolean>(false);
+import Body from "./components/Body";
 
 export default class App extends React.Component<{}, { uuid: string }> {
     constructor(props: {}) {
@@ -20,8 +16,7 @@ export default class App extends React.Component<{}, { uuid: string }> {
         return (
             <div id="react-app" className={"App"}>
                 <Header navPosition={"center"}/>
-                <Uploader uuid={this.state.uuid} hasUploaded={hasUploaded} setUpload={() => setUploaded(true)}/>
-                <div>{hasUploaded ? "state passed successfully" : "you can do it!"}</div>
+                <Body uuid={this.state.uuid}/>
             </div>
         )
     }
