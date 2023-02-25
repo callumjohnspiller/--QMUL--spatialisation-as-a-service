@@ -1,8 +1,8 @@
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            ACCESS_KEY_ID: string;
-            SECRET_ACCESS_KEY: string;
+            REACT_APP_ACCESS_KEY_ID: string;
+            REACT_APP_SECRET_ACCESS_KEY: string;
         }
     }
 
