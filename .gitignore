@@ -285,4 +285,4 @@ lambda/spatialisation/config
 /lambda/spatialisation/aws-sdk-cpp/
 /lambda/spatialisation/aws-lambda-cpp-runtime/
 /lambda/spatialisation/cmake-build-release/
-/ui/src/libs/creds.js
+/ui/src/libs/creds.ts

@@ -3,7 +3,6 @@ import sty from "./upload.module.scss";
 import { v4 as uuidv4 } from 'uuid';
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client } from "../../libs/s3Client";
-import {upload} from "@testing-library/user-event/dist/upload";
 
 type UploaderProps = {};
 
