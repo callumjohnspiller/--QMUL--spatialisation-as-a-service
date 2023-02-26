@@ -3,6 +3,8 @@ import {v4 as uuidv4} from 'uuid';
 import "./stylesheets/styles.scss";
 import Header from "./components/Header";
 import Body from "./components/Body";
+import { CreateQueueCommand } from  "@aws-sdk/client-sqs";
+import {sqsClient} from "./libs/sqsClient";
 
 export default class App extends React.Component<{}, { uuid: string }> {
     constructor(props: {}) {
@@ -10,6 +12,7 @@ export default class App extends React.Component<{}, { uuid: string }> {
         this.state = {
             uuid: uuidv4()
         };
+        createSQSQueue(this.state.uuid).then(data => console.log(data))
     }
 
     render() {
@@ -19,5 +22,23 @@ export default class App extends React.Component<{}, { uuid: string }> {
                 <Body uuid={this.state.uuid}/>
             </div>
         )
+    }
+}
+
+async function createSQSQueue(uuid: string) {
+    const params = {
+        QueueName: uuid,
+        Attributes: {
+            DelaySeconds: "0",
+            MessageRetentionPeriod: "86400"
+        }
+    };
+
+    try {
+        const data = await sqsClient.send(new CreateQueueCommand(params));
+        console.log("Success", data);
+        return data;
+    } catch (err) {
+        console.log("Error", err);
     }
 }

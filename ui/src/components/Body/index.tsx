@@ -8,13 +8,16 @@ interface BodyProps {
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
 
+    if (uploadStatus) {
+        const queueURL = "";
+    }
+
     return (
         <div>
             <Uploader
                 uuid={props.uuid}
                 setUploadStatus={() => setUploadStatus(true)}
             />
-            <div>{uploadStatus ? "state passed successfully" : "you can do it!"}</div>
         </div>
     )
 }
