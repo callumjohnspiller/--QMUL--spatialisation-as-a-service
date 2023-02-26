@@ -1,26 +1,32 @@
 import React from "react";
-import {createTheme, ThemeProvider} from "@mui/material";
-import AudioPlayer from 'material-ui-audio-player';
+import {Howl} from "howler";
+import {Stack} from "@mui/material";
 
 interface AudioFilePlayerProps {
     audioURL: string
 }
 
 function AudioFilePlayer(props: AudioFilePlayerProps) {
+    const sound = new Howl({
+        src: [props.audioURL],
+        html5: true
+    });
 
-    const uiTheme = createTheme({});
+    let playSound = () => {
+        sound.play()
+    }
 
     return (
-        <ThemeProvider theme={uiTheme}>
-            <AudioPlayer
-                src={props.audioURL}
-                elevation={1}
-                width="100%"
-                variation="default"
-                spacing={3}
-                download={true}
-            />
-        </ThemeProvider>
+        <Stack
+            spacing={2}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+        >
+            <button onClick={() => playSound()}>
+                {"Uploaded file"}
+            </button>
+        </Stack>
     );
 }
 
