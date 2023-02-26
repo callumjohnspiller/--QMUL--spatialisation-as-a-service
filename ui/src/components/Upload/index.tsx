@@ -37,7 +37,7 @@ function Uploader(props: UploaderProps) {
 
         // Delay to allow SNS topic before subscribing
         setTimeout(function () {
-            props.setUploadStatus();
+            props.setUploadStatus(true);
         }, 500);
     };
 
