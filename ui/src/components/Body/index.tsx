@@ -17,7 +17,7 @@ function Body(props: BodyProps) {
                 setUploadStatus={() => setUploadStatus(true)}
             />
             {uploadStatus
-                ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload+" + props.uuid}/>
+                ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload_" + props.uuid}/>
                 : <div/>
             }
 
