@@ -27,7 +27,7 @@ export default class App extends React.Component<{}, { uuid: string }> {
 
 async function createSQSQueue(uuid: string) {
     const params = {
-        QueueName: uuid,
+        QueueName: "upload_" + uuid,
         Attributes: {
             DelaySeconds: "0",
             MessageRetentionPeriod: "86400"
