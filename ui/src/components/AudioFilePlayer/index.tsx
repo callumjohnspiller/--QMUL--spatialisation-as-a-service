@@ -1,25 +1,27 @@
 import React from "react";
-import {HiArrowCircleDown, HiPlay} from "react-icons/hi";
-import {Howl} from "howler";
+import { createTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core';
+import AudioPlayer from 'material-ui-audio-player';
 
 interface AudioFilePlayerProps {
     audioURL: string
 }
 
 function AudioFilePlayer(props: AudioFilePlayerProps) {
-    const sound = new Howl({
-        src: [props.audioURL],
-        html5: true
-    });
 
-    let playSound = () => {
-        sound.play()
-    }
+    const uiTheme = createTheme({});
 
     return (
-        <button onClick={() => playSound()}>
-            {props.audioURL}
-        </button>
+        <ThemeProvider theme={uiTheme}>
+            <AudioPlayer
+                src={props.audioURL}
+                elevation={1}
+                width="100%"
+                variation="default"
+                spacing={3}
+                download={true}
+            />
+        </ThemeProvider>
     );
 }
 
