@@ -3,7 +3,8 @@ import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 
 interface BodyProps {
-    uuid: string
+    uuid: string,
+    separatedStems: string[]
 }
 
 function Body(props: BodyProps) {
@@ -15,8 +16,11 @@ function Body(props: BodyProps) {
                 uuid={props.uuid}
                 setUploadStatus={() => setUploadStatus(true)}
             />
-            <AudioFilePlayer filename={"test"}
-                             s3_url={"https://saas-deposit.s3.eu-west-2.amazonaws.com/Bobby+Bare%2C+Jr+-+Sad+Smile.mp3"}/>
+            {uploadStatus
+                ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload+" + props.uuid}/>
+                : <div/>
+            }
+
         </div>
     )
 }

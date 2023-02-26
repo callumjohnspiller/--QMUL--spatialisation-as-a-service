@@ -6,11 +6,12 @@ import Body from "./components/Body";
 import { CreateQueueCommand } from  "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
 
-export default class App extends React.Component<{}, { uuid: string }> {
+export default class App extends React.Component<{}, { uuid: string, separatedStems: string[] }> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            uuid: uuidv4()
+            uuid: uuidv4(),
+            separatedStems: []
         };
         createSQSQueue(this.state.uuid).then(data => console.log(data))
     }
@@ -19,7 +20,7 @@ export default class App extends React.Component<{}, { uuid: string }> {
         return (
             <div id="react-app" className={"App"}>
                 <Header/>
-                <Body uuid={this.state.uuid}/>
+                <Body uuid={this.state.uuid} separatedStems={this.state.separatedStems}/>
             </div>
         )
     }
