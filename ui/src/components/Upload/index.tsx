@@ -29,8 +29,7 @@ function Uploader(props: UploaderProps) {
         }
 
         try {
-            const results = await s3Client.send(new PutObjectCommand(params));
-            return results;
+            await s3Client.send(new PutObjectCommand(params));
         } catch (err) {
             console.log("Error", err);
         }
