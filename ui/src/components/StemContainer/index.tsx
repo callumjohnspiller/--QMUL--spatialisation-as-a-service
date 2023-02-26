@@ -1,5 +1,4 @@
 import React from 'react';
-import sty from "./header.module.scss";
 
 type StemContainerProps = {}
 

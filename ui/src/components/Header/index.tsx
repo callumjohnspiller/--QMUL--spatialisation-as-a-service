@@ -1,20 +1,14 @@
 import React from 'react';
 import sty from "./header.module.scss";
 
-type HeaderProps = {
-    navPosition: "center" | "right" | "overlay";
+interface HeaderProps {
 }
 
-const Header: React.FunctionComponent<HeaderProps> = ({navPosition}) => {
-
+function Header(props: HeaderProps) {
     return (
         <header id={"page-header"} className={sty.header}>
         </header>
     );
-};
+}
 
 export default Header;
-
-Header.defaultProps = {
-    navPosition: "center"
-};

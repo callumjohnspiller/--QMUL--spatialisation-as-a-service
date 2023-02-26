@@ -1,4 +1,4 @@
-import  { SNSClient } from "@aws-sdk/client-sns";
+import {SNSClient} from "@aws-sdk/client-sns";
 
 const REGION = "eu-west-2";
 const snsClient = new SNSClient({

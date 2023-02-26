@@ -1,15 +1,14 @@
 import React, {ChangeEvent, useState} from 'react';
 import sty from "./upload.module.scss";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { s3Client } from "../../libs/s3Client";
+import {PutObjectCommand} from "@aws-sdk/client-s3";
+import {s3Client} from "../../libs/s3Client";
 
 interface UploaderProps {
     uuid: string,
-    hasUploaded: boolean,
-    setUpload: Function
+    setUploadStatus: Function
 }
 
-function Uploader(props:UploaderProps) {
+function Uploader(props: UploaderProps) {
     const [file, setFile] = useState<File>();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +30,15 @@ function Uploader(props:UploaderProps) {
 
         try {
             const results = await s3Client.send(new PutObjectCommand(params));
-            props.setUpload();
             return results;
         } catch (err) {
             console.log("Error", err);
         }
+
+        // Delay to allow SNS topic before subscribing
+        setTimeout(function () {
+            props.setUploadStatus();
+        }, 500);
     };
 
     return (
@@ -43,9 +46,6 @@ function Uploader(props:UploaderProps) {
             <input type="file" onChange={handleFileChange}/>
             <div>{file && `${file.name} - ${file.type}`}</div>
             <button onClick={handleUploadClick}>Upload</button>
-            <div>
-                {props.hasUploaded ? "file uploaded successfully" : "AWAITING FILE"}
-            </div>
         </div>
     );
 }
