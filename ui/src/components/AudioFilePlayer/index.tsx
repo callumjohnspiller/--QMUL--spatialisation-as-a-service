@@ -1,6 +1,5 @@
 import React from "react";
-import { createTheme } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/core';
+import {createTheme, ThemeProvider} from "@mui/material";
 import AudioPlayer from 'material-ui-audio-player';
 
 interface AudioFilePlayerProps {
