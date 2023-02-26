@@ -16,11 +16,12 @@ function Body(props: BodyProps) {
                 uuid={props.uuid}
                 setUploadStatus={() => setUploadStatus(true)}
             />
-            {uploadStatus
-                ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload_" + props.uuid}/>
-                : <div/>
-            }
-
+            <div>
+                {uploadStatus
+                    ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload_" + props.uuid}/>
+                    : "player goes here"
+                }
+            </div>
         </div>
     )
 }
