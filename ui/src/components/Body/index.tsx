@@ -25,7 +25,7 @@ function Body(props: BodyProps) {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson = JSON.parse(str);
-            setFileUrl("https://" + bodyJson.detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson.detail.object.key);
+            setFileUrl("https://" + bodyJson[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson[1].detail.object.key);
         }
         if (uploadStatus && !sqsQueueUrl) {
             createSqsQueue().then((result) => {console.log(result)});
