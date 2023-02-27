@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
-import {configure} from "@testing-library/react";
 
 interface BodyProps {
     uuid: string,
@@ -18,12 +17,15 @@ function Body(props: BodyProps) {
 
     useEffect(() => {
         if (uploadStatus && !sqsQueueUrl) {
-            const data = props.createSQSQueue();
-            console.log(data);
-            setQueueUrl(data["QueueUrl"]);
+            const data = props.createSQSQueue().then(() => {
+                setQueueUrl(data.QueueUrl);
+                }
+            );
             console.log(sqsQueueUrl);
-            const s3Message = props.getMessage(sqsQueueUrl);
-            setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
+            const s3Message = props.getMessage(sqsQueueUrl).then(() => {
+                setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
+            });
+
         }
     });
 
