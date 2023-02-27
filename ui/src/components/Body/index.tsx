@@ -21,6 +21,7 @@ function Body(props: BodyProps) {
             const result: CreateQueueResult = await props.createSQSQueue();
             console.log(result);
             setQueueUrl(result.QueueUrl);
+            console.log(sqsQueueUrl);
         }
         async function setUploadedFileUrl() {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
