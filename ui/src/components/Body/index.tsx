@@ -17,15 +17,14 @@ function Body(props: BodyProps) {
 
     useEffect(() => {
         if (uploadStatus && !sqsQueueUrl) {
-            const data = props.createSQSQueue().then(() => {
+            props.createSQSQueue().then((data: { QueueUrl: string }) => {
                 setQueueUrl(data.QueueUrl);
                 }
             );
             console.log(sqsQueueUrl);
-            const s3Message = props.getMessage(sqsQueueUrl).then(() => {
+            props.getMessage(sqsQueueUrl).then((s3Message: { detail: { object: { key: string; }, bucket: { name: string}; }; }[]) => {
                 setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
             });
-
         }
     });
 
