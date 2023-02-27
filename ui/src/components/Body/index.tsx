@@ -17,15 +17,19 @@ function Body(props: BodyProps) {
     const [originalFileUrl, setFileUrl] = useState<string>();
 
     useEffect(() => {
+        async function createSqsQueue() {
+            const result: CreateQueueResult = await props.createSQSQueue();
+            console.log(result);
+            setQueueUrl(result.QueueUrl);
+        }
+        async function setUploadedFileUrl() {
+            const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+            console.log(message);
+            setFileUrl("https://" + message.Messages + ".s3.eu-west-2.amazonaws.com/" + message.Messages);
+        }
         if (uploadStatus && !sqsQueueUrl) {
-            props.createSQSQueue().then((result: CreateQueueResult) => {
-                setQueueUrl(result.QueueUrl);
-                }
-            );
-            props.getMessage(sqsQueueUrl).then((s3Message: ReceiveMessageResult) => {
-                console.log(s3Message);
-                setFileUrl("https://" + s3Message.Messages + ".s3.eu-west-2.amazonaws.com/" + s3Message.Messages);
-            });
+            createSqsQueue().then();
+            setUploadedFileUrl().then();
         }
     });
 
