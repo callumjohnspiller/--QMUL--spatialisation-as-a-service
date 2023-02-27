@@ -25,7 +25,7 @@ function Body(props: BodyProps) {
         if (uploadStatus && !sqsQueueUrl) {
             configureS3Url().then(r => console.log(originalFileUrl));
         }
-    }, []);
+    });
 
     return (
         <div>
