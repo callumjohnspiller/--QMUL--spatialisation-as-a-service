@@ -54,7 +54,7 @@ async function getMessage(queueURL: string) {
         MaxNumberOfMessages: 1,
         MessageAttributeNames: ["All"],
         QueueUrl: queueURL,
-        WaitTimeSeconds: 0,
+        WaitTimeSeconds: 20,
     }
 
     try {

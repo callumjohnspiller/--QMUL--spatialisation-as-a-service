@@ -24,7 +24,7 @@ function Body(props: BodyProps) {
         async function setUploadedFileUrl() {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             setFileUrl("https://" + message.Messages + ".s3.eu-west-2.amazonaws.com/" + message.Messages);
-            return message
+            return message;
         }
         if (uploadStatus && !sqsQueueUrl) {
             createSqsQueue().then((result) => {console.log(result)});
