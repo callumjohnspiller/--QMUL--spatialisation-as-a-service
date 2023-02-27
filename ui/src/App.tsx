@@ -42,6 +42,7 @@ async function createSQSQueue(uuid: string) {
     try {
         const data = await sqsClient.send(new CreateQueueCommand(params));
         console.log("Success", data);
+        return data;
     } catch (err) {
         console.log("Error", err);
     }
