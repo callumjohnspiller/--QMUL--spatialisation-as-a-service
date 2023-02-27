@@ -13,7 +13,9 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     });
 
     let playSound = () => {
-        sound.play();
+        if (!sound.playing()) {
+            sound.play();
+        }
     }
 
     let pauseSound = () => {
