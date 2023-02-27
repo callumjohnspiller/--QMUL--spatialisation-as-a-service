@@ -23,9 +23,9 @@ function Body(props: BodyProps) {
         }
         async function setUploadedFileUrl() {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
-            const str = (message.Messages && message.Messages[0]) ? message.Messages[0].Body : "";
-            console.log(str);
-            setFileUrl("https://" + message + ".s3.eu-west-2.amazonaws.com/" + message);
+            const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
+            const bodyJson = JSON.parse(str);
+            setFileUrl("https://" + bodyJson.detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson.detail.object.key);
         }
         if (uploadStatus && !sqsQueueUrl) {
             createSqsQueue().then((result) => {console.log(result)});
