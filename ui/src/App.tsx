@@ -22,6 +22,7 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
                 <Body uuid={this.state.uuid}
                       separatedStems={this.state.separatedStems}
                       createSQSQueue={() => createSQSQueue(this.state.uuid)}
+                      getSQSUrl={() => getSQSUrl(this.state.uuid)}
                       getMessage={getMessage}
                 />
             </div>
@@ -29,7 +30,6 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
     }
 }
 
-// Returns object containing queue URL
 async function createSQSQueue(uuid: string) {
     const params = {
         QueueName: "upload_" + uuid,
@@ -45,9 +45,17 @@ async function createSQSQueue(uuid: string) {
     } catch (err) {
         console.log("Error", err);
     }
+}
+
+async function getSQSUrl(uuid: string) {
+    const params = {
+        QueueName: "upload_" + uuid
+    };
 
     try {
-        return await sqsClient.send(new GetQueueUrlCommand(params));
+        const data = await sqsClient.send(new GetQueueUrlCommand(params));
+        console.log("Success", data);
+        return data;
     } catch (err) {
         console.log("Error", err);
     }
