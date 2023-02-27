@@ -4,11 +4,17 @@ import AudioFilePlayer from "../AudioFilePlayer";
 
 interface BodyProps {
     uuid: string,
-    separatedStems: string[]
+    separatedStems: string[],
+    createSQSQueue: Function
 }
 
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
+    const [sqsQueueURL, setQueueURL] = useState<string>();
+
+    if (uploadStatus && !sqsQueueURL) {
+        setQueueURL(props.createSQSQueue(props.uuid));
+    }
 
     return (
         <div>
