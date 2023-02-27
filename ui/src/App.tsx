@@ -21,7 +21,7 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
                 <Header/>
                 <Body uuid={this.state.uuid}
                       separatedStems={this.state.separatedStems}
-                      createSQSQueue={() => createSQSQueue}/>
+                      createSQSQueue={() => createSQSQueue(this.state.uuid)}/>
             </div>
         )
     }

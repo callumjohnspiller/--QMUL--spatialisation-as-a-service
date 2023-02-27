@@ -13,7 +13,7 @@ function Body(props: BodyProps) {
     const [sqsQueueURL, setQueueURL] = useState<string>();
 
     if (uploadStatus && !sqsQueueURL) {
-        setQueueURL(props.createSQSQueue(props.uuid));
+        setQueueURL(props.createSQSQueue());
     }
 
     return (
