@@ -24,13 +24,13 @@ function Body(props: BodyProps) {
             console.log(sqsQueueUrl);
         }
         async function setUploadedFileUrl() {
+            console.log(sqsQueueUrl);
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             console.log(message);
             setFileUrl("https://" + message.Messages + ".s3.eu-west-2.amazonaws.com/" + message.Messages);
         }
         if (uploadStatus && !sqsQueueUrl) {
-            createSqsQueue().then();
-            setUploadedFileUrl().then();
+            createSqsQueue().then(() => setUploadedFileUrl().then());
         }
     });
 
