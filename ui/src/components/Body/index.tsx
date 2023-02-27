@@ -25,15 +25,15 @@ function Body(props: BodyProps) {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const str = (message.Messages && message.Messages[0]) ? message.Messages[0].Body : "";
             console.log(str);
-            // setFileUrl("https://" + message + ".s3.eu-west-2.amazonaws.com/" + message);
+            setFileUrl("https://" + message + ".s3.eu-west-2.amazonaws.com/" + message);
         }
         if (uploadStatus && !sqsQueueUrl) {
             createSqsQueue().then((result) => {console.log(result)});
         }
         if (sqsQueueUrl && !originalFileUrl) {
-            setUploadedFileUrl().then((result) => {console.log(result)})
+            setUploadedFileUrl().then((result) => {console.log(result)});
         }
-    });
+    }, [uploadStatus, sqsQueueUrl]);
 
     return (
         <div>
