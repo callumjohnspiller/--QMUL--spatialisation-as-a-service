@@ -13,7 +13,11 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     });
 
     let playSound = () => {
-        sound.play()
+        sound.play();
+    }
+
+    let pauseSound = () => {
+        sound.pause();
     }
 
     return (
@@ -24,7 +28,10 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
             alignItems="center"
         >
             <button onClick={() => playSound()}>
-                {"Uploaded file"}
+                {"Play"}
+            </button>
+            <button onClick={() => pauseSound()}>
+                {"Pause"}
             </button>
         </Stack>
     );
