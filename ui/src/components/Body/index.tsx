@@ -5,15 +5,19 @@ import AudioFilePlayer from "../AudioFilePlayer";
 interface BodyProps {
     uuid: string,
     separatedStems: string[],
-    createSQSQueue: Function
+    createSQSQueue: Function,
+    getMessage: Function
 }
 
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
-    const [sqsQueueURL, setQueueURL] = useState<string>();
+    const [sqsQueueUrl, setQueueUrl] = useState<string>();
+    const [originalFileUrl, setFileUrl] = useState<string>();
 
-    if (uploadStatus && !sqsQueueURL) {
-        setQueueURL(props.createSQSQueue());
+    if (uploadStatus && !sqsQueueUrl) {
+        setQueueUrl(props.createSQSQueue());
+        const s3Message = props.getMessage(sqsQueueUrl);
+        setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
     }
 
     return (
@@ -23,8 +27,8 @@ function Body(props: BodyProps) {
                 setUploadStatus={() => setUploadStatus(true)}
             />
             <div>
-                {uploadStatus
-                    ? <AudioFilePlayer audioURL = {"https://saas-deposit.s3.eu-west-2.amazonaws.com/upload_" + props.uuid}/>
+                {(originalFileUrl)
+                    ? <AudioFilePlayer audioURL = {originalFileUrl}/>
                     : "player goes here"
                 }
             </div>
