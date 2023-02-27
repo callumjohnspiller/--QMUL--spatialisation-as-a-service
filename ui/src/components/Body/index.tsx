@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 
@@ -9,16 +9,18 @@ interface BodyProps {
     getMessage: Function
 }
 
-async function Body(props: BodyProps) {
+function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [originalFileUrl, setFileUrl] = useState<string>();
 
     if (uploadStatus && !sqsQueueUrl) {
-        setQueueUrl(await props.createSQSQueue().QueueUrl);
-        console.log(sqsQueueUrl)
-        const s3Message = await props.getMessage(sqsQueueUrl);
-        setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
+        useEffect(() => {
+            setQueueUrl(props.createSQSQueue().QueueUrl);
+            console.log(sqsQueueUrl)
+            const s3Message = props.getMessage(sqsQueueUrl);
+            setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
+        });
     }
 
     return (
