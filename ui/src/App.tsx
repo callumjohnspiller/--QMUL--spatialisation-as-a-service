@@ -29,6 +29,7 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
     }
 }
 
+// Returns object containing queue URL
 async function createSQSQueue(uuid: string) {
     const params = {
         QueueName: "upload_" + uuid,
