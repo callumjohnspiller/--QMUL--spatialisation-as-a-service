@@ -7,8 +7,7 @@ interface BodyProps {
     uuid: string,
     separatedStems: string[],
     createSQSQueue: Function,
-    getMessage: Function,
-    getSQSUrl: Function
+    getMessage: Function
 }
 
 function Body(props: BodyProps) {
@@ -19,18 +18,19 @@ function Body(props: BodyProps) {
     useEffect(() => {
         async function createSqsQueue() {
             const result: CreateQueueResult = await props.createSQSQueue();
-            console.log(result);
             setQueueUrl(result.QueueUrl);
-            console.log(sqsQueueUrl);
+            return result;
         }
         async function setUploadedFileUrl() {
-            console.log(sqsQueueUrl);
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
-            console.log(message);
             setFileUrl("https://" + message.Messages + ".s3.eu-west-2.amazonaws.com/" + message.Messages);
+            return message
         }
         if (uploadStatus && !sqsQueueUrl) {
-            createSqsQueue().then(() => setUploadedFileUrl().then());
+            createSqsQueue().then((result) => {console.log(result)});
+        }
+        if (sqsQueueUrl && !originalFileUrl) {
+            setUploadedFileUrl().then((result) => {console.log(result)})
         }
     });
 
