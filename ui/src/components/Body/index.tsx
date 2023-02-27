@@ -15,10 +15,9 @@ function Body(props: BodyProps) {
     const [originalFileUrl, setFileUrl] = useState<string>();
 
     if (uploadStatus && !sqsQueueUrl) {
-        setQueueUrl(props.createSQSQueue());
+        setQueueUrl(props.createSQSQueue().QueueUrl);
         const s3Message = props.getMessage(sqsQueueUrl);
-        console.log(s3Message)
-        // setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
+        setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
     }
 
     return (
