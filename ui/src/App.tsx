@@ -23,6 +23,7 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
                       separatedStems={this.state.separatedStems}
                       createSQSQueue={() => createSQSQueue(this.state.uuid)}
                       getMessage={getMessage}
+                      deleteMessage={deleteMessage}
                 />
             </div>
         )

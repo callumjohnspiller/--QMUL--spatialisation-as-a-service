@@ -39,13 +39,13 @@ function Body(props: BodyProps) {
             const bodyJson = JSON.parse(str);
             setFileUrl("https://" + bodyJson[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson[1].detail.object.key);
             if (message.Messages) {
-                await props.deleteMessage(sqsQueueUrl, message.Messages[0].ReceiptHandle)
+                await props.deleteMessage(sqsQueueUrl, message.Messages[0].ReceiptHandle);
             }
         }
 
         if (sqsQueueUrl && !originalFileUrl) {
             setUploadedFileUrl().then((result) => {
-                console.log(result)
+                console.log(result);
             });
         }
     }, [sqsQueueUrl]);
