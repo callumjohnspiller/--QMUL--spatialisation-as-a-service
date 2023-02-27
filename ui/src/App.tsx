@@ -6,13 +6,12 @@ import Body from "./components/Body";
 import {CreateQueueCommand, GetQueueUrlCommand, ReceiveMessageCommand} from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
 
-export default class App extends React.Component<{}, { uuid: string, separatedStems: string[], sqsQueueUrl: string}> {
+export default class App extends React.Component<{}, { uuid: string, separatedStems: string[]}> {
     constructor(props: {}) {
         super(props);
         this.state = {
             uuid: uuidv4(),
-            separatedStems: [],
-            sqsQueueUrl: ""
+            separatedStems: []
         };
     }
 
@@ -23,7 +22,7 @@ export default class App extends React.Component<{}, { uuid: string, separatedSt
                 <Body uuid={this.state.uuid}
                       separatedStems={this.state.separatedStems}
                       createSQSQueue={() => createSQSQueue(this.state.uuid)}
-                      getMessage={() => getMessage("")}
+                      getMessage={getMessage}
                 />
             </div>
         )
