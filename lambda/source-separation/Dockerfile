@@ -44,15 +44,6 @@ ARG FUNCTION_DIR
 WORKDIR ${FUNCTION_DIR}
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
-# Copy entry script
-COPY ./entry_script.sh /entry_script.sh
-
-# Add the lambda runtime mocking for testing locally
-ADD aws-lambda-rie-x86_64 /usr/local/bin/aws-lambda-rie
-
-#Edit permissions to allow entry script to run
-RUN chmod 755 /usr/local/bin/aws-lambda-rie /entry_script.sh
-
 #Declare entry points for the function and the lambda handler command
-ENTRYPOINT [ "/entry_script.sh" ]
+ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
 CMD [ "app.handler" ]
