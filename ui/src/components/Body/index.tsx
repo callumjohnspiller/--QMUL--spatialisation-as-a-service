@@ -7,7 +7,8 @@ interface BodyProps {
     uuid: string,
     separatedStems: string[],
     createSQSQueue: Function,
-    getMessage: Function
+    getMessage: Function,
+    deleteMessage: Function
 }
 
 function Body(props: BodyProps) {
@@ -15,25 +16,39 @@ function Body(props: BodyProps) {
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [originalFileUrl, setFileUrl] = useState<string>();
 
+    // Sets SQS URL after file is uploaded
     useEffect(() => {
         async function createSqsQueue() {
             const result: CreateQueueResult = await props.createSQSQueue();
             setQueueUrl(result.QueueUrl);
             return result;
         }
+
+        if (uploadStatus && !sqsQueueUrl) {
+            createSqsQueue().then((result) => {
+                console.log(result)
+            });
+        }
+    }, [uploadStatus])
+
+    // Stores the URL of the created files and deletes the received message from the SQS queue.
+    useEffect(() => {
         async function setUploadedFileUrl() {
             const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson = JSON.parse(str);
             setFileUrl("https://" + bodyJson[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson[1].detail.object.key);
+            if (message.Messages) {
+                await props.deleteMessage(sqsQueueUrl, message.Messages[0].ReceiptHandle)
+            }
         }
-        if (uploadStatus && !sqsQueueUrl) {
-            createSqsQueue().then((result) => {console.log(result)});
-        }
+
         if (sqsQueueUrl && !originalFileUrl) {
-            setUploadedFileUrl().then((result) => {console.log(result)});
+            setUploadedFileUrl().then((result) => {
+                console.log(result)
+            });
         }
-    }, [uploadStatus, sqsQueueUrl]);
+    }, [sqsQueueUrl]);
 
     return (
         <div>

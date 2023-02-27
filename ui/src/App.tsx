@@ -3,10 +3,10 @@ import {v4 as uuidv4} from 'uuid';
 import "./stylesheets/styles.scss";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import {CreateQueueCommand, GetQueueUrlCommand, ReceiveMessageCommand} from "@aws-sdk/client-sqs";
+import {CreateQueueCommand, ReceiveMessageCommand, DeleteMessageCommand} from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
 
-export default class App extends React.Component<{}, { uuid: string, separatedStems: string[]}> {
+export default class App extends React.Component<{}, { uuid: string, separatedStems: string[] }> {
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -61,6 +61,20 @@ async function getMessage(queueURL: string) {
         const data = await sqsClient.send(new ReceiveMessageCommand(params));
         console.log("Success, ", data);
         return data; // For unit tests.
+    } catch (err) {
+        console.log("Error", err);
+    }
+}
+
+async function deleteMessage(queueURL: string, receiptHandle: string) {
+    const params = {
+        QueueUrl: queueURL,
+        ReceiptHandle: receiptHandle
+    }
+
+    try {
+        const data = await sqsClient.send(new DeleteMessageCommand(params));
+        console.log("Message deleted", data);
     } catch (err) {
         console.log("Error", err);
     }
