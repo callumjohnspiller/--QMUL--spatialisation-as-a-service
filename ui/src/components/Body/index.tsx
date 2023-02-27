@@ -14,14 +14,14 @@ function Body(props: BodyProps) {
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [originalFileUrl, setFileUrl] = useState<string>();
 
-    if (uploadStatus && !sqsQueueUrl) {
-        useEffect(() => {
+    useEffect(() => {
+        if (uploadStatus && !sqsQueueUrl) {
             setQueueUrl(props.createSQSQueue().QueueUrl);
             console.log(sqsQueueUrl)
             const s3Message = props.getMessage(sqsQueueUrl);
             setFileUrl("https://" + s3Message[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + s3Message[1].detail.object.key);
-        });
-    }
+        }
+    });
 
     return (
         <div>
