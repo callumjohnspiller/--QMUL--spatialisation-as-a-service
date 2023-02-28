@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import {CircularProgress} from '@mui/material';
+import {CircularProgress, Slider} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -16,6 +16,8 @@ function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [fileUrls, setFileUrls] = useState<string[]>();
+    const [fileLabels, setFileLabels] = useState<any>();
+    const [spatialParams, setSpatialParams] = useState<any>({});
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -49,6 +51,18 @@ function Body(props: BodyProps) {
             for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
                 arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
             }
+            setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
+
+            fileLabels.forEach((label: string) => {
+                let obj: any = {}
+                obj[label]["X"] = 50;
+                obj[label]["Y"] = 50;
+                obj[label]["Z"] = 50;
+                setSpatialParams(Object.assign(spatialParams, obj));
+            });
+            for (let label of fileLabels) {
+
+            }
             setFileUrls(arr);
             // Delete fetched message from queue
             if (message.Messages) {
@@ -62,6 +76,12 @@ function Body(props: BodyProps) {
             });
         }
     }, [sqsQueueUrl]);
+
+    const handleChange = (event: Event, newValue: number | number[], label: string, dimension: string) => {
+        let obj = spatialParams;
+        obj[label][dimension] = newValue;
+        setSpatialParams(obj);
+    }
 
     return (
         <div>
@@ -79,12 +99,36 @@ function Body(props: BodyProps) {
             <div>
                 {
                     (fileUrls)
-                    ? <ol>
-                            {fileUrls.map(url => (
-                                <AudioFilePlayer audioURL={url}/>
+                        ? <ol>
+                            {fileUrls.map((url, index) => (
+                                <div>
+                                    <p>{fileLabels[index]}</p>
+                                    <AudioFilePlayer audioURL={url}/>
+                                    <div>
+                                        <Slider defaultValue={50} aria-label={fileLabels[index] + "_X"}
+                                                value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
+                                            handleChange(e, newValue, fileLabels[index], "X")
+                                        }}/>
+                                        Set Value for X
+                                    </div>
+                                    <div>
+                                        <Slider defaultValue={50} aria-label={fileLabels[index] + "_Y"}
+                                                value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
+                                            handleChange(e, newValue, fileLabels[index], "Y")
+                                        }}/>
+                                        Set Value for Y
+                                    </div>
+                                    <div>
+                                        <Slider defaultValue={50} aria-label={fileLabels[index] + "_Y"}
+                                                value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
+                                            handleChange(e, newValue, fileLabels[index], "Z")
+                                        }}/>
+                                        Set Value for Z
+                                    </div>
+                                </div>
                             ))}
                         </ol>
-                    : "stems appear here"
+                        : "stems appear here"
                 }
             </div>
         </div>
