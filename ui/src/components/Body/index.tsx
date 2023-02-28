@@ -46,7 +46,7 @@ function Body(props: BodyProps) {
             const bodyJson: any = JSON.parse(str);
             // Create array of file paths
             let arr: string[] = [];
-            for (let path in bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
                 arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
             }
             setFileUrls(arr);
@@ -84,7 +84,7 @@ function Body(props: BodyProps) {
                                 <AudioFilePlayer audioURL={url}/>
                             ))}
                         </ol>
-                        : "stems appear here"
+                    : "stems appear here"
                 }
             </div>
         </div>
