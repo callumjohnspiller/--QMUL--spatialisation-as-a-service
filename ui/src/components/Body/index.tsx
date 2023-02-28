@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import { CircularProgress } from '@mui/material';
+import {CircularProgress} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -15,7 +15,7 @@ interface BodyProps {
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
-    const [originalFileUrl, setFileUrl] = useState<string>();
+    const [fileUrls, setFileUrls] = useState<string[]>();
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -37,20 +37,26 @@ function Body(props: BodyProps) {
         async function setUploadedFileUrl() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             // Wait for separation to occur
-            while(!message?.Messages) {
+            while (!message?.Messages) {
                 console.log("Retrying...")
                 message = await props.getMessage(sqsQueueUrl);
             }
-
+            // Parse json string from message
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
-            const bodyJson = JSON.parse(str);
-            setFileUrl("https://" + bodyJson[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson[1].detail.object.key);
+            const bodyJson: any = JSON.parse(str);
+            // Create array of file paths
+            let arr: string[] = [];
+            for (let path in bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
+            }
+            setFileUrls(arr);
+            // Delete fetched message from queue
             if (message.Messages) {
                 await props.deleteMessage(sqsQueueUrl, message.Messages[0].ReceiptHandle);
             }
         }
 
-        if (sqsQueueUrl && !originalFileUrl) {
+        if (sqsQueueUrl && !fileUrls) {
             setUploadedFileUrl().then((result) => {
                 console.log(result);
             });
@@ -65,16 +71,20 @@ function Body(props: BodyProps) {
             />
             <div>
                 {
-                    (uploadStatus && !originalFileUrl)
-                    ? <CircularProgress /> : null
+                    (uploadStatus && !fileUrls)
+                        ? <CircularProgress/> : null
                 }
             </div>
 
             <div>
                 {
-                    (originalFileUrl)
-                    ? <AudioFilePlayer audioURL={originalFileUrl}/>
-                    : "player goes here"
+                    (fileUrls)
+                    ? <ol>
+                            {fileUrls.map(url => (
+                                <AudioFilePlayer audioURL={url}/>
+                            ))}
+                        </ol>
+                        : "stems appear here"
                 }
             </div>
         </div>
