@@ -36,9 +36,12 @@ function Body(props: BodyProps) {
     useEffect(() => {
         async function setUploadedFileUrl() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
-            while (!message.Messages) {
+
+            while(message?.Messages) {
+                console.log("Retrying...")
                 message = await props.getMessage(sqsQueueUrl);
             }
+
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson = JSON.parse(str);
             setFileUrl("https://" + bodyJson[1].detail.bucket.name + ".s3.eu-west-2.amazonaws.com/" + bodyJson[1].detail.object.key);
