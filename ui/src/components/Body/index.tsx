@@ -36,8 +36,8 @@ function Body(props: BodyProps) {
     useEffect(() => {
         async function setUploadedFileUrl() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
-
-            while(message?.Messages) {
+            // Wait for separation to occur
+            while(!message?.Messages) {
                 console.log("Retrying...")
                 message = await props.getMessage(sqsQueueUrl);
             }
