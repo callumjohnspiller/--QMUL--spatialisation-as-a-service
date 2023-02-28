@@ -51,14 +51,14 @@ function Body(props: BodyProps) {
 
             // Set file labels and set up spatial params
             setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
-            let obj: any = {};
-            fileLabels.forEach((label: string) => {
+            for (let label of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                let obj: any = {};
                 obj[label]["X"] = 50;
                 obj[label]["Y"] = 50;
                 obj[label]["Z"] = 50;
                 console.log(obj);
                 setSpatialParams(Object.assign(spatialParams, obj));
-            });
+            }
 
             console.log(spatialParams)
 
