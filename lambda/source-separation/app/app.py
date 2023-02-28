@@ -55,4 +55,4 @@ def handler(event, context):
             Key=f"{key}/{path}",
         )
 
-    return {"output-bucket": output_bucket_name, "output-folder": key}
+    return {"output-bucket": output_bucket_name, "output-folder": key, "output-paths": file_paths}
