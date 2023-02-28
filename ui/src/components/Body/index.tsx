@@ -15,8 +15,8 @@ interface BodyProps {
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
-    const [fileUrls, setFileUrls] = useState<string[]>();
-    const [fileLabels, setFileLabels] = useState<any>();
+    const [fileUrls, setFileUrls] = useState<string[]>([]);
+    const [fileLabels, setFileLabels] = useState<string[]>([]);
     const [spatialParams, setSpatialParams] = useState<any>({});
 
     // Sets SQS URL after file is uploaded
@@ -38,21 +38,19 @@ function Body(props: BodyProps) {
     useEffect(() => {
         async function setUploadedFileUrl() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+
             // Wait for separation to occur
             while (!message?.Messages) {
                 console.log("Retrying...")
                 message = await props.getMessage(sqsQueueUrl);
             }
+
             // Parse json string from message
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson: any = JSON.parse(str);
-            // Create array of file paths
-            let arr: string[] = [];
-            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
-                arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
-            }
-            setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
 
+            // Set file labels and set up spatial params
+            setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
             fileLabels.forEach((label: string) => {
                 let obj: any = {}
                 obj[label]["X"] = 50;
@@ -60,10 +58,14 @@ function Body(props: BodyProps) {
                 obj[label]["Z"] = 50;
                 setSpatialParams(Object.assign(spatialParams, obj));
             });
-            for (let label of fileLabels) {
 
+            // Create array of file paths
+            let arr: string[] = [];
+            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
             }
             setFileUrls(arr);
+
             // Delete fetched message from queue
             if (message.Messages) {
                 await props.deleteMessage(sqsQueueUrl, message.Messages[0].ReceiptHandle);
