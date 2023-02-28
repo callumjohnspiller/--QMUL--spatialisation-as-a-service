@@ -59,6 +59,8 @@ function Body(props: BodyProps) {
                 setSpatialParams(Object.assign(spatialParams, obj));
             });
 
+            console.log(spatialParams)
+
             // Create array of file paths
             let arr: string[] = [];
             for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
