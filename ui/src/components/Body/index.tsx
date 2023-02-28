@@ -15,7 +15,7 @@ interface BodyProps {
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
-    const [fileUrls, setFileUrls] = useState<string[]>([]);
+    const [fileUrls, setFileUrls] = useState<string[]>();
     const [fileLabels, setFileLabels] = useState<string[]>([]);
     const [spatialParams, setSpatialParams] = useState<any>({});
 
