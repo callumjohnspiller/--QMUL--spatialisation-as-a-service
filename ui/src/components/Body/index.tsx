@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
+import { CircularProgress } from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -34,7 +35,7 @@ function Body(props: BodyProps) {
     // Stores the URL of the created files and deletes the received message from the SQS queue.
     useEffect(() => {
         async function setUploadedFileUrl() {
-            let message: ReceiveMessageResult = {};
+            let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             while (!message.Messages) {
                 message = await props.getMessage(sqsQueueUrl);
             }
@@ -60,7 +61,15 @@ function Body(props: BodyProps) {
                 setUploadStatus={() => setUploadStatus(true)}
             />
             <div>
-                {(originalFileUrl)
+                {
+                    (uploadStatus && !originalFileUrl)
+                    ? <CircularProgress /> : null
+                }
+            </div>
+
+            <div>
+                {
+                    (originalFileUrl)
                     ? <AudioFilePlayer audioURL={originalFileUrl}/>
                     : "player goes here"
                 }
