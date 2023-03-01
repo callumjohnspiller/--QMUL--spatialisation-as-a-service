@@ -57,7 +57,7 @@ function Body(props: BodyProps) {
                     [label]: {"X": 50, "Y": 50, "Z": 50}
                 });
             }
-            console.log(spatialParams);
+            console.log(JSON.stringify(spatialParams));
 
             // Create an array of file paths
             let arr: string[] = [];
