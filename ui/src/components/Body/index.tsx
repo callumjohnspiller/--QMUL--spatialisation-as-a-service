@@ -32,7 +32,7 @@ function Body(props: BodyProps) {
                 console.log(result)
             });
         }
-    }, [uploadStatus])
+    }, [uploadStatus, sqsQueueUrl])
 
     // Stores the URL of the created files and deletes the received message from the SQS queue.
     useEffect(() => {
@@ -52,9 +52,13 @@ function Body(props: BodyProps) {
             console.log(bodyJson);
             console.log(bodyJson.lambdaResult.Payload["output-paths"]);
 
-            for (let path of bodyJson.lambdaResult.Payload["output-paths"]) {
-                setFileLabels([...fileLabels, path])
+            let pathArr: string[] = [];
+
+            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                pathArr.push(path)
             }
+
+            setFileLabels(pathArr);
 
             console.log(fileLabels);
 
