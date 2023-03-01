@@ -54,7 +54,7 @@ function Body(props: BodyProps) {
 
             const updateFilePaths = async (pathArray: string[]) => {
                 let pathArr: string[] = [];
-                for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                for (let path of pathArray) {
                     pathArr.push(path);
                 }
                 setFileLabels(pathArr);
