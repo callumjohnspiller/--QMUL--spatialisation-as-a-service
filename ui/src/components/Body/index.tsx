@@ -16,7 +16,7 @@ function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [fileUrls, setFileUrls] = useState<string[]>();
-    const [fileLabels, setFileLabels] = useState<string[]>();
+    const [fileLabels, setFileLabels] = useState<string[]>([]);
     const [spatialParams, setSpatialParams] = useState<any>();
 
     // Sets SQS URL after file is uploaded
@@ -52,18 +52,20 @@ function Body(props: BodyProps) {
             console.log(bodyJson);
             console.log(bodyJson.lambdaResult.Payload["output-paths"]);
 
-            let pathArr: string[] = [];
-
-            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
-                pathArr.push(path)
+            const updateFilePaths = async (pathArray: string[]) => {
+                let pathArr: string[] = [];
+                for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                    pathArr.push(path);
+                }
+                setFileLabels(pathArr);
             }
 
-            setFileLabels(pathArr);
+            await updateFilePaths(bodyJson.lambdaResult.Payload["output-paths"])
 
             console.log(fileLabels);
 
             let spatialParamsSetup: any = {};
-            for (let label of fileLabels? fileLabels:[]) {
+            for (let label of fileLabels) {
                 spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
             }
 
@@ -78,6 +80,7 @@ function Body(props: BodyProps) {
                 arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
             }
             setFileUrls(arr);
+            console.log(fileUrls);
 
             // Delete fetched message from queue
             if (message.Messages) {
