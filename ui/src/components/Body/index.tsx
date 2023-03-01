@@ -17,7 +17,7 @@ function Body(props: BodyProps) {
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [fileUrls, setFileUrls] = useState<string[]>();
     const [fileLabels, setFileLabels] = useState<string[]>([]);
-    const [spatialParams, setSpatialParams] = useState<any>({});
+    const [spatialParams, setSpatialParams] = useState<any>();
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -55,6 +55,7 @@ function Body(props: BodyProps) {
             for (let label of fileLabels) {
                 spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
             }
+            console.log(JSON.stringify(spatialParamsSetup));
             setSpatialParams(spatialParamsSetup);
 
             console.log(JSON.stringify(spatialParams));
