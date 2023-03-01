@@ -46,8 +46,9 @@ function Body(props: BodyProps) {
             }
 
             // Parse json string from message
-            const str: string = (message?.Messages && message?.Messages[0]?.Body) ? message.Messages[0].Body : "";
+            const str: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson: any = JSON.parse(str);
+            console.log(bodyJson);
 
             // Set file labels and set up spatial params
             setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
