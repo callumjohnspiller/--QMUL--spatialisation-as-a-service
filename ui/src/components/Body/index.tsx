@@ -60,7 +60,7 @@ function Body(props: BodyProps) {
 
             console.log(spatialParams);
 
-            // Create array of file paths
+            // Create an array of file paths
             let arr: string[] = [];
             for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
                 arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
@@ -95,7 +95,7 @@ function Body(props: BodyProps) {
             <div>
                 {
                     (uploadStatus && !fileUrls)
-                        ? <CircularProgress/> : null
+                        ? <CircularProgress/> : <div/>
                 }
             </div>
 
@@ -103,35 +103,37 @@ function Body(props: BodyProps) {
                 {
                     (fileUrls)
                         ? <ol>
-                            {fileUrls.map((url, index) => (
+                            {fileUrls.map((url, index) => {
+                                console.log(url)
+                                return(
                                 <div>
                                     <p>{fileLabels[index]}</p>
                                     <AudioFilePlayer audioURL={url}/>
                                     <div>
                                         <Slider defaultValue={50} aria-label={fileLabels[index] + "_X"}
-                                                value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
+                                                value={spatialParams[(fileLabels[index])]["X"]} onChange={(e, newValue) => {
                                             handleChange(e, newValue, fileLabels[index], "X")
                                         }}/>
-                                        Set Value for X
+                                        Set Value for forward/back
                                     </div>
                                     <div>
                                         <Slider defaultValue={50} aria-label={fileLabels[index] + "_Y"}
                                                 value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
                                             handleChange(e, newValue, fileLabels[index], "Y")
                                         }}/>
-                                        Set Value for Y
+                                        Set Value for left/right
                                     </div>
                                     <div>
                                         <Slider defaultValue={50} aria-label={fileLabels[index] + "_Y"}
                                                 value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
                                             handleChange(e, newValue, fileLabels[index], "Z")
                                         }}/>
-                                        Set Value for Z
+                                        Set Value for up/down
                                     </div>
-                                </div>
-                            ))}
+                                </div>)
+                            })}
                         </ol>
-                        : "stems appear here"
+                        : <div>"stems appear here"</div>
                 }
             </div>
         </div>
