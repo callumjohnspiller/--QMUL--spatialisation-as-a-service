@@ -48,17 +48,16 @@ function Body(props: BodyProps) {
             // Parse json string from message
             const str: string = (message.Messages && message.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson: any = JSON.parse(str);
+            console.log(bodyJson);
 
             // Set file labels and set up spatial params
             setFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"]);
             for (let label of fileLabels) {
-                let obj: any = {};
-                obj[label] = {"X": 50, "Y": 50, "Z": 50};
-                console.log(obj);
-                setSpatialParams(Object.assign(spatialParams, obj));
+                setSpatialParams({
+                    ...spatialParams,
+                    [label]: {"X": 50, "Y": 50, "Z": 50}
+                });
             }
-
-            console.log(spatialParams);
 
             // Create an array of file paths
             let arr: string[] = [];
@@ -81,9 +80,13 @@ function Body(props: BodyProps) {
     }, [sqsQueueUrl]);
 
     const handleChange = (event: Event, newValue: number | number[], label: string, dimension: string) => {
-        let obj = spatialParams;
-        obj[label][dimension] = newValue;
-        setSpatialParams(obj);
+        setSpatialParams({
+            ...spatialParams,
+            [label]: {
+                ...spatialParams[label],
+                [dimension]: newValue
+            }
+        });
     }
 
     return (
@@ -104,14 +107,13 @@ function Body(props: BodyProps) {
                     (fileUrls)
                         ? <ol>
                             {fileUrls.map((url, index) => {
-                                console.log(url)
                                 return(
                                 <div>
                                     <p>{fileLabels[index]}</p>
                                     <AudioFilePlayer audioURL={url}/>
                                     <div>
                                         <Slider defaultValue={50} aria-label={fileLabels[index] + "_X"}
-                                                value={spatialParams[(fileLabels[index])]["X"]} onChange={(e, newValue) => {
+                                                value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
                                             handleChange(e, newValue, fileLabels[index], "X")
                                         }}/>
                                         Set Value for forward/back
