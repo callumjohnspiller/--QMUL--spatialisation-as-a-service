@@ -52,7 +52,7 @@ function Body(props: BodyProps) {
             console.log(bodyJson);
             console.log(bodyJson.lambdaResult.Payload["output-paths"]);
 
-            const updateFilePaths = async (pathArray: string[]) => {
+            const updateFileLabels = async (pathArray: string[]) => {
                 let pathArr: string[] = [];
                 for (let path of pathArray) {
                     pathArr.push(path);
@@ -60,26 +60,30 @@ function Body(props: BodyProps) {
                 setFileLabels(pathArr);
             }
 
-            await updateFilePaths(bodyJson.lambdaResult.Payload["output-paths"])
+            await updateFileLabels(bodyJson["lambdaResult"]["Payload"]["output-paths"])
 
             console.log(fileLabels);
 
-            let spatialParamsSetup: any = {};
-            for (let label of fileLabels) {
-                spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
+            const spatialParamsSetup = async () => {
+                let spatialParamsSetup: any = {};
+                for (let label of fileLabels) {
+                    spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
+                }
+                setSpatialParams(spatialParamsSetup);
             }
 
-            console.log(JSON.stringify(spatialParamsSetup));
-            setSpatialParams(spatialParamsSetup);
-
+            await spatialParamsSetup();
             console.log(JSON.stringify(spatialParams));
 
-            // Create an array of file paths
-            let arr: string[] = [];
-            for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
-                arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
+            const setupUrls = async () => {
+                let arr: string[] = [];
+                for (let path of bodyJson["lambdaResult"]["Payload"]["output-paths"]) {
+                    arr.push("https://" + bodyJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + bodyJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
+                }
+                setFileUrls(arr);
             }
-            setFileUrls(arr);
+
+            await setupUrls();
             console.log(fileUrls);
 
             // Delete fetched message from queue
