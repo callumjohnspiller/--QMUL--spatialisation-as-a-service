@@ -49,13 +49,15 @@ function Body(props: BodyProps) {
             const str: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
             const bodyJson: any = JSON.parse(str);
             console.log(bodyJson);
+            console.log(bodyJson.lambdaResult.Payload["output-paths"]);
 
             // Set file labels and set up spatial params
             const nextLabels = bodyJson.lambdaResult.Payload["output-paths"].map((c: string) => {
                 return c
-            })
+            });
             setFileLabels(nextLabels);
             console.log(fileLabels);
+
             let spatialParamsSetup: any = {};
             for (let label of fileLabels) {
                 spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
