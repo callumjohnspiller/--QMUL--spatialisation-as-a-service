@@ -54,7 +54,9 @@ function Body(props: BodyProps) {
 
     useEffect(() => {
         const str: string = (sqsMessage?.Messages && sqsMessage?.Messages[0].Body) ? sqsMessage.Messages[0].Body : "";
-        setSQSMessageJson(JSON.parse(str));
+        if (str != "") {
+            setSQSMessageJson(JSON.parse(str));
+        }
     }, [sqsMessage])
 
     useEffect(() => {
