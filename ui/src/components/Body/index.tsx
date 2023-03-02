@@ -152,7 +152,9 @@ function Body(props: BodyProps) {
                         </li>)
                     })}
                     <li>
-                        Submit parameters
+                        <p>
+                            Submit parameters
+                        </p>
                         <button>Press me to submit
                         </button>
                     </li>
