@@ -109,6 +109,10 @@ function Body(props: BodyProps) {
         console.log(spatialParams)
     }
 
+    const handleSubmit = (event: Event, spatialParams: any) => {
+
+    }
+
     return (<div>
             <Uploader
                 uuid={props.uuid}
@@ -121,7 +125,7 @@ function Body(props: BodyProps) {
             <div>
                 {(fileUrls) ? <ol>
                     {fileUrls.map((url, index) => {
-                        return (<div>
+                        return (<li>
                             <p>{fileLabels[index]}</p>
                             <AudioFilePlayer audioURL={url}/>
                             <div>
@@ -145,8 +149,13 @@ function Body(props: BodyProps) {
                                 }}/>
                                 Set Value for up/down
                             </div>
-                        </div>)
+                        </li>)
                     })}
+                    <li>
+                        Submit parameters
+                        <button>Press me to submit
+                        </button>
+                    </li>
                 </ol> : <div>"stems appear here"</div>}
             </div>
         </div>)
