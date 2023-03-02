@@ -28,7 +28,7 @@ function Body(props: BodyProps) {
             return result;
         }
 
-        if (!sqsQueueUrl) {
+        if (!sqsQueueUrl && uploadStatus) {
             createSqsQueue().then((result) => {
                 console.log(result)
             });
@@ -47,11 +47,14 @@ function Body(props: BodyProps) {
             }
         }
 
-        getMessageFromQueue().then(() => {
-            console.log("Message fetched from queue")
-        });
+        if (sqsQueueUrl) {
+            getMessageFromQueue().then(() => {
+                console.log("Message fetched from queue")
+            });
+        }
     }, [sqsQueueUrl])
 
+    // Converts message body into JSON
     useEffect(() => {
         const str: string = (sqsMessage?.Messages && sqsMessage?.Messages[0].Body) ? sqsMessage.Messages[0].Body : "";
         if (str != "") {
@@ -59,6 +62,7 @@ function Body(props: BodyProps) {
         }
     }, [sqsMessage])
 
+    // Creates file label array from JSON
     useEffect(() => {
         let pathArr: string[] = [];
         for (let path of sqsMessageJson["lambdaResult"]["Payload"]["output-paths"]) {
@@ -67,6 +71,7 @@ function Body(props: BodyProps) {
         setFileLabels(pathArr);
     }, [sqsMessageJson])
 
+    // Sets up spatial parameters object
     useEffect(() => {
         let spatialParamsSetup: any = {};
         for (let label of fileLabels) {
@@ -75,6 +80,7 @@ function Body(props: BodyProps) {
         setSpatialParams(spatialParamsSetup);
     }, [fileLabels])
 
+    // Sets the urls for the separated files
     useEffect(() => {
         let arr: string[] = [];
         for (let path of fileLabels) {
@@ -83,6 +89,7 @@ function Body(props: BodyProps) {
         setFileUrls(arr);
     }, [fileLabels])
 
+    // Handles changes in the spatial parameters UI
     const handleChange = (event: Event, newValue: number | number[], label: string, dimension: string) => {
         setSpatialParams({
             ...spatialParams, [label]: {
