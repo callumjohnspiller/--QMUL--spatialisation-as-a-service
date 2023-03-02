@@ -1,7 +1,7 @@
 import React from "react";
 import {Howl} from "howler";
 import {Stack} from "@mui/material";
-import sty from "./audioFilePlayer.module.scss";
+import sty from "./player.module.scss";
 
 interface AudioFilePlayerProps {
     audioURL: string
