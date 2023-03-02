@@ -56,37 +56,45 @@ function Body(props: BodyProps) {
 
     // Converts message body into JSON
     useEffect(() => {
-        const str: string = (sqsMessage?.Messages && sqsMessage?.Messages[0].Body) ? sqsMessage.Messages[0].Body : "";
-        if (str != "") {
-            setSQSMessageJson(JSON.parse(str));
+        if (sqsMessage) {
+            const str: string = (sqsMessage?.Messages && sqsMessage?.Messages[0].Body) ? sqsMessage.Messages[0].Body : "";
+            if (str != "") {
+                setSQSMessageJson(JSON.parse(str));
+            }
         }
     }, [sqsMessage])
 
     // Creates file label array from JSON
     useEffect(() => {
-        let pathArr: string[] = [];
-        for (let path of sqsMessageJson["lambdaResult"]["Payload"]["output-paths"]) {
-            pathArr.push(path);
+        if (sqsMessageJson) {
+            let pathArr: string[] = [];
+            for (let path of sqsMessageJson["lambdaResult"]["Payload"]["output-paths"]) {
+                pathArr.push(path);
+            }
+            setFileLabels(pathArr);
         }
-        setFileLabels(pathArr);
     }, [sqsMessageJson])
 
     // Sets up spatial parameters object
     useEffect(() => {
-        let spatialParamsSetup: any = {};
-        for (let label of fileLabels) {
-            spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
+        if (fileLabels.length > 0) {
+            let spatialParamsSetup: any = {};
+            for (let label of fileLabels) {
+                spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
+            }
+            setSpatialParams(spatialParamsSetup);
         }
-        setSpatialParams(spatialParamsSetup);
     }, [fileLabels])
 
     // Sets the urls for the separated files
     useEffect(() => {
-        let arr: string[] = [];
-        for (let path of fileLabels) {
-            arr.push("https://" + sqsMessageJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + sqsMessageJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
+        if (fileLabels.length > 0) {
+            let arr: string[] = [];
+            for (let path of fileLabels) {
+                arr.push("https://" + sqsMessageJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + sqsMessageJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
+            }
+            setFileUrls(arr);
         }
-        setFileUrls(arr);
     }, [fileLabels])
 
     // Handles changes in the spatial parameters UI
