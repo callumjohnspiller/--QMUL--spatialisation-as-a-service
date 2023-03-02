@@ -1,6 +1,7 @@
 import React from "react";
 import {Howl} from "howler";
 import {Stack} from "@mui/material";
+import {sty} from "./audioFilePlayer.module.scss";
 
 interface AudioFilePlayerProps {
     audioURL: string
@@ -23,7 +24,7 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     }
 
     return (
-        <Stack
+        <Stack className={sty.player}
             spacing={2}
             direction="column"
             justifyContent="center"
