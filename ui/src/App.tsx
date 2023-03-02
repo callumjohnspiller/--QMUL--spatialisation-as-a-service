@@ -60,6 +60,10 @@ async function getMessage(queueURL: string) {
     }
 }
 
+async function triggerRender(spatialParams: any) {
+
+}
+
 async function deleteMessage(queueURL: string, receiptHandle: string) {
     const params = {
         QueueUrl: queueURL, ReceiptHandle: receiptHandle

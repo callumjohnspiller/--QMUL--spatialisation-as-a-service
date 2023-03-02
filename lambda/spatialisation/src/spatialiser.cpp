@@ -26,13 +26,19 @@ int render() {
     bool hrtfLoaded = HRTF::CreateFromSofa(
             "../3dti_AudioToolkit/resources/HRTF/SOFA/3DTI_HRTF_IRC1008_512s_" + std::to_string(sampleRate) + "Hz.sofa",
             listener, specifiedDelays);
-    if (hrtfLoaded) { spdlog::get("console")->info("HRTF Loaded successfully"); }
+    if (hrtfLoaded) {
+        spdlog::get("console")->info("HRTF Loaded successfully");
+    } else {
+        spdlog::get("stderr")->error("Loading HRTF from SOFA file failed")
+    }
 
     bool ildLoaded = ILD::CreateFrom3dti_ILDNearFieldEffectTable(
             "../3dti_AudioToolkit/resources/ILD/NearFieldCompensation_ILD_" + std::to_string(sampleRate) + ".3dti-ild",
             listener);
     if (ildLoaded) {
         spdlog::get("console")->info("\"ILD Near Field Effect simulation file has been loaded successfully\"");
+    } else {
+        spdlog::get("stderr")->error("Loading ILD Near Field Effect simulation file failed")
     }
 
 //     Optional: change listener position (in case of head movement)

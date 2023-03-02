@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import {CircularProgress, Slider} from '@mui/material';
+import {CircularProgress, Slider, Button} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -109,8 +109,8 @@ function Body(props: BodyProps) {
         console.log(spatialParams)
     }
 
-    const handleSubmit = (event: Event, spatialParams: any) => {
-
+    const handleSubmit = (spatialParams: any) => {
+        // TODO callback to AWS Step function
     }
 
     return (<div>
@@ -155,8 +155,11 @@ function Body(props: BodyProps) {
                         <p>
                             Submit parameters
                         </p>
-                        <button>Press me to submit
-                        </button>
+                        <Button variant={"contained"} onClick={() => {
+                            handleSubmit(spatialParams)
+                        }}>
+                            Render 3D Audio
+                        </Button>
                     </li>
                 </ol> : <div>"stems appear here"</div>}
             </div>
