@@ -39,17 +39,19 @@ function Body(props: BodyProps) {
     // Fetches message from SQS Queue
     useEffect(() => {
         async function getMessageFromQueue() {
-            while (!sqsMessage?.Messages) {
-                setSQSMessage(await props.getMessage(sqsQueueUrl));
-                if (!sqsMessage?.Messages) {
-                    console.log("Still separating...");
-                }
+            let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+            // Wait for separation to occur
+            while (!message?.Messages) {
+                console.log("Retrying...")
+                message = await props.getMessage(sqsQueueUrl);
             }
+            return message;
         }
 
         if (sqsQueueUrl) {
-            getMessageFromQueue().then(() => {
-                console.log("Message fetched from queue")
+            getMessageFromQueue().then((message) => {
+                setSQSMessage(message);
+                console.log("Message fetched from queue");
             });
         }
     }, [sqsQueueUrl])
@@ -104,6 +106,7 @@ function Body(props: BodyProps) {
                 ...spatialParams[label], [dimension]: newValue
             }
         });
+        console.log(spatialParams)
     }
 
     return (<div>
