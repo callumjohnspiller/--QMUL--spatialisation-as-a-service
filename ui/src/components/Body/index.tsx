@@ -129,7 +129,7 @@ function Body(props: BodyProps) {
                             <p>{fileLabels[index]}</p>
                             <AudioFilePlayer audioURL={url}/>
                             <div>
-                                <Slider defaultValue={50} aria-label={fileLabels[index] + "_X"}
+                                <Slider size={'medium'} defaultValue={50} aria-label={fileLabels[index] + "_X"}
                                         value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
                                     handleChange(e, newValue, fileLabels[index], "X")
                                 }}/>
