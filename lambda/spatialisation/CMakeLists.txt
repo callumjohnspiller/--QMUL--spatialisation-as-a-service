@@ -19,6 +19,7 @@ file(GLOB_RECURSE SOURCES
         ../3dti_AudioToolkit/3dti_Toolkit/Common/*.cpp
         ../3dti_AudioToolkit/3dti_ResourceManager/HRTF/*.cpp
         ../3dti_AudioToolkit/3dti_ResourceManager/ILD/*.cpp
+        ../3dti_AudioToolkit/3dti_ResourceManager/BRIR/*.cpp
         )
 
 if (NOT TARGET spdlog)

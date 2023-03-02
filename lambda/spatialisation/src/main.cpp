@@ -17,7 +17,7 @@ int main() {
 
 //  Initialise AWS API with options
     SDKOptions options;
-    options.loggingOptions.logLevel = Utils::Logging::LogLevel::Info;
+    options.loggingOptions.logLevel = Utils::Logging::LogLevel::Trace;
     InitAPI(options);
 
 //    Configure client and invoke lambda handler

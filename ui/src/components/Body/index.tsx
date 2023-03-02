@@ -106,7 +106,6 @@ function Body(props: BodyProps) {
                 ...spatialParams[label], [dimension]: newValue
             }
         });
-        console.log(spatialParams)
     }
 
     const handleSubmit = (spatialParams: any) => {
