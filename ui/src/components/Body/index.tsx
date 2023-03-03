@@ -138,13 +138,13 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (!taskToken && fileUrls) {
+        if (!taskToken && fileUrls && stemTaskToken) {
             getTaskTokenMessage().then((message) => {
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [fileUrls])
+    }, [fileUrls, stemTaskToken])
 
     useEffect(() => {
         async function getTokenMessage() {
@@ -205,7 +205,7 @@ function Body(props: BodyProps) {
 
     return (<div>
             <div>
-                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount} setStemCount={() => setStemCount('')}/>
+                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount} setStemCount={setStemCount}/>
                     : <div></div>}
             </div>
 
