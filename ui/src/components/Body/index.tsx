@@ -22,6 +22,9 @@ function Body(props: BodyProps) {
     const [fileUrls, setFileUrls] = useState<string[]>();
     const [taskToken, setTaskToken] = useState<string>();
     const [spatialParams, setSpatialParams] = useState<any>();
+    const [submitted, setSubmitted] = useState<boolean>(false);
+    const [confirmation, setConfirmation] = useState<ReceiveMessageResult>();
+    const [outputUrl, setOutputUrl] = useState<string>();
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -39,13 +42,35 @@ function Body(props: BodyProps) {
 
     }, [uploadStatus]);
 
+    useEffect(()=> {
+        async function getConfirmation() {
+            let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+            while (!message?.Messages) {
+                console.log("Retrying...");
+                message = await props.getMessage(sqsQueueUrl);
+            }
+            return message;
+        }
+
+        if (submitted) {
+            getConfirmation().then((message) => {
+                setConfirmation(message);
+                console.log("Message fetched from queue");
+            }).then(() => {
+                const str: string = (confirmation?.Messages && confirmation?.Messages[0].Body) ? confirmation.Messages[0].Body : "";
+                let json: any = JSON.parse(str);
+                setOutputUrl("https://saas-output.s3.eu-west-2.amazonaws.com/" + json["lambdaResult"]["Payload"]["output-folder"] + "_result.wav");
+            });
+        }
+    }, [submitted])
+
     // Fetches message from SQS Queue
     useEffect(() => {
         async function getMessageFromQueue() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             // Wait for separation to occur
             while (!message?.Messages) {
-                console.log("Retrying...")
+                console.log("Retrying...");
                 message = await props.getMessage(sqsQueueUrl);
             }
             return message;
@@ -113,12 +138,15 @@ function Body(props: BodyProps) {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const bodyString: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
             setTaskToken(JSON.parse(bodyString).TaskToken);
-            return;
+            return message;
         }
 
         if (!taskToken && fileUrls) {
-            getTaskTokenMessage().then(() => {
+            getTaskTokenMessage().then((message) => {
                 console.log("Task token fetched");
+                const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
+                props.deleteMessage(sqsQueueUrl, receiptHandle);
+                console.log("Message cleared from queue");
             });
         }
     }, [fileUrls])
@@ -135,8 +163,7 @@ function Body(props: BodyProps) {
     const handleSubmit = () => {
         async function sendSpatialParams() {
             const input: any = {
-                output: JSON.stringify(spatialParams),
-                taskToken: taskToken
+                output: JSON.stringify(spatialParams), taskToken: taskToken
             }
             const command = new SendTaskSuccessCommand(input);
             return await sfnClient.send(command);
@@ -144,15 +171,13 @@ function Body(props: BodyProps) {
 
         sendSpatialParams().then((response) => {
             console.log(response);
+            setSubmitted(true);
         });
     }
 
-    return (
-        <div>
+    return (<div>
             <div>
-                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)}/>
-                    : ""
-                }
+                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)}/> : ""}
             </div>
 
             <div>
@@ -160,7 +185,11 @@ function Body(props: BodyProps) {
             </div>
 
             <div>
-                {(fileUrls) ? <ol>
+                {(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
+            </div>
+
+            <div>
+                {(fileUrls && !submitted) ? <ol>
                     {fileUrls.map((url, index) => {
                         return (<li>
                             <p>{fileLabels[index]}</p>
@@ -197,13 +226,14 @@ function Body(props: BodyProps) {
                         }}>
                             Render 3D Audio
                         </Button>
-                    </li> : <li>"Waiting for task token"</li>
-                    }
-                </ol> : <div>"stems appear here"</div>
-                }
+                    </li> : <li>"Waiting for task token"</li>}
+                </ol> : <div>stems appear here</div>}
             </div>
-        </div>
-    )
+
+            <div>
+                {(outputUrl) ? <AudioFilePlayer audioURL={outputUrl}/> : <div></div>}
+            </div>
+        </div>)
 }
 
 export default Body;
