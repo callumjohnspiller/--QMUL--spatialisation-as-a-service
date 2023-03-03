@@ -57,12 +57,16 @@ function Body(props: BodyProps) {
             getConfirmation().then((message) => {
                 setConfirmation(message);
                 console.log("Message fetched from queue");
+                console.log(message);
             }).then(() => {
                 const str: string = (confirmation?.Messages && confirmation?.Messages[0].Body) ? confirmation.Messages[0].Body : "";
+                console.log(str);
                 return str;
             }).then((str) => {
                 let json: any = JSON.parse(str);
+                console.log(json);
                 setOutputUrl("https://saas-output.s3.eu-west-2.amazonaws.com/" + json["lambdaResult"]["Payload"]["output-folder"] + "_result.wav");
+                console.log(outputUrl)
             });
         }
     }, [submitted])
