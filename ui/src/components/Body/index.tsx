@@ -167,7 +167,7 @@ function Body(props: BodyProps) {
 
         async function sendStemParams() {
             const input: any = {
-                output: stemCount,
+                output: stemCount.toString(),
                 taskToken: stemTaskToken
             }
             const command = new SendTaskSuccessCommand(input);
