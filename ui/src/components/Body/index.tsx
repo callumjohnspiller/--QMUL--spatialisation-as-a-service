@@ -58,8 +58,9 @@ function Body(props: BodyProps) {
                 setConfirmation(message);
                 console.log("Message fetched from queue");
                 console.log(message);
-            }).then(() => {
-                const str: string = (confirmation?.Messages && confirmation?.Messages[0].Body) ? confirmation.Messages[0].Body : "";
+                return message;
+            }).then((message) => {
+                const str: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
                 console.log(str);
                 return str;
             }).then((str) => {
