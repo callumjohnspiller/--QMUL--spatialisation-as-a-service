@@ -121,7 +121,7 @@ function Body(props: BodyProps) {
 
     // Sets the urls for the separated files
     useEffect(() => {
-        if (fileLabels.length > 0 && !submitted) {
+        if (fileLabels.length > 0 && !fileUrls) {
             let arr: string[] = [];
             for (let path of fileLabels) {
                 arr.push("https://" + sqsMessageJson["lambdaResult"]["Payload"]["output-bucket"] + ".s3.eu-west-2.amazonaws.com/" + sqsMessageJson["lambdaResult"]["Payload"]["output-folder"] + "/" + path)
