@@ -31,10 +31,13 @@ invocation_response lambda_handler(invocation_request const &req, Client::Client
     }
 
     auto payloadView = json.View();
-    Aws::String bucket = payloadView.GetString("s3bucket");
-    Aws::String folder = payloadView.GetString("s3folder");
-    auto keys = payloadView.GetArray("s3keys");
-    auto spatialParams = payloadView.GetObject("spatialParams");
+    auto lambdaResult = payloadView.GetObject("lambdaResult");
+    auto payload = lambdaResult.GetObject("Payload");
+    Aws::String bucket = payload.GetString("output-bucket");
+    Aws::String folder = payload.GetString("output-folder");
+    auto keys = payload.GetArray("output-paths");
+    auto params = payloadView.GetObject("params");
+    auto spatialParams = params.GetObject("spatialParams");
 
     spdlog::get("console")->info("Establishing S3 Client...");
     auto s3_client = MakeShared<S3::S3Client>("S3Client", clientConfig);

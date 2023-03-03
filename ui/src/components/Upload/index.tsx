@@ -10,10 +10,21 @@ interface UploaderProps {
 
 function Uploader(props: UploaderProps) {
     const [file, setFile] = useState<File>();
+    const [validFile, setValidFile] = useState<boolean>(true);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            setFile(event.target.files[0]);
+            switch (event.target.files[0].type) {
+                case 'audio/wav':
+                    setFile(event.target.files[0]);
+                    break;
+                case 'audio/mpeg':
+                    setFile(event.target.files[0]);
+                    break;
+                default:
+                    setValidFile(false);
+            }
+
         }
     };
 
@@ -40,6 +51,9 @@ function Uploader(props: UploaderProps) {
     return (
         <div className={sty.upload}>
             <input type="file" onChange={handleFileChange}/>
+            {
+                (!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>
+            }
             <div>{file && `${file.name} - ${file.type}`}</div>
             <button onClick={handleUploadClick}>Upload</button>
         </div>
