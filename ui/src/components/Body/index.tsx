@@ -49,6 +49,7 @@ function Body(props: BodyProps) {
                 console.log("Retrying...");
                 message = await props.getMessage(sqsQueueUrl);
             }
+            console.log("confirmed");
             return message;
         }
 
@@ -58,6 +59,8 @@ function Body(props: BodyProps) {
                 console.log("Message fetched from queue");
             }).then(() => {
                 const str: string = (confirmation?.Messages && confirmation?.Messages[0].Body) ? confirmation.Messages[0].Body : "";
+                return str;
+            }).then((str) => {
                 let json: any = JSON.parse(str);
                 setOutputUrl("https://saas-output.s3.eu-west-2.amazonaws.com/" + json["lambdaResult"]["Payload"]["output-folder"] + "_result.wav");
             });
