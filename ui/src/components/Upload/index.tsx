@@ -2,10 +2,13 @@ import React, {ChangeEvent, useState} from 'react';
 import sty from "./upload.module.scss";
 import {PutObjectCommand} from "@aws-sdk/client-s3";
 import {s3Client} from "../../libs/s3Client";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 
 interface UploaderProps {
     uuid: string,
-    setUploadStatus: Function
+    setUploadStatus: Function,
+    stemCount: string | number,
+    setStemCount: Function
 }
 
 function Uploader(props: UploaderProps) {
@@ -27,6 +30,10 @@ function Uploader(props: UploaderProps) {
 
         }
     };
+
+    const handleStemCountChange = (event: SelectChangeEvent<typeof props.stemCount>) => {
+        props.setStemCount(event.target.value);
+    }
 
     const handleUploadClick = async () => {
         if (!file) {
@@ -55,6 +62,25 @@ function Uploader(props: UploaderProps) {
                 (!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>
             }
             <div>{file && `${file.name} - ${file.type}`}</div>
+            {
+                (validFile) ? <FormControl>
+                    How many parts do you want this file separated into?
+                        <InputLabel id="stem-count-select-label">Number of Stems</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={props.stemCount}
+                            autoWidth
+                            label="Number of Stems"
+                            onChange={handleStemCountChange}
+                        >
+                            <MenuItem value={2}>Two</MenuItem>
+                            <MenuItem value={4}>Four</MenuItem>
+                            <MenuItem value={5}>Five</MenuItem>
+                        </Select>
+                </FormControl>
+                    : <div></div>
+            }
             <button onClick={handleUploadClick}>Upload</button>
         </div>
     );

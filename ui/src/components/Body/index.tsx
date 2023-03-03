@@ -5,6 +5,7 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Slider} from '@mui/material';
+import {isNumberObject} from "util/types";
 
 interface BodyProps {
     uuid: string,
@@ -15,15 +16,16 @@ interface BodyProps {
 
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
+    const [stemCount, setStemCount] = useState<string | number>('');
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [sqsMessage, setSQSMessage] = useState<ReceiveMessageResult>();
     const [sqsMessageJson, setSQSMessageJson] = useState<any>();
     const [fileLabels, setFileLabels] = useState<string[]>([]);
     const [fileUrls, setFileUrls] = useState<string[]>();
     const [taskToken, setTaskToken] = useState<string>();
+    const [stemTaskToken, setStemTaskToken] = useState<string>();
     const [spatialParams, setSpatialParams] = useState<any>();
     const [submitted, setSubmitted] = useState<boolean>(false);
-    const [confirmation, setConfirmation] = useState<ReceiveMessageResult>();
     const [outputUrl, setOutputUrl] = useState<string>();
 
     // Sets SQS URL after file is uploaded
@@ -36,7 +38,6 @@ function Body(props: BodyProps) {
 
         if (!sqsQueueUrl && uploadStatus) {
             createSqsQueue().then((result) => {
-                console.log(result)
             });
         }
 
@@ -46,28 +47,20 @@ function Body(props: BodyProps) {
         async function getConfirmation() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             while (!message?.Messages) {
-                console.log("Retrying...");
                 message = await props.getMessage(sqsQueueUrl);
             }
-            console.log("confirmed");
             return message;
         }
 
         if (submitted) {
             getConfirmation().then((message) => {
-                setConfirmation(message);
-                console.log("Message fetched from queue");
-                console.log(message);
                 return message;
             }).then((message) => {
                 const str: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
-                console.log(str);
                 return str;
             }).then((str) => {
                 let json: any = JSON.parse(str);
-                console.log(json);
                 setOutputUrl("https://saas-output.s3.eu-west-2.amazonaws.com/" + json["lambdaResult"]["Payload"]["output-folder"] + "_result.wav");
-                console.log(outputUrl)
             });
         }
     }, [submitted])
@@ -78,7 +71,6 @@ function Body(props: BodyProps) {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             // Wait for separation to occur
             while (!message?.Messages) {
-                console.log("Retrying...");
                 message = await props.getMessage(sqsQueueUrl);
             }
             return message;
@@ -87,12 +79,10 @@ function Body(props: BodyProps) {
         if (sqsQueueUrl) {
             getMessageFromQueue().then((message) => {
                 setSQSMessage(message);
-                console.log("Message fetched from queue");
                 return message;
             }).then((message) => {
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
-                console.log("Message cleared from queue");
             });
         }
     }, [sqsQueueUrl])
@@ -151,13 +141,45 @@ function Body(props: BodyProps) {
 
         if (!taskToken && fileUrls) {
             getTaskTokenMessage().then((message) => {
-                console.log("Task token fetched");
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
-                console.log("Message cleared from queue");
             });
         }
     }, [fileUrls])
+
+    useEffect(() => {
+        async function getTokenMessage() {
+            let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+            const bodyString: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
+            setStemTaskToken(JSON.parse(bodyString).TaskToken);
+            return message;
+        }
+
+        if (isNumberObject(stemCount) && uploadStatus && !stemTaskToken) {
+            getTokenMessage().then((message) => {
+                const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
+                props.deleteMessage(sqsQueueUrl, receiptHandle);
+            });
+        }
+
+    }, [stemCount])
+
+    useEffect(() => {
+
+        async function sendStemParams() {
+            const input: any = {
+                output: stemCount,
+                taskToken: stemTaskToken
+            }
+            const command = new SendTaskSuccessCommand(input);
+            return await sfnClient.send(command);
+        }
+
+        if(stemTaskToken) {
+            sendStemParams().then();
+        }
+
+    }, [stemTaskToken])
 
     // Handles changes in the spatial parameters UI
     const handleChange = (event: Event, newValue: number | number[], label: string, dimension: string) => {
@@ -178,14 +200,14 @@ function Body(props: BodyProps) {
         }
 
         sendSpatialParams().then((response) => {
-            console.log(response);
             setSubmitted(true);
         });
     }
 
     return (<div>
             <div>
-                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)}/> : ""}
+                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount} setStemCount={() => setStemCount('')}/>
+                    : <div></div>}
             </div>
 
             <div>

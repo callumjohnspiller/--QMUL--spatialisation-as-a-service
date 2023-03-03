@@ -35,10 +35,9 @@ async function createSQSQueue(uuid: string) {
 
     try {
         const data = await sqsClient.send(new CreateQueueCommand(params));
-        console.log("SQS Queue Created");
         return data;
     } catch (err) {
-        console.log("Error creating SQS Queue", err);
+
     }
 }
 
@@ -55,7 +54,6 @@ async function getMessage(queueURL: string) {
         const data = await sqsClient.send(new ReceiveMessageCommand(params));
         return data; // For unit tests.
     } catch (err) {
-        console.log("Error fetching message from SQS queue", err);
     }
 }
 
@@ -66,8 +64,6 @@ async function deleteMessage(queueURL: string, receiptHandle: string) {
 
     try {
         const data = await sqsClient.send(new DeleteMessageCommand(params));
-        console.log("Message deleted from queue", data);
     } catch (err) {
-        console.log("Error deleting message from queue", err);
     }
 }
