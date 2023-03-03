@@ -75,7 +75,7 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (sqsQueueUrl) {
+        if (sqsQueueUrl && stemTaskToken) {
             getMessageFromQueue().then((message) => {
                 setSQSMessage(message);
                 return message;
@@ -84,7 +84,7 @@ function Body(props: BodyProps) {
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [sqsQueueUrl])
+    }, [sqsQueueUrl, stemTaskToken])
 
     // Converts message body into JSON
     useEffect(() => {
@@ -98,14 +98,14 @@ function Body(props: BodyProps) {
 
     // Creates file label array from JSON
     useEffect(() => {
-        if (sqsMessageJson) {
+        if (sqsMessageJson && stemTaskToken) {
             let pathArr: string[] = [];
             for (let path of sqsMessageJson["lambdaResult"]["Payload"]["output-paths"]) {
                 pathArr.push(path);
             }
             setFileLabels(pathArr);
         }
-    }, [sqsMessageJson])
+    }, [sqsMessageJson, stemTaskToken])
 
     // Sets up spatial parameters object
     useEffect(() => {
