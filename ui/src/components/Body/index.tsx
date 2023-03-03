@@ -110,7 +110,6 @@ function Body(props: BodyProps) {
 
     // Fetches task id from state machine
     useEffect(()=> {
-
         async function getTaskTokenMessage() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const bodyString: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
@@ -118,7 +117,8 @@ function Body(props: BodyProps) {
             return;
         }
 
-        if (!taskToken) {
+        if (!taskToken && fileUrls) {
+            console.log("Fetching early");
             getTaskTokenMessage().then(() => {
                 console.log("Task token fetched");
             });

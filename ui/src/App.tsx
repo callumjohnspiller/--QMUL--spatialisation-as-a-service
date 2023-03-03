@@ -43,7 +43,6 @@ async function createSQSQueue(uuid: string) {
 }
 
 async function getMessage(queueURL: string) {
-
     const params = {
         AttributeNames: ["SentTimestamp"],
         MaxNumberOfMessages: 1,
@@ -58,10 +57,6 @@ async function getMessage(queueURL: string) {
     } catch (err) {
         console.log("Error fetching message from SQS queue", err);
     }
-}
-
-async function triggerRender(spatialParams: any) {
-
 }
 
 async function deleteMessage(queueURL: string, receiptHandle: string) {
