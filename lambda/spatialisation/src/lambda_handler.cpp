@@ -67,7 +67,8 @@ invocation_response lambda_handler(invocation_request const &req, Client::Client
         spdlog::get("console")->info("Rendering complete");
     }
 
-    auto uploadHandle = transfer_manager->UploadFile("tmp/binaural.wav", "saas-output", "result.wav", "wav",
+    Aws::String fileName = folder + Aws::String("_result.wav");
+    auto uploadHandle = transfer_manager->UploadFile("tmp/binaural.wav", "saas-output", fileName, "wav",
                                                      Aws::Map<Aws::String, Aws::String>());
     if (result == 0) {
         spdlog::get("console")->info("Uploading file to S3");

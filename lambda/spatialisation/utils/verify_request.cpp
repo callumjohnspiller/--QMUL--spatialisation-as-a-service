@@ -17,8 +17,7 @@ bool verifyRequest(JsonValue &json) {
 
     auto payloadView = json.View();
 
-    if (!payloadView.ValueExists("s3bucket") || !payloadView.ValueExists("s3keys") ||
-        !payloadView.GetObject("s3bucket").IsString()) {
+    if (!payloadView.ValueExists("lambdaResult") || !payloadView.ValueExists("params")) {
         spdlog::get("err_logger")->error("JSON request has invalid values");
         return false;
     }
