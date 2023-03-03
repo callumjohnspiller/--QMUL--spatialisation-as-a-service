@@ -134,7 +134,7 @@ function Body(props: BodyProps) {
 
     const handleSubmit = () => {
         async function sendSpatialParams() {
-            let outputJson: any = JSON.parse(JSON.stringify(spatialParams)); // Escape strings so AWS can handle it
+            let outputJson: any = JSON.parse(JSON.stringify(spatialParams).replace(/'"'/g, '\\\"')); // Escape strings so AWS can handle it
             const input: any = {
                 output: outputJson,
                 taskToken: taskToken
