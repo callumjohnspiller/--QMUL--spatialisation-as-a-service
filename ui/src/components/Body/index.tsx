@@ -5,7 +5,6 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Slider} from '@mui/material';
-import {isNumberObject} from "util/types";
 
 interface BodyProps {
     uuid: string,
@@ -155,7 +154,7 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (isNumberObject(stemCount) && uploadStatus && !stemTaskToken) {
+        if (typeof stemCount == 'number' && uploadStatus && !stemTaskToken) {
             getTokenMessage().then((message) => {
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
