@@ -84,7 +84,7 @@ function Body(props: BodyProps) {
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [sqsQueueUrl, stemTaskToken])
+    }, [])
 
     // Converts message body into JSON
     useEffect(() => {
@@ -94,7 +94,7 @@ function Body(props: BodyProps) {
                 setSQSMessageJson(JSON.parse(str));
             }
         }
-    }, [sqsMessage])
+    }, [])
 
     // Creates file label array from JSON
     useEffect(() => {
@@ -105,7 +105,7 @@ function Body(props: BodyProps) {
             }
             setFileLabels(pathArr);
         }
-    }, [sqsMessageJson, stemTaskToken])
+    }, [])
 
     // Sets up spatial parameters object
     useEffect(() => {
@@ -116,7 +116,7 @@ function Body(props: BodyProps) {
             }
             setSpatialParams(spatialParamsSetup);
         }
-    }, [fileLabels])
+    }, [])
 
     // Sets the urls for the separated files
     useEffect(() => {
@@ -127,7 +127,7 @@ function Body(props: BodyProps) {
             }
             setFileUrls(arr);
         }
-    }, [fileLabels])
+    }, [])
 
     // Fetches task id from state machine
     useEffect(() => {
@@ -144,7 +144,7 @@ function Body(props: BodyProps) {
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [fileUrls, stemTaskToken])
+    }, [])
 
     useEffect(() => {
         async function getTokenMessage() {
@@ -154,14 +154,14 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (typeof stemCount == 'number' && uploadStatus && !stemTaskToken) {
+        if (typeof stemCount == 'number' && !stemTaskToken && sqsQueueUrl) {
             getTokenMessage().then((message) => {
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
 
-    }, [stemCount])
+    }, [sqsQueueUrl])
 
     useEffect(() => {
 
