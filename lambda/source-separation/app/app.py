@@ -26,11 +26,11 @@ def handler(event, context):
                      Key=key, Filename=local_filename)
 
     if 'stem-count' in event.keys():
-        if event['stem-count'] == 2:
+        if event['stem-count']['val'] == 2:
             separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
-        elif event['stem-count'] == 4:
+        elif event['stem-count']['val'] == 4:
             separator = Separator('spleeter:4stems', multiprocess=False, stft_backend='tensorflow')
-        elif event['stem-count'] == 5:
+        elif event['stem-count']['val'] == 5:
             separator = Separator('spleeter:5stems', multiprocess=False, stft_backend='tensorflow')
         else:
             separator = Separator('spleeter:2stems', multiprocess=False, stft_backend='tensorflow')
