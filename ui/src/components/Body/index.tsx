@@ -16,6 +16,7 @@ interface BodyProps {
 function Body(props: BodyProps) {
     const [uploadStatus, setUploadStatus] = useState<boolean>(false);
     const [stemCount, setStemCount] = useState<string | number>('');
+    const [stemsSubmitted, setStemsSubmitted] = useState<boolean>(false);
     const [sqsQueueUrl, setQueueUrl] = useState<string>();
     const [sqsMessage, setSQSMessage] = useState<ReceiveMessageResult>();
     const [sqsMessageJson, setSQSMessageJson] = useState<any>();
@@ -75,7 +76,7 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (sqsQueueUrl && stemTaskToken) {
+        if (sqsQueueUrl && stemsSubmitted) {
             getMessageFromQueue().then((message) => {
                 setSQSMessage(message);
                 return message;
@@ -84,7 +85,7 @@ function Body(props: BodyProps) {
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [])
+    }, [stemsSubmitted])
 
     // Converts message body into JSON
     useEffect(() => {
@@ -94,18 +95,18 @@ function Body(props: BodyProps) {
                 setSQSMessageJson(JSON.parse(str));
             }
         }
-    }, [])
+    }, [sqsMessage])
 
     // Creates file label array from JSON
     useEffect(() => {
-        if (sqsMessageJson && stemTaskToken) {
+        if (sqsMessageJson) {
             let pathArr: string[] = [];
             for (let path of sqsMessageJson["lambdaResult"]["Payload"]["output-paths"]) {
                 pathArr.push(path);
             }
             setFileLabels(pathArr);
         }
-    }, [])
+    }, [sqsMessageJson])
 
     // Sets up spatial parameters object
     useEffect(() => {
@@ -116,7 +117,7 @@ function Body(props: BodyProps) {
             }
             setSpatialParams(spatialParamsSetup);
         }
-    }, [])
+    }, [fileLabels])
 
     // Sets the urls for the separated files
     useEffect(() => {
@@ -127,7 +128,7 @@ function Body(props: BodyProps) {
             }
             setFileUrls(arr);
         }
-    }, [])
+    }, [fileLabels])
 
     // Fetches task id from state machine
     useEffect(() => {
@@ -138,13 +139,13 @@ function Body(props: BodyProps) {
             return message;
         }
 
-        if (!taskToken && fileUrls && stemTaskToken) {
+        if (!taskToken && fileUrls) {
             getTaskTokenMessage().then((message) => {
                 const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
                 props.deleteMessage(sqsQueueUrl, receiptHandle);
             });
         }
-    }, [])
+    }, [fileUrls])
 
     useEffect(() => {
         async function getTokenMessage() {
@@ -175,7 +176,9 @@ function Body(props: BodyProps) {
         }
 
         if(stemTaskToken) {
-            sendStemParams().then();
+            sendStemParams().then(() => {
+                setStemsSubmitted(true);
+            });
         }
 
     }, [stemTaskToken])
