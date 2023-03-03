@@ -4,8 +4,7 @@ import AudioFilePlayer from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import {CircularProgress, Slider, Button} from '@mui/material';
-import upload from "../Upload";
+import {Button, CircularProgress, Slider} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -109,7 +108,7 @@ function Body(props: BodyProps) {
     }, [fileLabels])
 
     // Fetches task id from state machine
-    useEffect(()=> {
+    useEffect(() => {
         async function getTaskTokenMessage() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             const bodyString: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
@@ -118,7 +117,6 @@ function Body(props: BodyProps) {
         }
 
         if (!taskToken && fileUrls) {
-            console.log("Fetching early");
             getTaskTokenMessage().then(() => {
                 console.log("Task token fetched");
             });
@@ -136,13 +134,15 @@ function Body(props: BodyProps) {
 
     const handleSubmit = () => {
         async function sendSpatialParams() {
+            let outputJson: any = JSON.parse(JSON.stringify(spatialParams)); // Escape strings so AWS can handle it
             const input: any = {
-                output: spatialParams,
+                output: outputJson,
                 taskToken: taskToken
             }
             const command = new SendTaskSuccessCommand(input);
             return await sfnClient.send(command);
         }
+
         sendSpatialParams().then((response) => {
             console.log(response);
         });
