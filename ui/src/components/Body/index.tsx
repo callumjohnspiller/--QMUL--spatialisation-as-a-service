@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
+import {sfnClient} from "../../libs/stepFunctionsClient";
+import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {CircularProgress, Slider, Button} from '@mui/material';
+import upload from "../Upload";
 
 interface BodyProps {
     uuid: string,
@@ -18,6 +21,7 @@ function Body(props: BodyProps) {
     const [sqsMessageJson, setSQSMessageJson] = useState<any>();
     const [fileLabels, setFileLabels] = useState<string[]>([]);
     const [fileUrls, setFileUrls] = useState<string[]>();
+    const [taskToken, setTaskToken] = useState<string>();
     const [spatialParams, setSpatialParams] = useState<any>();
 
     // Sets SQS URL after file is uploaded
@@ -52,6 +56,11 @@ function Body(props: BodyProps) {
             getMessageFromQueue().then((message) => {
                 setSQSMessage(message);
                 console.log("Message fetched from queue");
+                return message;
+            }).then((message) => {
+                const receiptHandle: string = (message?.Messages && message?.Messages[0].ReceiptHandle) ? message.Messages[0].ReceiptHandle : "";
+                props.deleteMessage(sqsQueueUrl, receiptHandle);
+                console.log("Message cleared from queue");
             });
         }
     }, [sqsQueueUrl])
@@ -99,6 +108,23 @@ function Body(props: BodyProps) {
         }
     }, [fileLabels])
 
+    // Fetches task id from state machine
+    useEffect(()=> {
+
+        async function getTaskTokenMessage() {
+            let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
+            const bodyString: string = (message?.Messages && message?.Messages[0].Body) ? message.Messages[0].Body : "";
+            setTaskToken(JSON.parse(bodyString).TaskToken);
+            return;
+        }
+
+        if (!taskToken) {
+            getTaskTokenMessage().then(() => {
+                console.log("Task token fetched");
+            });
+        }
+    }, [fileUrls])
+
     // Handles changes in the spatial parameters UI
     const handleChange = (event: Event, newValue: number | number[], label: string, dimension: string) => {
         setSpatialParams({
@@ -108,15 +134,28 @@ function Body(props: BodyProps) {
         });
     }
 
-    const handleSubmit = (spatialParams: any) => {
-        // TODO callback to AWS Step function
+    const handleSubmit = () => {
+        async function sendSpatialParams() {
+            const input: any = {
+                output: spatialParams,
+                taskToken: taskToken
+            }
+            const command = new SendTaskSuccessCommand(input);
+            return await sfnClient.send(command);
+        }
+        sendSpatialParams().then((response) => {
+            console.log(response);
+        });
     }
 
-    return (<div>
-            <Uploader
-                uuid={props.uuid}
-                setUploadStatus={() => setUploadStatus(true)}
-            />
+    return (
+        <div>
+            <div>
+                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)}/>
+                    : ""
+                }
+            </div>
+
             <div>
                 {(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
             </div>
@@ -150,19 +189,22 @@ function Body(props: BodyProps) {
                             </div>
                         </li>)
                     })}
-                    <li>
+                    {(taskToken) ? <li>
                         <p>
                             Submit parameters
                         </p>
                         <Button variant={"contained"} onClick={() => {
-                            handleSubmit(spatialParams)
+                            handleSubmit()
                         }}>
                             Render 3D Audio
                         </Button>
-                    </li>
-                </ol> : <div>"stems appear here"</div>}
+                    </li> : <li>"Waiting for task token"</li>
+                    }
+                </ol> : <div>"stems appear here"</div>
+                }
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default Body;

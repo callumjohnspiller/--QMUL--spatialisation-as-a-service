@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.32.0",
+    "@aws-sdk/client-sfn": "^3.282.0",
     "@aws-sdk/client-sqs": "^3.279.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
