@@ -28,6 +28,8 @@ function Body(props: BodyProps) {
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [outputUrl, setOutputUrl] = useState<string>();
 
+    const fetchedUrls = useMemo(() => {return fileUrls? fileUrls : [""]}, []);
+
     // Sets SQS URL after file is uploaded
     useEffect(() => {
         async function createSqsQueue() {
@@ -224,7 +226,7 @@ function Body(props: BodyProps) {
 
             <div>
                 {(fileUrls && !submitted) ? <ol>
-                    {fileUrls.map((url, index) => {
+                    {fetchedUrls.map((url, index) => {
                         return (<li>
                             <p>{fileLabels[index]}</p>
                             {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
