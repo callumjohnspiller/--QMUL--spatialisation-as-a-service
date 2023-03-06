@@ -231,7 +231,7 @@ function Body(props: BodyProps) {
                         <MemoAudioFilePlayer audioURL={url}/>
                         <div className={sty.slider}>
                             <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                                    aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
+                                    aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"auto"}
                                     value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
                                 handleChange(e, newValue, fileLabels[index], "X")
                             }}/>
@@ -239,7 +239,7 @@ function Body(props: BodyProps) {
                         </div>
                         <div className={sty.slider}>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
-                                    valueLabelDisplay={"on"}
+                                    valueLabelDisplay={"auto"}
                                     value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
                                 handleChange(e, newValue, fileLabels[index], "Y")
                             }}/>
@@ -247,7 +247,7 @@ function Body(props: BodyProps) {
                         </div>
                         <div className={sty.slider}>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
-                                    valueLabelDisplay={"on"}
+                                    valueLabelDisplay="auto"
                                     value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
                                 handleChange(e, newValue, fileLabels[index], "Z")
                             }}/>
