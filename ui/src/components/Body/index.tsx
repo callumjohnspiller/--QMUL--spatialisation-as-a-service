@@ -28,7 +28,9 @@ function Body(props: BodyProps) {
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [outputUrl, setOutputUrl] = useState<string>();
 
-    const fetchedUrls = useMemo(() => {return fileUrls? fileUrls : [""]}, []);
+    const fetchedUrls = useMemo(() => {
+        return fileUrls ? fileUrls : [""]
+    }, [fileUrls]);
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -45,7 +47,7 @@ function Body(props: BodyProps) {
 
     }, [uploadStatus]);
 
-    useEffect(()=> {
+    useEffect(() => {
         async function getConfirmation() {
             let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
             while (!message?.Messages) {
@@ -170,14 +172,13 @@ function Body(props: BodyProps) {
 
         async function sendStemParams() {
             const input: any = {
-                output: stemCount.toString(),
-                taskToken: stemTaskToken
+                output: stemCount.toString(), taskToken: stemTaskToken
             }
             const command = new SendTaskSuccessCommand(input);
             return await sfnClient.send(command);
         }
 
-        if(stemTaskToken) {
+        if (stemTaskToken) {
             sendStemParams().then(() => {
                 setStemsSubmitted(true);
             });
@@ -211,65 +212,69 @@ function Body(props: BodyProps) {
     }
 
     return (<div>
-            <div>
-                {(!uploadStatus) ? <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount} setStemCount={setStemCount}/>
-                    : <div></div>}
-            </div>
+        <div>
+            {(!uploadStatus) ?
+                <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
+                          setStemCount={setStemCount}/> : <div></div>}
+        </div>
 
-            <div>
-                {(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
-            </div>
+        <div>
+            {(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
+        </div>
 
-            <div>
-                {(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
-            </div>
+        <div>
+            {(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
+        </div>
 
-            <div>
-                {(fileUrls && !submitted) ? <ol>
-                    {fetchedUrls.map((url, index) => {
-                        return (<li>
-                            <p>{fileLabels[index]}</p>
-                            {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
-                            <div>
-                                <Slider size={'medium'} min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
-                                        value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
-                                    handleChange(e, newValue, fileLabels[index], "X")
-                                }}/>
-                                Set Value for forward/back
-                            </div>
-                            <div>
-                                <Slider min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
-                                        value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
-                                    handleChange(e, newValue, fileLabels[index], "Y")
-                                }}/>
-                                Set Value for left/right
-                            </div>
-                            <div>
-                                <Slider min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
-                                        value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
-                                    handleChange(e, newValue, fileLabels[index], "Z")
-                                }}/>
-                                Set Value for up/down
-                            </div>
-                        </li>)
-                    })}
-                    {(taskToken) ? <li>
-                        <p>
-                            Submit parameters
-                        </p>
-                        <Button variant={"contained"} onClick={() => {
-                            handleSubmit()
-                        }}>
-                            Render 3D Audio
-                        </Button>
-                    </li> : <li>"Waiting for task token"</li>}
-                </ol> : <div>stems appear here</div>}
-            </div>
+        <div>
+            {(fileUrls && !submitted) ? <ol>
+                {fetchedUrls.map((url, index) => {
+                    return (<li>
+                        <p>{fileLabels[index]}</p>
+                        {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
+                        <div>
+                            <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
+                                    aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
+                                    value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
+                                handleChange(e, newValue, fileLabels[index], "X")
+                            }}/>
+                            Set Value for forward/back
+                        </div>
+                        <div>
+                            <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
+                                    valueLabelDisplay={"on"}
+                                    value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
+                                handleChange(e, newValue, fileLabels[index], "Y")
+                            }}/>
+                            Set Value for left/right
+                        </div>
+                        <div>
+                            <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
+                                    valueLabelDisplay={"on"}
+                                    value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
+                                handleChange(e, newValue, fileLabels[index], "Z")
+                            }}/>
+                            Set Value for up/down
+                        </div>
+                    </li>)
+                })}
+                {(taskToken) ? <li>
+                    <p>
+                        Submit parameters
+                    </p>
+                    <Button variant={"contained"} onClick={() => {
+                        handleSubmit()
+                    }}>
+                        Render 3D Audio
+                    </Button>
+                </li> : <li>"Waiting for task token"</li>}
+            </ol> : <div>stems appear here</div>}
+        </div>
 
-            <div>
-                {(outputUrl) ? <AudioFilePlayer audioURL={outputUrl}/> : <div></div>}
-            </div>
-        </div>)
+        <div>
+            {(outputUrl) ? <AudioFilePlayer audioURL={outputUrl}/> : <div></div>}
+        </div>
+    </div>)
 }
 
 export default Body;
