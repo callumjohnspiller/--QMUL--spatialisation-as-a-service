@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Uploader from "../Upload";
 import {MemoAudioFilePlayer} from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
