@@ -1,6 +1,7 @@
 import React from "react";
 import {Howl} from "howler";
 import {Stack} from "@mui/material";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import sty from "./player.module.scss";
 
 interface AudioFilePlayerProps {
@@ -26,13 +27,13 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     return (
         <Stack className={sty.player}
             spacing={2}
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
         >
             <button onClick={() => playSound()}>
                 {"Play"}
             </button>
+            <div>
+                {(sound.playing() ? <PlayArrowIcon/> : "")}
+            </div>
             <button onClick={() => pauseSound()}>
                 {"Pause"}
             </button>
