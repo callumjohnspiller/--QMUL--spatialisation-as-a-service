@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {memo, useEffect, useMemo, useState} from 'react';
 import Uploader from "../Upload";
-import AudioFilePlayer from "../AudioFilePlayer";
+import {MemoAudioFilePlayer} from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
@@ -27,10 +27,6 @@ function Body(props: BodyProps) {
     const [spatialParams, setSpatialParams] = useState<any>();
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [outputUrl, setOutputUrl] = useState<string>();
-
-    const fetchedUrls = useMemo(() => {
-        return fileUrls ? fileUrls : [""]
-    }, [fileUrls]);
 
     // Sets SQS URL after file is uploaded
     useEffect(() => {
@@ -228,10 +224,10 @@ function Body(props: BodyProps) {
 
         <div>
             {(fileUrls && !submitted) ? <ol>
-                {fetchedUrls.map((url, index) => {
+                {fileUrls.map((url, index) => {
                     return (<li>
                         <p>{fileLabels[index]}</p>
-                        {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
+                        <MemoAudioFilePlayer audioURL={url}/>
                         <div>
                             <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                                     aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
@@ -272,7 +268,7 @@ function Body(props: BodyProps) {
         </div>
 
         <div>
-            {(outputUrl) ? <AudioFilePlayer audioURL={outputUrl}/> : <div></div>}
+            {(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
         </div>
     </div>)
 }

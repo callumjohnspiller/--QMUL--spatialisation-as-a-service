@@ -40,4 +40,4 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     );
 }
 
-export default AudioFilePlayer;
+export const MemoAudioFilePlayer = React.memo(AudioFilePlayer);
