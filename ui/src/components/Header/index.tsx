@@ -5,9 +5,9 @@ interface HeaderProps {
 }
 
 function Header(props: HeaderProps) {
-    return (
-        <header id={"page-header"} className={sty.header}>
-        </header>
+    return (<head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </head>
     );
 }
 
