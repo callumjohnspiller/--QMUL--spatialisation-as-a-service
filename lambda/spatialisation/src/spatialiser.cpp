@@ -71,8 +71,8 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
     // Configure source positions from spatialParams
     std::vector<Common::CVector3> sourcePositions;
     for (size_t i = 0; i < keys.GetLength(); i++) {
-        sourcePositions.push_back(Common::CVector3(spatialParams.GetObject(keys[i].AsString()).GetInteger("X")/100.0, spatialParams.GetObject(keys[i].AsString()).GetInteger("Y")/100.0,
-                                                   spatialParams.GetObject(keys[i].AsString()).GetInteger("Z")/100.0));
+        sourcePositions.push_back(Common::CVector3(spatialParams.GetObject(keys[i].AsString()).GetInteger("X"), spatialParams.GetObject(keys[i].AsString()).GetInteger("Y"),
+                                                   spatialParams.GetObject(keys[i].AsString()).GetInteger("Z")));
     }
 
     if (sourcePaths.size() != sourcePositions.size()) {
