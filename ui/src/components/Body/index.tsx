@@ -5,6 +5,7 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Slider} from '@mui/material';
+import sty from "./body.module.scss";
 
 interface BodyProps {
     uuid: string,
@@ -113,7 +114,7 @@ function Body(props: BodyProps) {
         if (fileLabels.length > 0) {
             let spatialParamsSetup: any = {};
             for (let label of fileLabels) {
-                spatialParamsSetup[label] = {"X": 50, "Y": 50, "Z": 50};
+                spatialParamsSetup[label] = {"X": 0, "Y": 0, "Z": 0};
             }
             setSpatialParams(spatialParamsSetup);
         }
@@ -228,7 +229,7 @@ function Body(props: BodyProps) {
                     return (<li>
                         <p>{fileLabels[index]}</p>
                         <MemoAudioFilePlayer audioURL={url}/>
-                        <div>
+                        <div className={sty.slider}>
                             <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                                     aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
                                     value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
@@ -236,7 +237,7 @@ function Body(props: BodyProps) {
                             }}/>
                             Set Value for forward/back
                         </div>
-                        <div>
+                        <div className={sty.slider}>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
                                     valueLabelDisplay={"on"}
                                     value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
@@ -244,7 +245,7 @@ function Body(props: BodyProps) {
                             }}/>
                             Set Value for left/right
                         </div>
-                        <div>
+                        <div className={sty.slider}>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
                                     valueLabelDisplay={"on"}
                                     value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {

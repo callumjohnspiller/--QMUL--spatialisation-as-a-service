@@ -31,7 +31,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test-ct": "playwright test -c playwright-ct.config.ts"
+    "test-ct": "playwright test -c playwright-ct.config.ts",
+    "lint": "sass-lint -v",
+    "lint:fix": "sass-lint-auto-fix"
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +62,7 @@
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "sass": "^1.57.1"
+    "sass": "^1.57.1",
+    "sass-lint-auto-fix": "^0.21.2"
   }
 }
