@@ -17,6 +17,7 @@ function Uploader(props: UploaderProps) {
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
+            console.log(event.target.files[0].type);
             switch (event.target.files[0].type) {
                 case 'audio/wav':
                     setFile(event.target.files[0]);
