@@ -229,21 +229,21 @@ function Body(props: BodyProps) {
                             <p>{fileLabels[index]}</p>
                             {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
                             <div>
-                                <Slider size={'medium'} min={-100} max={100} defaultValue={0} aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
+                                <Slider size={'medium'} min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"on"}
                                         value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
                                     handleChange(e, newValue, fileLabels[index], "X")
                                 }}/>
                                 Set Value for forward/back
                             </div>
                             <div>
-                                <Slider min={-100} max={100} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
+                                <Slider min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
                                         value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
                                     handleChange(e, newValue, fileLabels[index], "Y")
                                 }}/>
                                 Set Value for left/right
                             </div>
                             <div>
-                                <Slider min={-100} max={100} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
+                                <Slider min={-20} max={20} defaultValue={0} aria-label={fileLabels[index] + "_Y"}
                                         value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
                                     handleChange(e, newValue, fileLabels[index], "Z")
                                 }}/>
