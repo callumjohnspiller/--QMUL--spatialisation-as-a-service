@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Uploader from "../Upload";
 import AudioFilePlayer from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
@@ -227,7 +227,7 @@ function Body(props: BodyProps) {
                     {fileUrls.map((url, index) => {
                         return (<li>
                             <p>{fileLabels[index]}</p>
-                            <AudioFilePlayer audioURL={url}/>
+                            {useMemo(() => <AudioFilePlayer audioURL={url}/>, [])}
                             <div>
                                 <Slider size={'medium'} defaultValue={50} aria-label={fileLabels[index] + "_X"}
                                         value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
