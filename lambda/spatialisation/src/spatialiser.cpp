@@ -61,15 +61,12 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
         spdlog::get("err_logger")->error("Loading BRIR from SOFA file failed");
     }
 
-    spdlog::get("console")->info("1");
-
     // Configure sources
     std::vector<string> sourcePaths;
     for (size_t i = 0; i < keys.GetLength(); i++) {
         auto localDir = Aws::String("tmp/") + keys[i].AsString();
         sourcePaths.push_back(localDir);
     }
-    spdlog::get("console")->info("2");
 
     // Configure source positions from spatialParams
     std::vector<Common::CVector3> sourcePositions;
@@ -77,13 +74,10 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
         sourcePositions.push_back(Common::CVector3(spatialParams.GetObject(keys[i].AsString()).GetInteger("X")/100.0, spatialParams.GetObject(keys[i].AsString()).GetInteger("Y")/100.0,
                                                    spatialParams.GetObject(keys[i].AsString()).GetInteger("Z")/100.0));
     }
-    std::cout << sourcePositions[0] << std::endl;
-    spdlog::get("console")->info("3");
 
     if (sourcePaths.size() != sourcePositions.size()) {
         throw std::runtime_error("The number of source positions needs to be equal to the number of source paths");
     }
-    spdlog::get("console")->info("4");
     const size_t numSources = sourcePaths.size();
 
     std::vector<std::shared_ptr<Binaural::CSingleSourceDSP>> sources(numSources);
@@ -99,7 +93,6 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
         // Open corresponding audio file
         sourceFiles[i].load(sourcePaths[i]);
     }
-    spdlog::get("console")->info("5");
 
     int numSamples = sourceFiles.front().getNumSamplesPerChannel();
     for (size_t i = 0; i < numSources; ++i) {
@@ -113,7 +106,6 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
             spdlog::get("err_logger")->error("Only the first channel of multichannel source audio files will be used");
         }
     }
-    spdlog::get("console")->info("6");
 
     // Create binaural stereo file to store result in memory
     AudioFile<double> binauralFile;
