@@ -17,13 +17,14 @@ function Uploader(props: UploaderProps) {
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            console.log(event.target.files[0].type);
             switch (event.target.files[0].type) {
-                case 'audio/wav':
+                case 'audio/x-wav':
                     setFile(event.target.files[0]);
+                    setValidFile(true);
                     break;
                 case 'audio/mpeg':
                     setFile(event.target.files[0]);
+                    setValidFile(true);
                     break;
                 default:
                     setValidFile(false);
@@ -82,7 +83,10 @@ function Uploader(props: UploaderProps) {
                 </FormControl>
                     : <div></div>
             }
-            <button onClick={handleUploadClick}>Upload</button>
+            <div>
+                {(validFile) ? <button onClick={handleUploadClick}>Upload</button> : <div></div> }
+            </div>
+
         </div>
     );
 }
