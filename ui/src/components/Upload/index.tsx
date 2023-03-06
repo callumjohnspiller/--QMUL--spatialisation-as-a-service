@@ -84,9 +84,8 @@ function Uploader(props: UploaderProps) {
                     : <div></div>
             }
             <div>
-                {(validFile) ? <button onClick={handleUploadClick}>Upload</button> : <div></div> }
+                {(file && validFile) ? <button onClick={handleUploadClick}>Upload</button> : <div></div> }
             </div>
-
         </div>
     );
 }

@@ -264,7 +264,7 @@ function Body(props: BodyProps) {
                         Render 3D Audio
                     </Button>
                 </li> : <li>"Waiting for task token"</li>}
-            </ol> : <div>stems appear here</div>}
+            </ol> : <div></div>}
         </div>
 
         <div>

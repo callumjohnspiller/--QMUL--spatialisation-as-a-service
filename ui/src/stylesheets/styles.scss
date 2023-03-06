@@ -1,10 +1,9 @@
 @import 'normalize';
 
 :root {
-  --montserrat: 'Montserrat', sans-serif;
-
-  --color-white: #FFFFFF;
   --color-black: #000000;
+  --color-white: #FFFFFF;
+  --montserrat: 'Montserrat', sans-serif;
 }
 
 //Normalize Box Sizing
@@ -19,9 +18,9 @@ html {
 
 html,
 body {
-  width: 100%;
   height: 100%;
   min-height: 100vh;
+  width: 100%;
 }
 
 body {
@@ -30,17 +29,17 @@ body {
 }
 
 a {
-  text-decoration: none;
   font-family: inherit;
+  text-decoration: none;
 }
 
 .hero {
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
 
   img {
-    width: 100%;
     height: 100%;
     object-fit: cover;
+    width: 100%;
   }
 }
