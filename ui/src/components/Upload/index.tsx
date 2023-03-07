@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useState} from 'react';
-import sty from "./upload.module.scss";
 import {PutObjectCommand} from "@aws-sdk/client-s3";
 import {s3Client} from "../../libs/s3Client";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
@@ -58,7 +57,7 @@ function Uploader(props: UploaderProps) {
     };
 
     return (
-        <div className={sty.upload}>
+        <div>
             <input type="file" onChange={handleFileChange}/>
             {
                 (!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>

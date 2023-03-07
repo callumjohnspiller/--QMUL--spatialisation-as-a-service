@@ -1,8 +1,7 @@
 import React from "react";
 import {Howl} from "howler";
-import {Stack} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import sty from "./player.module.scss";
 
 interface AudioFilePlayerProps {
     audioURL: string
@@ -25,18 +24,18 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
     }
 
     return (
-        <Stack className={sty.player}
+        <Stack
             spacing={2}
         >
-            <button onClick={() => playSound()}>
+            <Button onClick={() => playSound()}>
                 {"Play"}
-            </button>
+            </Button>
             <div>
                 {(sound.playing() ? <PlayArrowIcon/> : "")}
             </div>
-            <button onClick={() => pauseSound()}>
+            <Button onClick={() => pauseSound()}>
                 {"Pause"}
-            </button>
+            </Button>
         </Stack>
     );
 }

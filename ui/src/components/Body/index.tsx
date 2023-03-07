@@ -5,7 +5,6 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Slider} from '@mui/material';
-import sty from "./body.module.scss";
 
 interface BodyProps {
     uuid: string,
@@ -229,7 +228,7 @@ function Body(props: BodyProps) {
                     return (<li>
                         <p>{fileLabels[index]}</p>
                         <MemoAudioFilePlayer audioURL={url}/>
-                        <div className={sty.slider}>
+                        <div>
                             <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                                     aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"auto"}
                                     value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
@@ -237,7 +236,7 @@ function Body(props: BodyProps) {
                             }}/>
                             Set Value for forward/back
                         </div>
-                        <div className={sty.slider}>
+                        <div>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
                                     valueLabelDisplay={"auto"}
                                     value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
@@ -245,7 +244,7 @@ function Body(props: BodyProps) {
                             }}/>
                             Set Value for left/right
                         </div>
-                        <div className={sty.slider}>
+                        <div>
                             <Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
                                     valueLabelDisplay="auto"
                                     value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
@@ -259,9 +258,9 @@ function Body(props: BodyProps) {
                     <p>
                         Submit parameters
                     </p>
-                    <Button variant={"contained"} onClick={() => {
-                        handleSubmit()
-                    }}>
+                    <Button
+                        variant={"contained"}
+                        onClick={() => {handleSubmit()}}>
                         Render 3D Audio
                     </Button>
                 </li> : <li>"Waiting for task token"</li>}
