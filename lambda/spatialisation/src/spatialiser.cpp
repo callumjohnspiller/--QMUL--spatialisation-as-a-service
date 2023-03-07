@@ -54,7 +54,7 @@ int render(Aws::String bucket, Aws::Utils::Array <Aws::Utils::Json::JsonView> ke
 
     // Environment
     std::shared_ptr<Binaural::CEnvironment> environment = renderer.CreateEnvironment();
-    bool brirLoaded = BRIR::CreateFromSofa("3dti_AudioToolkit/resources/BRIR/SOFA/3DTI_BRIR_large_" + std::to_string(sampleRate) + "Hz.sofa", environment);
+    bool brirLoaded = BRIR::CreateFromSofa("3dti_AudioToolkit/resources/BRIR/SOFA/3DTI_BRIR_small_" + std::to_string(sampleRate) + "Hz.sofa", environment);
     if (brirLoaded) {
         spdlog::get("console")->info("BRIR loaded successfully");
     } else {
