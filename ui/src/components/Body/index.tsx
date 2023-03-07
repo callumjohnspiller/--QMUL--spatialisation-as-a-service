@@ -4,7 +4,7 @@ import {MemoAudioFilePlayer} from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import {Button, CircularProgress, Paper, Slider} from '@mui/material';
+import {Button, CircularProgress, Grid, Paper, Slider} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -207,22 +207,22 @@ function Body(props: BodyProps) {
         });
     }
 
-    return (<Paper>
-        <div>
+    return (<Grid container spacing={5}>
+        <Grid item xs={3}>
             {(!uploadStatus) ?
                 <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
                           setStemCount={setStemCount}/> : <div></div>}
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item>
             {(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item>
             {(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item>
             {(fileUrls && !submitted) ? <ol>
                 {fileUrls.map((url, index) => {
                     return (<li>
@@ -265,12 +265,12 @@ function Body(props: BodyProps) {
                     </Button>
                 </li> : <li>"Waiting for task token"</li>}
             </ol> : <div></div>}
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item>
             {(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
-        </div>
-    </Paper>)
+        </Grid>
+    </Grid>)
 }
 
 export default Body;

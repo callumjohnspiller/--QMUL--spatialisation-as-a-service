@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import {CreateQueueCommand, DeleteMessageCommand, ReceiveMessageCommand} from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
+import {Container} from "@mui/material";
 
 export default class App extends React.Component<{}, { uuid: string }> {
     constructor(props: {}) {
@@ -15,14 +16,16 @@ export default class App extends React.Component<{}, { uuid: string }> {
     }
 
     render() {
-        return (<div id="react-app" className={"App"}>
-            <Header/>
-            <Body uuid={this.state.uuid}
-                  createSQSQueue={() => createSQSQueue(this.state.uuid)}
-                  getMessage={getMessage}
-                  deleteMessage={deleteMessage}
-            />
-        </div>)
+        return (
+            <Container id={"app-container"}>
+                <Header/>
+                <Body uuid={this.state.uuid}
+                      createSQSQueue={() => createSQSQueue(this.state.uuid)}
+                      getMessage={getMessage}
+                      deleteMessage={deleteMessage}
+                />
+            </Container>
+        );
     }
 }
 
