@@ -66,13 +66,10 @@ function Uploader(props: UploaderProps) {
             {
                 (validFile) ? <FormControl>
                     How many parts do you want this file separated into?
-                        <InputLabel id="stem-count-select-label">Number of Stems</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={props.stemCount}
-                            autoWidth
-                            label="Number of Stems"
                             onChange={handleStemCountChange}
                         >
                             <MenuItem value={2}>Two</MenuItem>

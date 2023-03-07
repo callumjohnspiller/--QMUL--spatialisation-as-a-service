@@ -4,7 +4,7 @@ import {MemoAudioFilePlayer} from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueResult, ReceiveMessageResult} from "@aws-sdk/client-sqs";
-import {Button, CircularProgress, Slider} from '@mui/material';
+import {Button, CircularProgress, Paper, Slider} from '@mui/material';
 
 interface BodyProps {
     uuid: string,
@@ -207,7 +207,7 @@ function Body(props: BodyProps) {
         });
     }
 
-    return (<div>
+    return (<Paper>
         <div>
             {(!uploadStatus) ?
                 <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
@@ -270,7 +270,7 @@ function Body(props: BodyProps) {
         <div>
             {(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
         </div>
-    </div>)
+    </Paper>)
 }
 
 export default Body;
