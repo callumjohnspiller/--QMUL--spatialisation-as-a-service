@@ -2,12 +2,13 @@ import React, { ChangeEvent, useState } from "react";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client } from "../../libs/s3Client";
 import {
-	FormControl,
-	InputLabel,
+	FormControl, Input,
+	Button,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
+	SelectChangeEvent
 } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 interface UploaderProps {
   setStemCount: Function;
@@ -62,12 +63,12 @@ function Uploader(props: UploaderProps) {
 	};
 
 	return (
-		<div>
-			<input type="file" onChange={handleFileChange}/>
+		<Paper>
+			<Input type="file" onChange={handleFileChange}/>
 			{
 				(!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>
 			}
-			<div>{file && `${file.name} - ${file.type}`}</div>
+			<Paper>{file && `${file.name} - ${file.type}`}</Paper>
 			{
 				(validFile) ? <FormControl>
           How many parts do you want this file separated into?
@@ -85,10 +86,10 @@ function Uploader(props: UploaderProps) {
 					: 
 					<div></div>
 			}
-			<div>
-				{(file && validFile) ? <button onClick={handleUploadClick}>Upload</button> : <div></div> }
-			</div>
-		</div>
+			<Paper>
+				{(file && validFile) ? <Button onClick={handleUploadClick}>Upload</Button> : <div></div> }
+			</Paper>
+		</Paper>
 	);
 }
 

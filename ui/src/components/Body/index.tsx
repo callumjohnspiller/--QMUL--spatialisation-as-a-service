@@ -208,14 +208,14 @@ function Body(props: BodyProps) {
 	};
 
 	return (
-		<Paper>
+		<Paper elevation={3}>
 			<Grid
 				container spacing={2}
-				direction={"column"}
+				direction={"row"}
 				justifyContent={"center"}
 				alignItems={"stretch"}
 			>
-				<Grid item >
+				<Grid item xs>
 					{(!uploadStatus) ?
 						<Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
 							setStemCount={setStemCount}/> : <div></div>}
