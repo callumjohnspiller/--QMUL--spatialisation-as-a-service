@@ -12,13 +12,14 @@ function Box(props: ThreeElements["mesh"]) {
 		<mesh
 			{...props}
 			ref={ref}
-			scale={5}
+			scale={1}
 			onClick={(event) => click(!clicked)}
 			onPointerOver={(event) => hover(true)}
 			onPointerOut={(event) => hover(false)}>
 			{/* eslint-disable-next-line react/no-unknown-property */}
-			<boxGeometry args={[1, 1, 1]} />
-			<meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+			<boxGeometry args={[20, 20, 20]} />
+			{/* eslint-disable-next-line react/no-unknown-property */}
+			<meshStandardMaterial color={hovered ? "hotpink" : "orange"} transparent={true} opacity={0.3}/>
 		</mesh>
 	);
 }
