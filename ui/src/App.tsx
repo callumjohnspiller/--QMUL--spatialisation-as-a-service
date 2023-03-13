@@ -6,6 +6,7 @@ import {
 	CreateQueueCommand,
 	DeleteMessageCommand,
 	ReceiveMessageCommand,
+	ReceiveMessageResult
 } from "@aws-sdk/client-sqs";
 import { sqsClient } from "./libs/sqsClient";
 import { Container } from "@mui/material";
@@ -44,7 +45,7 @@ async function createSQSQueue (uuid: string) {
 	} catch (err) { /* empty */ }
 }
 
-async function getMessage (queueURL: string | undefined) {
+async function getMessage (queueURL: string | undefined): Promise<ReceiveMessageResult> {
 	const params = {
 		AttributeNames: ["SentTimestamp"],
 		MaxNumberOfMessages: 1,
@@ -54,13 +55,16 @@ async function getMessage (queueURL: string | undefined) {
 	};
 
 	try {
-		return await sqsClient.send(new ReceiveMessageCommand(params)); // For unit tests.
+		return await sqsClient.send(new ReceiveMessageCommand(params));
 	} catch (err) { /* empty */ }
+	return new class implements ReceiveMessageResult {
+
+	};
 }
 
-async function deleteMessage (queueURL: string, receiptHandle: string): Promise<void> {
+async function deleteMessage (queueUrl: string | undefined, receiptHandle: string): Promise<void> {
 	const params = {
-		QueueUrl: queueURL, ReceiptHandle: receiptHandle
+		QueueUrl: queueUrl, ReceiptHandle: receiptHandle
 	};
 
 	try {

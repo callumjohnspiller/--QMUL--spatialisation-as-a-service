@@ -9,8 +9,8 @@ import {Button, CircularProgress, Grid, Paper, Slider} from "@mui/material";
 interface BodyProps {
     uuid: string,
     createSQSQueue: () => Promise<CreateQueueCommandOutput | undefined>,
-    getMessage: (queueURL: string | undefined) => ReceiveMessageResult,
-    deleteMessage: (sqsQueueUrl: string, receiptHandle: string) => void
+    getMessage: (queueURL: string | undefined) => Promise<ReceiveMessageResult>,
+    deleteMessage: (sqsQueueUrl: string | undefined, receiptHandle: string) => void
 }
 
 function Body(props: BodyProps) {
@@ -224,7 +224,7 @@ function Body(props: BodyProps) {
 		<Grid item>
 			{(fileUrls && !submitted) ? <ol>
 				{fileUrls.map((url, index) => {
-					return (<li>
+					return (<li key={index}>
 						<p>{fileLabels[index]}</p>
 						<MemoAudioFilePlayer audioURL={url}/>
 						<div>
@@ -262,7 +262,7 @@ function Body(props: BodyProps) {
 						onClick={() => {handleSubmit();}}>
                         Render 3D Audio
 					</Button>
-				</li> : <li>"Waiting for task token"</li>}
+				</li> : <li>Waiting for task token</li>}
 			</ol> : <div></div>}
 		</Grid>
 
