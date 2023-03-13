@@ -207,73 +207,74 @@ function Body(props: BodyProps) {
 		});
 	};
 
-	return (<Grid container spacing={5}>
-		<Grid item xs={3}>
-			{(!uploadStatus) ?
-				<Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
-					setStemCount={setStemCount}/> : <div></div>}
-		</Grid>
+	return (
+		<Grid container spacing={2}>
+			<Grid item >
+				{(!uploadStatus) ?
+					<Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
+						setStemCount={setStemCount}/> : <div></div>}
+			</Grid>
 
-		<Grid item>
-			{(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
-		</Grid>
+			<Grid item>
+				{(uploadStatus && !fileUrls) ? <CircularProgress/> : <div/>}
+			</Grid>
 
-		<Grid item>
-			{(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
-		</Grid>
+			<Grid item>
+				{(submitted && !outputUrl) ? <CircularProgress/> : <div/>}
+			</Grid>
 
-		<Grid item>
-			{(fileUrls && !submitted) ? <ol>
-				{fileUrls.map((url, index) => {
-					return (<li key={index}>
-						<p>{fileLabels[index]}</p>
-						<MemoAudioFilePlayer audioURL={url}/>
-						<div>
-							<Slider size={"medium"} min={-20} max={20} defaultValue={0} step={0.1}
-								aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"auto"}
-								value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
-									handleChange(e, newValue, fileLabels[index], "X");
-								}}/>
+			<Grid item>
+				{(fileUrls && !submitted) ? <ol>
+					{fileUrls.map((url, index) => {
+						return (<li key={index}>
+							<p>{fileLabels[index]}</p>
+							<MemoAudioFilePlayer audioURL={url}/>
+							<div>
+								<Slider size={"medium"} min={-20} max={20} defaultValue={0} step={0.1}
+									aria-label={fileLabels[index] + "_X"} valueLabelDisplay={"auto"}
+									value={spatialParams[fileLabels[index]]["X"]} onChange={(e, newValue) => {
+										handleChange(e, newValue, fileLabels[index], "X");
+									}}/>
                             Set Value for forward/back
-						</div>
-						<div>
-							<Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
-								valueLabelDisplay={"auto"}
-								value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
-									handleChange(e, newValue, fileLabels[index], "Y");
-								}}/>
+							</div>
+							<div>
+								<Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
+									valueLabelDisplay={"auto"}
+									value={spatialParams[fileLabels[index]]["Y"]} onChange={(e, newValue) => {
+										handleChange(e, newValue, fileLabels[index], "Y");
+									}}/>
                             Set Value for left/right
-						</div>
-						<div>
-							<Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
-								valueLabelDisplay="auto"
-								value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
-									handleChange(e, newValue, fileLabels[index], "Z");
-								}}/>
+							</div>
+							<div>
+								<Slider min={-20} max={20} defaultValue={0} step={0.1} aria-label={fileLabels[index] + "_Y"}
+									valueLabelDisplay="auto"
+									value={spatialParams[fileLabels[index]]["Z"]} onChange={(e, newValue) => {
+										handleChange(e, newValue, fileLabels[index], "Z");
+									}}/>
                             Set Value for up/down
-						</div>
-					</li>);
-				})}
-				{(taskToken) ? <li>
-					<p>
+							</div>
+						</li>);
+					})}
+					{(taskToken) ? <li>
+						<p>
                         Submit parameters
-					</p>
-					<Button
-						variant={"contained"}
-						onClick={() => {handleSubmit();}}>
+						</p>
+						<Button
+							variant={"contained"}
+							onClick={() => {handleSubmit();}}>
                         Render 3D Audio
-					</Button>
-				</li> : <li>Waiting for task token</li>}
-			</ol> : <div></div>}
-		</Grid>
+						</Button>
+					</li> : <li>Waiting for task token</li>}
+				</ol> : <div></div>}
+			</Grid>
 
-		<Grid item>
-			{(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
-		</Grid>
-		<Grid>
-			{Representation()}
-		</Grid>
-	</Grid>);
+			<Grid item xs={12}>
+				{(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
+			</Grid>
+			<Grid item xs={12}>
+				{Representation()}
+			</Grid>
+		</Grid>);
 }
 
 export default Body;
