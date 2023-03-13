@@ -5,6 +5,7 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import { CreateQueueCommandOutput, ReceiveMessageResult } from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Grid, Paper, Slider} from "@mui/material";
+import Representation from "../3dSpace/3dSpace";
 
 interface BodyProps {
     uuid: string,
@@ -268,6 +269,9 @@ function Body(props: BodyProps) {
 
 		<Grid item>
 			{(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
+		</Grid>
+		<Grid>
+			{Representation()}
 		</Grid>
 	</Grid>);
 }
