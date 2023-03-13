@@ -6,12 +6,12 @@ declare global {
         }
     }
 
-    declare module '*.scss';
+    declare module "*.scss";
 
-    declare module '*.scss' {
+    declare module "*.scss" {
         const content: Record<string, string>;
         export default content;
     }
 }
 
-export {}
+export {};
