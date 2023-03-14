@@ -278,7 +278,7 @@ function Body(props: BodyProps) {
 					{(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <div></div>}
 				</Grid>
 
-				<Grid item minHeight={500} minWidth={500}>
+				<Grid xs={12}>
 					{Representation()}
 				</Grid>
 			</Grid>
