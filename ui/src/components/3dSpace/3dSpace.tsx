@@ -12,9 +12,25 @@ function Box(props: ThreeElements["mesh"]) {
 			ref={ref}
 			scale={1}>
 			{/* eslint-disable-next-line react/no-unknown-property */}
-			<boxGeometry args={[20, 20, 20]} />
+			<boxGeometry args={[1, 1, 1]} />
 			{/* eslint-disable-next-line react/no-unknown-property */}
 			<meshStandardMaterial color={"green"} transparent={true} opacity={0.3}/>
+		</mesh>
+	);
+}
+
+function SmallBox(props: ThreeElements["mesh"]) {
+	const ref = useRef<THREE.Mesh>(null!);
+	useFrame((state, delta) => (ref.current.rotation.x));
+	return (
+		<mesh
+			{...props}
+			ref={ref}
+			scale={1}>
+			{/* eslint-disable-next-line react/no-unknown-property */}
+			<boxGeometry args={[0.1, 0.1, 0.1]} />
+			{/* eslint-disable-next-line react/no-unknown-property */}
+			<meshStandardMaterial color={"red"} transparent={false}/>
 		</mesh>
 	);
 }
@@ -27,6 +43,7 @@ export default function Representation() {
 			<pointLight position={[10, 10, 10]} />
 			<OrbitControls/>
 			<Box position={[0, 0, 0]} />
+			<SmallBox position={[0,0.3,0.3]}/>
 		</Canvas>
 	);
 }
