@@ -14,7 +14,7 @@ function Box(props: ThreeElements["mesh"]) {
 			{/* eslint-disable-next-line react/no-unknown-property */}
 			<boxGeometry args={[1, 1, 1]} />
 			{/* eslint-disable-next-line react/no-unknown-property */}
-			<meshStandardMaterial color={"green"} transparent={true} opacity={0.3}/>
+			<meshStandardMaterial color={"green"} transparent={true} opacity={0.5}/>
 		</mesh>
 	);
 }
