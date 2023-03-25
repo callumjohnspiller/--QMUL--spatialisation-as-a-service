@@ -16,30 +16,32 @@ With respect to these developments in the business, this project seeks to engage
 
 \subsection{Problem Statement}\label{subsec:problem-statement}
 
-The onboarding of~\glspl{pspartner} to the developer and publisher platforms managed by~\gls{sie} has been a targeted area for improvement within the company.
-The primary challenge the business has faced in this area has been the reduction of friction in the process of getting~\glspl{pspartner} into the PlayStation ecosystem.
+The onboarding of~\glspl{pspartner} to the developer and publisher platforms managed by~\gls{sie} is an area in the company that has been targeted for improvement.
+One of the primary targets for improvement has been the reduction of friction in the process of getting~\glspl{pspartner} engaged with the PlayStation ecosystem.
 
 While the~\gls{pspartner} onboarding process has been automated and refined over time, this author argues that the ability for potential~\glspl{pspartner} to engage with and trial PlayStation's spatial audio technology is too restricted.
 
-This project is based upon the hypothesis that, for a user who wishes to experiment with or experience~\gls{spatial_audio}, the barrier for entry is too high.
-Engaging with a working demonstration of customisable~\gls{spatial_audio} requires a user to perform a significant amount of preparation on a local machine;
+This project was founded upon the hypothesis that, for a user who wishes to experiment with or experience~\gls{spatial_audio}, the barrier for entry is too high.
+Engaging with a working demonstration of customisable~\gls{spatial_audio} requires a user to perform a significant amount of preparation and setup on a local machine;
 it demands a time commitment and pre-requisite technical knowledge that is far greater than is reasonable for an interested party to quickly evaluate what is possible.
 
-Currently~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must apply and order a~\gls{ps5} development kit, wait for it to arrive, set it up, then figure out how to engage with the~\glspl{api} provided by~\gls{sie}\textquotesingle s~\gls{devnet}.
-This process is time-consuming and not optimal for a~\gls{pspartner} who wishes to get a quick insight into what is possible.
+Currently,~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must apply for and order a~\gls{ps5} development kit, wait for it to arrive, perform the setup of the development kit, then figure out how to engage with the~\glspl{api} provided by~\glspl{sie}~\gls{devnet}.
+This process is time-consuming and sub-optimal for a~\gls{pspartner} who wishes to get a quick insight into what is possible.
 
-This project proposes an alternative solution where a~\gls{pspartner} who wishes to engage with the~\gls{spatial_audio} paradigm is able to experiment using a familiar audio file of their choosing.
+This project proposes an alternative solution where a~\gls{pspartner} who wishes to engage with the~\gls{spatial_audio} paradigm is able to experiment with the technology by using a familiar audio file of their choosing.
 The fact that the system will be accessible through a browser will mean that the~\gls{pspartner} will have much easier access, increasing the overall positive impression of the~\gls{pspartner} platform.
 
 \subsection{Project Aims}\label{subsec:aims}
 
-The primary aim of this project is to research, design, and engineer a web service that allows a user to easily experience~\gls{spatial_audio} in a way that reacts to their input.
+The aim of this project is to research, design, and engineer a web service that allows a user to easily experience~\gls{spatial_audio} in a way that reacts to their input.
+Despite the fact that this project will make use of \gls{dsp} and requires a front-end for the user to interact with, the primary complexity of this project concerns the cloud infrastructure design and implementation that forms the backbone of the\textit{\textquote{Spatialisation-as-a-Service}}~concept, that is, moving compute-heavy tasks from the local machine to a cloud environment.
+Taking this into account, the project should be classified as an infrastructure project, and will focus upon the challenges relating to this area.
 
 The proposed workflow would allow a user to use a standard web browser\footnote{The project will most likely be designed for interaction through Chromium-based browsers and Firefox} to upload an audio file to a webpage and then receive back a new audio file that has rendered the stems from the original file into a \textquotesingle spatialised\textquotesingle ~format informed by \glspl{hrtf}.
-All the audio processing would execute in \gls{aws} cloud environments to circumvent any real-world hardware requirements and challenges.
+All the audio processing would execute in \gls{aws} cloud environments to circumvent real-world hardware requirements and challenges.
 
-For vital information security reasons, the prototype produced as a part of this project will not feature any proprietary~\gls{sie} software and instead use only libraries that exist in the public domain.
-As such, this prototype can be considered a~\gls{poc} where, if successful,~\gls{sie} software might be transplanted into the serverless pipeline.
+For information security reasons, the prototype produced as a part of this project will \textit{not} feature any proprietary~\gls{sie} software and instead use only libraries and code that exist in the public domain.
+Because of this, the prototype can be considered a~\gls{poc} where, if successful,~\gls{sie} software might be transplanted into the serverless pipeline.
 
 \subsection{Project Objectives}\label{subsec:project-objectives}
 
@@ -49,15 +51,15 @@ In order to achieve the aims set out in Section~\ref{subsec:aims} the project mu
     \item A project plan which outlines the timeline of both the research and development of the project
     \item A review of pertinent literature relating primarily to:
     \begin{itemize}
+        \item Public Cloud infrastructure and services (especially those available from \gls{aws})
         \item Audio spatialisation
-        \item Web audio \glspl{api}
-        \item Cloud infrastructure (including those available from \gls{aws})
+        \item Web front-end technology and audio \glspl{api}
     \end{itemize}
     \item A review of existing stereo-to-spatial services and technologies.
     \item A functioning stereo-to-spatial serverless pipeline.
     \item A frontend that enables a user to interact with the conversion pipeline by uploading and downloading audio files, as well as setting parameters for conversion through a web~\gls{api}.
     \item A testing framework that supports iterative development.
-    \item A report on user testing, including feedback from stakeholders.
+    \item A report on user testing.
     \item A review and analysis of how the produced system has met or missed the targets.
 \end{enumerate}
 
@@ -66,11 +68,9 @@ In order to achieve the aims set out in Section~\ref{subsec:aims} the project mu
 In order to guide the research and development process of the proposed system, this report will seek to answer the following research questions:
 
 \begin{enumerate}
-    \item Who might be interested in experiencing spatial audio, how might they do it, and why?
-    \item How is spatial audio rendered?
-    \item What are the existing ways in which spatial audio can be experienced, and how accessible are they?
-    \item Starting with a standard music file, what is the best way to demonstrate the capabilities of spatial audio rendering?
-    \item How can intensive audio processing be performed in cloud environments?
-    \item How might audio that is rendered in the cloud be delivered efficiently back to a web front-end?
+    \item What are the characteristics of audio-processing pipelines that are executed within cloud infrastructure?
+    \item What is the impact of cloud technology in addressing physical hardware limitations?
+    \item How effective is cloud infrastructure in facilitating the execution of compute-heavy audio pipelines?
+    \item How can the leveraging of cloud technology improve the experience of the users of~\glspl{sie}~\gls{pspartner} platform?
 
 \end{enumerate}
