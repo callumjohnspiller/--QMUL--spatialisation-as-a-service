@@ -22,6 +22,7 @@ In addition, the platform was also used to communicate the project's progress wi
 
 Prioritizing communication with the supervisor was integral to the success of the project because of the accountability and oversight it provided to this author.
 Having a platform such as ClickUp drastically reduced the likelihood of error in communication and time management.
+Additionally, a meeting with the project supervisor was scheduled every two weeks in order to identify and rememdy issues with the project's execution.
 
 \subsection{Timeline}\label{subsec:timeline}
 
@@ -62,3 +63,23 @@ Other resources utilized included:
     \item Open-source audio-processing libraries.
     \item Online articles and tutorials
 \end{enumerate}
+
+\subsection{Methodology}\label{subsec:methodology}
+
+\citet{murray-pm} notes that the \textquote{traditional} manner of software development follows a linear path from requirements, to design, to execution, to testing, and so on.
+This method often results in inflexibility when it comes to software project execution.
+This is because of its dependence on the full set of requirements being gathered before the development process begins.
+Any issues with the requirements (incompleteness, inaccuracy) using this method are typically only found at the end of the process, instead of along the way through a cycle of development and feedback\footnote{\citep{murray-pm}}.
+This project is of relatively small scope, and the number of shareholders are small on account of its proof-of-concept status.
+As such, it serves to incorporate some, but not all, aspects of the `Agile'\footnote{\citep{beck2001agile}} development methodology into the process:
+
+\begin{quotation}
+    An Agile project starts with only the most high-level requirements.
+    Sometimes these are referred to as “user stories.”
+    Such a requirement might sound like, “A user will be able to buy a subscription to our product on a new e-commerce website.”
+    There are no designs, no specifications.\footnote{\citep{murray-pm}}
+\end{quotation}
+
+While this project will not go so far as to remove the need for a design or specification altogether, the foundation for the project's execution will rest on high-level user stories and identified functional requirements.
+In addition, the project will require frequent testing as development progresses.
+The intention, therefore, is to endeavour to implement a~\gls{cicd} pipeline in order to ensure any updates to the prototype can be tested and deployed in an online environment as it is being developed.
