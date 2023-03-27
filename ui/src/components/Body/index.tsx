@@ -213,7 +213,7 @@ function Body(props: BodyProps) {
                 <div>
                     {(!uploadStatus) ?
                         <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
-                                  setStemCount={setStemCount}/> : <div></div>}
+                                  setStemCount={setStemCount}/> : <></>}
                 </div>
 
                 <div>

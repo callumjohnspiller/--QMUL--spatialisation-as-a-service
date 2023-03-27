@@ -9,6 +9,7 @@ import {
 import {sqsClient} from "./libs/sqsClient";
 import {Container} from "@mui/material";
 import Body from "./components/Body";
+import styles from './styles/app.module.css';
 
 export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
     constructor(props: Record<string, unknown>) {
@@ -21,14 +22,7 @@ export default class App extends React.Component<Record<string, unknown>, { uuid
     render(): ReactElement {
         return (
             <>
-                <Container sx={{
-                    background: '#0077c2',
-                    minHeight: '100vh',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
+                <Container>
                     <Body uuid={this.state.uuid}
                           createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
                           getMessage={getMessage}
