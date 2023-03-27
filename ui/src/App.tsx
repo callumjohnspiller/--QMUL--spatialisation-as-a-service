@@ -9,7 +9,6 @@ import {
 import {sqsClient} from "./libs/sqsClient";
 import {Container} from "@mui/material";
 import Body from "./components/Body";
-import styles from './styles/app.module.css';
 
 export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
     constructor(props: Record<string, unknown>) {
