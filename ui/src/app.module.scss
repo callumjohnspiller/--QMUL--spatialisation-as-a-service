@@ -1,136 +1,43 @@
 @import './stylesheets/config/config';
 
-.app {
-  background-color: #f7f7f7;
+.home {
+  background-color: #0077c2;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+}
 
-  .app-header {
-    margin-bottom: 40px;
-    text-align: center;
-    animation: fadeInDown 1s ease-in-out;
+.title {
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+  animation: fadeInDown 1s ease-in-out;
+}
 
-    h1 {
-      font-size: 3rem;
-    }
+.button {
+  font-size: 1.5rem;
+  background-color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-top: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
   }
+}
 
-  .slide-container {
-    width: 80%;
-    max-width: 800px;
-    height: 50vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    animation: fadeInUp 1s ease-in-out;
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-
-      &.active {
-        opacity: 1;
-      }
-
-      .MuiCard-root {
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-
-        .MuiCardContent-root {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          .MuiTypography-h5 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            font-weight: 500;
-          }
-
-          .MuiTypography-body2 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-          }
-
-          .MuiSlider-root {
-            margin-bottom: 20px;
-            width: 80%;
-          }
-
-          .MuiButton-contained {
-            font-size: 1.5rem;
-            text-transform: none;
-          }
-        }
-      }
-    }
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
   }
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  // Responsive styles for mobile devices
-  @media only screen and (max-width: 768px) {
-    .app-header {
-      h1 {
-        font-size: 2rem;
-      }
-    }
-
-    .slide-container {
-      height: 70vh;
-
-      .slide {
-        .MuiCard-root {
-          max-width: 350px;
-
-          .MuiTypography-h5 {
-            font-size: 1.5rem;
-          }
-
-          .MuiTypography-body2 {
-            font-size: 1.2rem;
-          }
-
-          .MuiSlider-root {
-            width: 100%;
-          }
-
-          .MuiButton-contained {
-            font-size: 1.2rem;
-          }
-        }
-      }
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

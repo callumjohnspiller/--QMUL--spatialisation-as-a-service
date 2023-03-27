@@ -24,60 +24,10 @@ export default class App extends React.Component<Record<string, unknown>, { uuid
 		return (
 			<div className="app">
 				<Container maxWidth="md">
-					<header className="app-header">
-						<Typography variant="h4" component="h1">
-							Welcome to our Spatial Audio Service
-						</Typography>
-					</header>
-					<div className="slide-container">
-						<div className="slide active">
-							<Card>
-								<CardContent>
-									<Typography gutterBottom variant="h5" component="h2">
-										Step 1
-									</Typography>
-									<Typography variant="body2" color="textSecondary" component="p">
-										Upload your audio file.
-									</Typography>
-								</CardContent>
-							</Card>
-						</div>
-						<div className="slide">
-							<Card>
-								<CardContent>
-									<Typography gutterBottom variant="h5" component="h2">
-										Step 2
-									</Typography>
-									<Typography variant="body2" color="textSecondary" component="p">
-										Choose your desired spatial audio settings.
-									</Typography>
-									<Slider
-										defaultValue={30}
-										aria-labelledby="discrete-slider"
-										valueLabelDisplay="auto"
-										step={10}
-										marks
-										min={10}
-										max={110}
-									/>
-								</CardContent>
-							</Card>
-						</div>
-						<div className="slide">
-							<Card>
-								<CardContent>
-									<Typography gutterBottom variant="h5" component="h2">
-										Step 3
-									</Typography>
-									<Typography variant="body2" color="textSecondary" component="p">
-										Download your newly created spatial audio file!
-									</Typography>
-									<Button variant="contained" color="primary">
-										Download
-									</Button>
-								</CardContent>
-							</Card>
-						</div>
+
+					<div className="home">
+						<h1 className="title">Welcome to My Website</h1>
+						<button className="button">Enter</button>
 					</div>
 
 					<Body uuid={this.state.uuid}
