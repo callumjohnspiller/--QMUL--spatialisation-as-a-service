@@ -1,6 +1,5 @@
 import React, { type ReactElement } from "react";
 import { v4 as uuidv4 } from "uuid";
-import "./stylesheets/styles.scss";
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
