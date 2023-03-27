@@ -4,7 +4,7 @@ import {MemoAudioFilePlayer} from "../AudioFilePlayer";
 import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import { CreateQueueCommandOutput, ReceiveMessageResult } from "@aws-sdk/client-sqs";
-import {Button, CircularProgress, Grid, Paper, Slider} from "@mui/material";
+import {Button, CircularProgress, Grid, Slider} from "@mui/material";
 import Representation from "../3dSpace/3dSpace";
 
 interface BodyProps {
@@ -208,7 +208,7 @@ function Body(props: BodyProps) {
 	};
 
 	return (
-		<Paper>
+		<div>
 			<Grid
 				container
 				direction={"row"}
@@ -282,7 +282,7 @@ function Body(props: BodyProps) {
 					{Representation()}
 				</Grid>
 			</Grid>
-		</Paper>
+		</div>
 	);
 }
 

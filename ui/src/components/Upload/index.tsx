@@ -8,7 +8,6 @@ import {
 	Select,
 	SelectChangeEvent
 } from "@mui/material";
-import Paper from "@mui/material/Paper";
 
 interface UploaderProps {
   setStemCount: Function;
@@ -63,12 +62,12 @@ function Uploader(props: UploaderProps) {
 	};
 
 	return (
-		<Paper>
+		<>
 			<Input type="file" onChange={handleFileChange}/>
 			{
 				(!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>
 			}
-			<Paper>{file && `${file.name} - ${file.type}`}</Paper>
+			<div>{file && `${file.name} - ${file.type}`}</div>
 			{
 				(validFile) ? <FormControl>
           How many parts do you want this file separated into?
@@ -86,10 +85,10 @@ function Uploader(props: UploaderProps) {
 					: 
 					<div></div>
 			}
-			<Paper>
+			<div>
 				{(file && validFile) ? <Button onClick={handleUploadClick}>Upload</Button> : <div></div> }
-			</Paper>
-		</Paper>
+			</div>
+		</>
 	);
 }
 
