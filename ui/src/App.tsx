@@ -2,6 +2,17 @@ import React, { type ReactElement } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { createGlobalStyle } from 'styled-components';
 
+import {
+	CreateQueueCommand,
+	DeleteMessageCommand,
+	ReceiveMessageCommand,
+	ReceiveMessageResult
+} from "@aws-sdk/client-sqs";
+
+import { sqsClient } from "./libs/sqsClient";
+import {Button, Container, Typography} from "@mui/material";
+import Body from "./components/Body";
+
 const GlobalStyle = createGlobalStyle`
   @keyframes fadeInDown {
     0% {
@@ -17,17 +28,6 @@ const GlobalStyle = createGlobalStyle`
     animation: fadeInDown 1s ease-in-out;
   }
 `;
-
-import {
-	CreateQueueCommand,
-	DeleteMessageCommand,
-	ReceiveMessageCommand,
-	ReceiveMessageResult
-} from "@aws-sdk/client-sqs";
-
-import { sqsClient } from "./libs/sqsClient";
-import {Button, Container, Typography} from "@mui/material";
-import Body from "./components/Body";
 
 export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
 	constructor (props: Record<string, unknown>) {
