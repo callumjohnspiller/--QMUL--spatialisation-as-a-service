@@ -1,16 +1,34 @@
 import React, { type ReactElement } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./stylesheets/styles.scss";
-import Body from "./components/Body";
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .MuiTypography-root.MuiTypography-h1 {
+    animation: fadeInDown 1s ease-in-out;
+  }
+`;
+
 import {
 	CreateQueueCommand,
 	DeleteMessageCommand,
 	ReceiveMessageCommand,
 	ReceiveMessageResult
 } from "@aws-sdk/client-sqs";
+
 import { sqsClient } from "./libs/sqsClient";
-import {Button, Card, CardContent, Container, Slider, Typography} from "@mui/material";
-import './app.module.scss';
+import {Button, Container, Typography} from "@mui/material";
+import Body from "./components/Body";
 
 export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
 	constructor (props: Record<string, unknown>) {
@@ -22,22 +40,23 @@ export default class App extends React.Component<Record<string, unknown>, { uuid
 
 	render (): ReactElement {
 		return (
-			<div className="app">
-				<Container maxWidth="md">
-
-					<div className="home">
-						<h1 className="title">Welcome to My Website</h1>
-						<button className="button">Enter</button>
-					</div>
+			<>
+				<GlobalStyle/>
+				<Container sx={{ background: '#0077c2', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+					<Typography variant="h1" sx={{ color: '#fff', fontSize: '3rem', textAlign: 'center', animation: '$fadeInDown 1s ease-in-out' }}>
+						Welcome to My Website
+					</Typography>
+					<Button variant="contained" color="secondary" sx={{ fontSize: '1.5rem', padding: '10px 20px', marginTop: '40px', transition: 'all 0.3s ease-in-out', '&:hover': { transform: 'scale(1.05)' } }}>
+						Enter
+					</Button>
 
 					<Body uuid={this.state.uuid}
 						  createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
 						  getMessage={getMessage}
 						  deleteMessage={deleteMessage}
 					/>
-
 				</Container>
-			</div>
+			</>
 		)
 	}
 }

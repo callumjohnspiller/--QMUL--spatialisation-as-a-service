@@ -208,9 +208,9 @@ function Body(props: BodyProps) {
 	};
 
 	return (
-		<Paper elevation={3}>
+		<Paper>
 			<Grid
-				container spacing={2}
+				container
 				direction={"row"}
 				justifyContent={"center"}
 				alignItems={"stretch"}
