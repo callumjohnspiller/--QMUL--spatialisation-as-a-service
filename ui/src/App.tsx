@@ -7,7 +7,6 @@ import {
     ReceiveMessageResult
 } from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
-import {Container} from "@mui/material";
 import Body from "./components/Body";
 
 export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
@@ -21,13 +20,11 @@ export default class App extends React.Component<Record<string, unknown>, { uuid
     render(): ReactElement {
         return (
             <>
-                <Container>
-                    <Body uuid={this.state.uuid}
-                          createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
-                          getMessage={getMessage}
-                          deleteMessage={deleteMessage}
-                    />
-                </Container>
+                <Body uuid={this.state.uuid}
+                      createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
+                      getMessage={getMessage}
+                      deleteMessage={deleteMessage}
+                />
             </>
         )
     }
