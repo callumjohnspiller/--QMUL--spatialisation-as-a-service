@@ -38,12 +38,12 @@ export function Box(props: any) {
 }
 
 export function Head(props: any) {
-    const gltf = useLoader(GLTFLoader, "./scene.gltf");
-    const groupRef = useRef<Group>(null);
+    const headRef = useRef<Group>();
 
-    return (
-        <group ref={groupRef}>
-            <primitive object={gltf.scene} />
-        </group>
-    );
+    const gltf = useLoader(GLTFLoader, 'scene.gltf');
+    React.useMemo(() => {
+        headRef.current = gltf.scene;
+    }, [gltf.scene]);
+
+    return <primitive {...props} object={headRef.current} />;
 }
