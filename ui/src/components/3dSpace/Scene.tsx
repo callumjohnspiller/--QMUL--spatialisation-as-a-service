@@ -2,7 +2,7 @@ import React from "react";
 import {Canvas, useLoader} from "@react-three/fiber";
 import {OrbitControls, Stats} from '@react-three/drei';
 import {Box} from './Objects';
-import {Head} from './prefabs/head/Head-compressed';
+import {Head} from './Head-compressed';
 
 interface SceneProps {
     spatialParams: any,
