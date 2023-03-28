@@ -30,7 +30,12 @@ function Scene(props: SceneProps) {
                                             ]}/>
                             })
                         }
-                        <OrbitControls/>
+                        <OrbitControls
+                            minAzimuthAngle={-Math.PI / 4}
+                            maxAzimuthAngle={Math.PI / 4}
+                            minPolarAngle={Math.PI / 6}
+                            maxPolarAngle={Math.PI - Math.PI / 6}
+                        />
                         <Stats/>
                     </Canvas>
                     : <></>
