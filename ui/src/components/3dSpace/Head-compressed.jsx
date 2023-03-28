@@ -11,7 +11,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export function Head(props) {
-  const { nodes, materials } = useGLTF('head.glb')
+  const { nodes, materials } = useGLTF('../../../public/prefabs/head/head.glb')
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
