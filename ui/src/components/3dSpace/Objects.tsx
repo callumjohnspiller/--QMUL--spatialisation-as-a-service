@@ -39,7 +39,6 @@ export function Box(props: any) {
 
 export function Head(props: any) {
     const headRef = useRef<Group>();
-
     const gltf = useLoader(GLTFLoader, 'scene.gltf');
     React.useMemo(() => {
         headRef.current = gltf.scene;

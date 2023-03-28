@@ -15,7 +15,7 @@ function Scene(props: SceneProps) {
                     <Canvas camera={{position: [0, 0, 3]}}>
                         <ambientLight intensity={0.5}/>
                         <pointLight position={[10, 10, 10]}/>
-                        <Head position={[0,0,0]}/>
+                        {/*<Head position={[0,0,0]}/>*/}
                         {
                             props.fileLabels.map((label, index) => {
                                 return <Box name={label}
