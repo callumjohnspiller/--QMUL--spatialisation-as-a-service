@@ -1,14 +1,26 @@
 import React from "react";
 import {Canvas, useLoader} from "@react-three/fiber";
 import {OrbitControls, Stats} from '@react-three/drei';
-import {Box} from './Objects';
-import {Head} from './Head-compressed';
+import {Box, Head} from './Objects';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 interface SceneProps {
     spatialParams: any,
     fileLabels: string[]
 }
 function Scene(props: SceneProps) {
+
+    const loader = new GLTFLoader();
+    loader.load(
+        './scene.gltf',
+        (gltf) => {
+            console.log('Loaded model:', gltf);
+            // do something with the model
+        },
+        (error) => {
+            console.log('Error loading model:', error);
+        }
+    );
 
     return (
         <div style={{height: "100vh"}}>

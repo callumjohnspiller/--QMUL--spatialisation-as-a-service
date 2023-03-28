@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState, useMemo} from "react";
-import {useFrame} from "@react-three/fiber";
+import {useFrame, useLoader} from "@react-three/fiber";
 import * as THREE from 'three';
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import {Group} from "three";
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);
@@ -32,5 +34,16 @@ export function Box(props: any) {
             <boxGeometry />
             <meshBasicMaterial color={"green"} wireframe={true} />
         </mesh>
+    );
+}
+
+export function Head(props: any) {
+    const gltf = useLoader(GLTFLoader, "./scene.gltf");
+    const groupRef = useRef<Group>(null);
+
+    return (
+        <group ref={groupRef}>
+            <primitive object={gltf.scene} />
+        </group>
     );
 }
