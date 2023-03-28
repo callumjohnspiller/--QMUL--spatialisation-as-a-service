@@ -208,7 +208,8 @@ function Body(props: BodyProps) {
         });
     };
 
-    return (<div>
+    return (
+        <div>
             <div>
                 <div>
                     {(!uploadStatus) ?
@@ -270,6 +271,9 @@ function Body(props: BodyProps) {
                                 Render 3D Audio
                             </Button>
                         </li> : <li>Waiting for task token</li>}
+                        <div>
+                            <Scene spatialParams={spatialParams} fileLabels={fileLabels}/>
+                        </div>
                     </ol> : <></>}
                 </div>
 
@@ -277,11 +281,9 @@ function Body(props: BodyProps) {
                     {(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl}/> : <></>}
                 </div>
 
-                <div>
-                    {Scene()}
-                </div>
             </div>
-        </div>);
+        </div>
+    );
 }
 
 export default Body;
