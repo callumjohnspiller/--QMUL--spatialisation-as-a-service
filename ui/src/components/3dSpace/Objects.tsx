@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState, useMemo} from "react";
 import {useFrame} from "@react-three/fiber";
-import * as THREE from 'three'
+import * as THREE from 'three';
+import { useGLTF } from '@react-three/drei'
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);
@@ -34,3 +35,19 @@ export function Box(props: any) {
         </mesh>
     );
 }
+
+export function Head(props: any) {
+    const group = useRef()
+    const head = useGLTF('./prefabs/head/scene.gltf')
+    head.asset.
+    return (
+        <group ref={group} {...props} dispose={null}>
+            <mesh castShadow receiveShadow geometry={head.Curve007_1.geometry} material={materials['Material.001']} />
+            <mesh castShadow receiveShadow geometry={nodes.Curve007_2.geometry} material={materials['Material.002']} />
+        </group>
+    )
+
+}
+
+
+useGLTF.preload('./prefabs/head/scene.gltf')
