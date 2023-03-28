@@ -1,7 +1,9 @@
-import React from "react";
-import {Canvas} from "@react-three/fiber";
+import React, {useRef} from "react";
+import {Canvas, useLoader} from "@react-three/fiber";
 import {OrbitControls, Stats} from '@react-three/drei';
 import {Box} from './Objects';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 interface SceneProps {
     spatialParams: any,
@@ -10,17 +12,29 @@ interface SceneProps {
 
 
 function Scene(props: SceneProps) {
+    const ref = useRef();
+    const {nodes} = useLoader(GLTFLoader, './prefabs/head/scene.gltf');
+    const headMesh = nodes.head as THREE.Mesh;
+
+    const lineMaterial = new THREE.LineBasicMaterial({ color: '#ffffff' });
+    const wireframe = new THREE.WireframeGeometry(headMesh.geometry);
+    const lineSegments = new THREE.LineSegments(wireframe, lineMaterial);
+
     return (
         <div style={{height: "100vh"}}>
             {
                 (props.fileLabels && props.spatialParams) ?
-                    <Canvas camera={{position: [0, 0, 2]}}>
+                    <Canvas camera={{position: [0, 0, 3]}}>
+                        <mesh geometry={headMesh.geometry}>
+                            <meshBasicMaterial visible={false} />
+                            <lineSegments geometry={wireframe} material={lineMaterial} />
+                        </mesh>
                         <ambientLight intensity={0.5}/>
                         <pointLight position={[10, 10, 10]}/>
                         {
                             props.fileLabels.map((label, index) => {
                                 return <Box name={label}
-                                            position={[props.spatialParams[props.fileLabels[index]]["X"], props.spatialParams[props.fileLabels[index]]["Y"], props.spatialParams[props.fileLabels[index]]["X"]]}/>
+                                            position={[props.spatialParams[props.fileLabels[index]]["X"], props.spatialParams[props.fileLabels[index]]["Y"], props.spatialParams[props.fileLabels[index]]["Z"]]}/>
                             })
                         }
                         <OrbitControls/>
