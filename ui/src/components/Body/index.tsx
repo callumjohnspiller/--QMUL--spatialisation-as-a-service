@@ -5,7 +5,7 @@ import {sfnClient} from "../../libs/stepFunctionsClient";
 import {SendTaskSuccessCommand} from "@aws-sdk/client-sfn";
 import {CreateQueueCommandOutput, ReceiveMessageResult} from "@aws-sdk/client-sqs";
 import {Button, CircularProgress, Slider} from "@mui/material";
-import Representation from "../3dSpace/3dSpace";
+import Scene from "../3dSpace/Scene";
 
 interface BodyProps {
     uuid: string,
@@ -278,7 +278,7 @@ function Body(props: BodyProps) {
                 </div>
 
                 <div>
-                    {Representation()}
+                    {Scene()}
                 </div>
             </div>
         </div>);
