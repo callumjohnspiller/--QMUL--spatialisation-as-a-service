@@ -10,7 +10,8 @@ interface SceneProps {
     fileLabels: string[]
 }
 function Scene(props: SceneProps) {
-    const gltf = useLoader(GLTFLoader, './prefabs/head/scene.gltf')
+    const gltf = useLoader(GLTFLoader, './prefabs/head/scene.gltf');
+    console.log(gltf.scene);
 
     return (
         <div style={{height: "100vh"}}>
