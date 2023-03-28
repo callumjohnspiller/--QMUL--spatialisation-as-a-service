@@ -1,4 +1,4 @@
-import React, {type ReactElement} from "react";
+import React, {Component} from "react";
 import {v4 as uuidv4} from "uuid";
 import {
     CreateQueueCommand,
@@ -8,24 +8,37 @@ import {
 } from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
 import Body from "./components/Body";
+import "./styles/app.css";
+import {Button} from "@mui/material";
 
-export default class App extends React.Component<Record<string, unknown>, { uuid: string }> {
-    constructor(props: Record<string, unknown>) {
+export default class App extends Component<{}, { uuid: string, showUpload: boolean }> {
+    constructor(props: {}) {
         super(props);
         this.state = {
-            uuid: uuidv4()
+            uuid: uuidv4(),
+            showUpload: false
         };
     }
 
-    render(): ReactElement {
+    handleEntry = () => {
+        this.setState({showUpload: true});
+    };
+
+    render() {
         return (
-            <>
-                <Body uuid={this.state.uuid}
-                      createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
-                      getMessage={getMessage}
-                      deleteMessage={deleteMessage}
-                />
-            </>
+            <div>
+                <h1>Spatialisation As A Service</h1>
+                <Button onClick={this.handleEntry}>Enter</Button>
+                {
+                    this.state.showUpload
+                    &&
+                    <Body uuid={this.state.uuid}
+                          createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
+                          getMessage={getMessage}
+                          deleteMessage={deleteMessage}
+                    />
+                }
+            </div>
         )
     }
 }
