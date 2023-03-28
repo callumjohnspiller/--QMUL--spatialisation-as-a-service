@@ -1,17 +1,14 @@
-import React, {useRef} from "react";
+import React from "react";
 import {Canvas, useLoader} from "@react-three/fiber";
-import {OrbitControls, Stats, useGLTF} from '@react-three/drei';
+import {OrbitControls, Stats} from '@react-three/drei';
 import {Box} from './Objects';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import {Head} from './prefabs/head/Head-compressed';
 
 interface SceneProps {
     spatialParams: any,
     fileLabels: string[]
 }
 function Scene(props: SceneProps) {
-    const gltf = useLoader(GLTFLoader, './prefabs/head/scene.gltf');
-    console.log(gltf.scene);
 
     return (
         <div style={{height: "100vh"}}>
@@ -20,7 +17,7 @@ function Scene(props: SceneProps) {
                     <Canvas camera={{position: [0, 0, 3]}}>
                         <ambientLight intensity={0.5}/>
                         <pointLight position={[10, 10, 10]}/>
-                        <primitive object={gltf.scene} position={[0,0,0]}/>
+                        <Head position={[0,0,0]}/>
                         {
                             props.fileLabels.map((label, index) => {
                                 return <Box name={label}
