@@ -4,6 +4,7 @@ import { SendTaskSuccessCommand } from '@aws-sdk/client-sfn';
 import { CreateQueueCommandOutput, ReceiveMessageResult } from '@aws-sdk/client-sqs';
 import Header from '../Header/Header';
 import { getMain } from './getMain';
+import Slideshow from './Slideshow';
 
 interface BodyProps {
   uuid: string,
@@ -207,15 +208,31 @@ function Body(props: BodyProps) {
     });
   };
 
+  const slides = [
+    {
+      title: 'Slide 1',
+      content: 'This is slide 1',
+    },
+    {
+      title: 'Slide 2',
+      content: 'This is slide 2',
+    },
+    {
+      title: 'Slide 3',
+      content: 'This is slide 3',
+    },
+  ];
+
   return (
     <div>
       <header>
         <Header />
       </header>
-      <main>
-
-      </main>
-      {getMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
+      <div>
+        {!onBoarded ?
+          <Slideshow slides={slides} onNavigateToApp={() => setOnBoarded(true)} />
+          : getMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
+      </div>
     </div>
   );
 }
