@@ -33,9 +33,6 @@ export default function App() {
             )}
             {siteEntered && (
                 <animated.div style={containerProps}>
-                    <header>
-                        <h1>Spatialisation As A Service</h1>
-                    </header>
                     <main>
                         {
                           siteEntered
