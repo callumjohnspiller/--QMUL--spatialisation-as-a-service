@@ -21,9 +21,9 @@ function Scene(props: SceneProps) {
                             props.fileLabels.map((label, index) => {
                                 return <Box name={label}
                                             position={[
-                                                props.spatialParams[props.fileLabels[index]]["Z"],// Z
-                                                props.spatialParams[props.fileLabels[index]]["X"], // X
-                                                props.spatialParams[props.fileLabels[index]]["Y"] // Y
+                                                props.spatialParams[props.fileLabels[index]]["Y"], //updown
+                                                props.spatialParams[props.fileLabels[index]]["Z"], //
+                                                props.spatialParams[props.fileLabels[index]]["X"]
                                             ]}/>
                             })
                         }

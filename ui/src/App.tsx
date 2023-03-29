@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {
     CreateQueueCommand,
@@ -10,6 +10,7 @@ import {sqsClient} from "./libs/sqsClient";
 import Body from "./components/Body";
 import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
 import { useSpring, animated } from '@react-spring/web';
+import Header from './components/Header/Header';
 
 export default function App() {
     const [siteEntered, setSiteEntered] = useState(false);
@@ -33,7 +34,8 @@ export default function App() {
             )}
             {siteEntered && (
                 <animated.div style={containerProps}>
-                    <main>
+                    <Header/>
+                    <div>
                         {
                           siteEntered
                           &&
@@ -43,7 +45,7 @@ export default function App() {
                                 deleteMessage={deleteMessage}
                           />
                         }
-                    </main>
+                    </div>
                 </animated.div>
             )}
         </div>
@@ -79,7 +81,7 @@ async function getMessage(queueURL: string | undefined): Promise<ReceiveMessageR
     }
     return new class implements ReceiveMessageResult {
 
-    };
+    }();
 }
 
 async function deleteMessage(queueUrl: string | undefined, receiptHandle: string): Promise<void> {
