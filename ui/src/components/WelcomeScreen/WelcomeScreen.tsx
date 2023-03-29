@@ -1,34 +1,85 @@
 import React from 'react';
 import { animated, PickAnimated, SpringValues, useSpring } from '@react-spring/web';
 import styled from 'styled-components';
+import { Button } from '@mui/material';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
 
 interface WelcomeScreenProps {
   onClick: () => void;
 }
 
-const Title = styled.h1`
+const Title = styled.div`
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
   font-size: 64px;
   font-weight: bold;
   text-align: center;
   margin-top: 20vh;
 `;
 
+const Subtitle = styled.h2`
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20vh;
+`;
+
+const ButtonContainer = styled.div`
+  text-align: center;
+  margin-top: 1vh;
+`
+
 const AnimatedTitle = animated(Title);
+const AnimatedSubtitle = animated(Subtitle);
+const AnimatedButtonContainer = animated(ButtonContainer);
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
-  const styles: SpringValues<PickAnimated<{ delay: number; from: { opacity: number }; to: { opacity: number } }>> = useSpring({
+  const styles: SpringValues<PickAnimated<{
+    delay: number;
+    from: { opacity: number };
+    to: { opacity: number }
+  }>> = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
     delay: 1000
   });
 
+  const styles2: SpringValues<PickAnimated<{
+    delay: number;
+    from: { opacity: number };
+    to: { opacity: number }
+  }>> = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 1500
+  });
+
+  const styles3: SpringValues<PickAnimated<{
+    delay: number;
+    from: { opacity: number };
+    to: { opacity: number }
+  }>> = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 2000
+  });
+
   return (
-    <AnimatedTitle style={styles} onClick={onClick}>
-      Spatialisation As A Service
-    </AnimatedTitle>
+    <div>
+      <AnimatedTitle style={styles}>
+        Spatialisation As A Service
+      </AnimatedTitle>
+      <AnimatedSubtitle style={styles2}>
+        (Don't forget your headphones!)
+        <HeadphonesIcon sx={{padding: 5, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 1, width: 80, height: 80}}/>
+      </AnimatedSubtitle>
+      <AnimatedButtonContainer style={styles3}>
+        <Button onClick={onClick}
+                variant="contained"
+                sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
+      </AnimatedButtonContainer>
+    </div>
   );
 };
-
 
 
 export default WelcomeScreen;
