@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {
     CreateQueueCommand,
@@ -8,39 +8,49 @@ import {
 } from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
 import Body from "./components/Body";
-import "./styles/app.css";
-import {Button} from "@mui/material";
+import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
+import { useSpring, animated } from '@react-spring/web';
 
-export default class App extends Component<{}, { uuid: string, showUpload: boolean }> {
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            uuid: uuidv4(),
-            showUpload: false
-        };
-    }
+export default function App() {
+    const [siteEntered, setSiteEntered] = useState(false);
+    const [uuid, setUuid] = useState("");
 
-    handleEntry = () => {
-        this.setState({showUpload: true});
+    const handleEntry = () => {
+        setSiteEntered(true);
+        setUuid(uuidv4());
     };
 
-    render() {
-        return (
-            <div>
-                <h1>Spatialisation As A Service</h1>
-                <Button onClick={this.handleEntry}>Enter</Button>
-                {
-                    this.state.showUpload
-                    &&
-                    <Body uuid={this.state.uuid}
-                          createSQSQueue={async () => await createSQSQueue(this.state.uuid)}
-                          getMessage={getMessage}
-                          deleteMessage={deleteMessage}
-                    />
-                }
-            </div>
-        )
-    }
+    const containerProps = useSpring({
+        opacity: siteEntered ? 1 : 0,
+        transform: siteEntered ? 'translateY(0)' : 'translateY(100px)',
+    });
+
+
+    return (
+        <div className={"app"}>
+            {!siteEntered && (
+              <WelcomeScreen onClick={handleEntry} />
+            )}
+            {siteEntered && (
+                <animated.div style={containerProps}>
+                    <header>
+                        <h1>Spatialisation As A Service</h1>
+                    </header>
+                    <main>
+                        {
+                          siteEntered
+                          &&
+                          <Body uuid={uuid!}
+                                createSQSQueue={async () => await createSQSQueue(uuid!)}
+                                getMessage={getMessage}
+                                deleteMessage={deleteMessage}
+                          />
+                        }
+                    </main>
+                </animated.div>
+            )}
+        </div>
+    )
 }
 
 async function createSQSQueue(uuid: string) {
