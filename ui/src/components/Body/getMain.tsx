@@ -29,7 +29,8 @@ export function GetMain(uploadStatus: boolean, props: BodyProps, setUploadStatus
     </div>
 
     <div>
-      {(fileUrls && !submitted) ? <ol>
+      {(fileUrls && !submitted) ?
+      <ol>
         {fileUrls.map((url, index) => {
           return (<li key={index}>
             <p>{fileLabels[index]}</p>
@@ -74,12 +75,11 @@ export function GetMain(uploadStatus: boolean, props: BodyProps, setUploadStatus
             Render 3D Audio
           </Button>
         </li> : <li>Waiting for task token</li>}
-        <div>
-          <Scene spatialParams={spatialParams} fileLabels={fileLabels} />
-        </div>
       </ol> : <></>}
     </div>
-
+    <div>
+      <Scene spatialParams={spatialParams} fileLabels={fileLabels} />
+    </div>
     <div>
       {(outputUrl) ? <MemoAudioFilePlayer audioURL={outputUrl} /> : <></>}
     </div>

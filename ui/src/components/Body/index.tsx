@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { sfnClient } from '../../libs/stepFunctionsClient';
 import { SendTaskSuccessCommand } from '@aws-sdk/client-sfn';
 import { CreateQueueCommandOutput, ReceiveMessageResult } from '@aws-sdk/client-sqs';
-import Header from '../Header/Header';
 import { GetMain } from './getMain';
 
 interface BodyProps {

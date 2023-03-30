@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState, useMemo} from "react";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from 'three';
+import { Html } from '@react-three/drei';
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);
     const [hovered, setHover] = useState(false);
-    const [position, setPosition] = useState(props.position)
-    const geometry = useMemo(() => new THREE.BoxGeometry(), [])
+    const [position, setPosition] = useState(props.position);
+    const geometry = useMemo(() => new THREE.BoxGeometry(), []);
 
 
     useEffect(() => {
@@ -24,7 +25,6 @@ export function Box(props: any) {
         <mesh
             {...props}
             ref={ref}
-            onPointerDown={(e) => console.log('pointer down ' + e.object.position.y)}
             onPointerOver={() => setHover(true)}
             onPointerOut={() => setHover(false)}
             geometry={geometry}
@@ -33,4 +33,39 @@ export function Box(props: any) {
             <meshBasicMaterial color={"green"} wireframe={true} />
         </mesh>
     );
+}
+
+export function Plane(props: any) {
+    const ref = useRef<THREE.Mesh>(null);
+    return (
+      <mesh
+        {...props}
+        ref={ref}
+      >
+          <planeBufferGeometry attach="geometry" args={[40, 40, 3, 3]} />
+          <meshPhongMaterial attach="material" color="" wireframe={false} opacity={0.8}/>
+      </mesh>
+    )
+}
+
+export function Head(props:any) {
+    const ref = useRef<THREE.Mesh>(null);
+    return (
+      <mesh
+        {...props}
+        ref={ref}
+      >
+          <planeBufferGeometry attach="geometry" args={[0,0,0,0]} />
+          <meshPhongMaterial attach="material" color="gray" wireframe={true} opacity={0.8}/>
+      </mesh>
+    )
+}
+
+export function Label(props:any) {
+    const ref = useRef<THREE.Mesh>(null);
+    return (
+      <Html center position={props.position}>
+          <p>props.content</p>
+      </Html>
+    )
 }
