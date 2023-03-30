@@ -53,8 +53,8 @@ export function Plane(props: any) {
 
 export function Head(props:any) {
     // @ts-ignore
-  const GLTF = useGLTF('/scene.gltf', true, true, GLTFLoader )
-  return (<primitive object={GLTF} />)
+  const GLTF = useGLTF('/scene.gltf', true, true )
+  return (<primitive object={GLTF.scenes[0]} />)
 }
 
 export function Label(props:any) {
