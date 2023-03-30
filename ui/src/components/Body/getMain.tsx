@@ -1,9 +1,10 @@
 import Uploader from '../Upload';
 import { Button, CircularProgress, Slider } from '@mui/material';
-import { MemoAudioFilePlayer } from '../AudioFilePlayer';
+import { MemoAudioFilePlayer } from '../AudioFilePlayers';
 import Scene from '../3dSpace/Scene';
 import React, {useState} from 'react';
 import { BodyProps } from './index';
+import {MemoHowlerGroup} from "../AudioFilePlayers/Howler";
 
 export function GetMain(
   uploadStatus: boolean,
@@ -41,11 +42,11 @@ export function GetMain(
             }}>
               Pause Stems
             </Button>
+            <MemoHowlerGroup audioURLS={fileUrls}/>
             <ol>
               {fileUrls.map((url, index) => {
                 return (
                     <li key={index}>
-                      <MemoAudioFilePlayer audioURL={url} playing={playing} name={fileLabels[index]}/>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                                 aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
@@ -75,6 +76,7 @@ export function GetMain(
                   </div>
                 </li>);
               })}
+
               {(taskToken) ? <li>
                 <p>
                   Submit parameters
@@ -91,7 +93,7 @@ export function GetMain(
           </div>
       }
       {fileUrls && <Scene spatialParams={spatialParams} fileLabels={fileLabels} />}
-      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing}/>}
+      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl}/>}
     </main>
   );
 }
