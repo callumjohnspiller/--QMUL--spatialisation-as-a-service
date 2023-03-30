@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState, useMemo} from "react";
-import {useFrame} from "@react-three/fiber";
+import {useFrame, extend} from "@react-three/fiber";
 import * as THREE from 'three';
-import { Html } from '@react-three/drei';
+import { Html} from '@react-three/drei';
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stats } from '@react-three/drei';
+import { OrbitControls, Stats, Text } from '@react-three/drei';
 import { Box, Label, Plane } from './Objects';
 
 interface SceneProps {
@@ -22,6 +22,13 @@ function Scene(props: SceneProps) {
           <Plane position={[0, -20, 0]} rotation={[Math.PI / -2, 0, 0]} />
           <Plane position={[20, 0, 0]} rotation={[Math.PI / 1, Math.PI / -2, 0]} />
           <Plane position={[-20, 0, 0]} rotation={[Math.PI / 1, Math.PI / 2, 0]} />
+          <Text
+            scale={[10, 10, 10]}
+            color="black" // default
+            position={[0, 0, -20]}
+          >
+            FORWARD
+          </Text>
           {
             props.fileLabels.map((label, index) => {
               return (
