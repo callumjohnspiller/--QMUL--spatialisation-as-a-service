@@ -12,7 +12,7 @@ interface BodyProps {
   deleteMessage: (sqsQueueUrl: string | undefined, receiptHandle: string) => void
 }
 
-export function getMain(uploadStatus: boolean, props: BodyProps, setUploadStatus: (value: (((prevState: boolean) => boolean) | boolean)) => void, stemCount: string | number, setStemCount: (value: (((prevState: (string | number)) => (string | number)) | string | number)) => void, fileUrls: string[] | undefined, submitted: boolean, outputUrl: string | undefined, fileLabels: string[], spatialParams: any, handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void, taskToken: string | undefined, handleSubmit: () => void) {
+export function GetMain(uploadStatus: boolean, props: BodyProps, setUploadStatus: (value: (((prevState: boolean) => boolean) | boolean)) => void, stemCount: string | number, setStemCount: (value: (((prevState: (string | number)) => (string | number)) | string | number)) => void, fileUrls: string[] | undefined, submitted: boolean, outputUrl: string | undefined, fileLabels: string[], spatialParams: any, handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void, taskToken: string | undefined, handleSubmit: () => void) {
   return <main>
     <div>
       {(!uploadStatus) ?
