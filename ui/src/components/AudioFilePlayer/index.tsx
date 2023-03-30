@@ -23,17 +23,24 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
 		}
 	},[props.playing]);
 
+	useEffect(() => {
+		// when component unmounts we want sound to stop playing if playing already
+		return () => {
+			sound.stop();
+		}
+	},[])
+
 	return (
 		<Stack
 			spacing={2}
 		>
-			<Button onClick={() => props.setPlaying(true)}>
+			<Button onClick={() => props.setPlaying()}>
 				{"Play"}
 			</Button>
 			<div>
 				{(sound.playing() ? <PlayArrowIcon/> : "")}
 			</div>
-			<Button onClick={() => props.setPlaying(false)}>
+			<Button onClick={() => props.setPlaying()}>
 				{"Pause"}
 			</Button>
 		</Stack>

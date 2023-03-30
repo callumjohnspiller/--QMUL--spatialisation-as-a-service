@@ -78,7 +78,7 @@ export function GetMain(
         </ol>
       }
       {fileUrls && <Scene spatialParams={spatialParams} fileLabels={fileLabels} />}
-      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing} setPlaying={setPlaying}/>}
+      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing} setPlaying={() => setPlaying(!playing)}/>}
     </main>
   );
 }
