@@ -8,21 +8,30 @@ interface HowlerProps {
     fileLabels: any
 }
 function HowlerGroup(props: HowlerProps) {
-    Howler.pos(0,0,0,)
+    Howler.pos(0,0,0,);
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
             src: url,
             preload: true
-        })
+        });
+        howls[url].pannerAttr({
+            panningModel: 'HRTF',
+            rolloffFactor: 2.5,
+            distanceModel: 'exponential'
+        });
     })
 
     useEffect(() => {
         props.audioURLS.forEach(function(url, index) {
-            howls[url].pos([props.spatialParams[props.fileLabels[index]]['X'], props.spatialParams[props.fileLabels[index]]['Y'], props.spatialParams[props.fileLabels[index]]['Z']]);
+            howls[url].pos(props.spatialParams[props.fileLabels[index]]['X'], props.spatialParams[props.fileLabels[index]]['Y'], props.spatialParams[props.fileLabels[index]]['Z']);
         });
     }, [props.spatialParams]);
+
+    useEffect(() => {
+
+    })
 
     const handlePlay = () => {
         props.audioURLS.forEach(function(url) {
