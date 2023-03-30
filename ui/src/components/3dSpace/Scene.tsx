@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats, Text } from '@react-three/drei';
 import { Box, Head, Label, Plane } from './Objects';
@@ -11,7 +11,7 @@ interface SceneProps {
 function Scene(props: SceneProps) {
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      {
+      {<Suspense>
         <Canvas camera={{ position: [2, 2, 10] }}>
           <axesHelper args={[20]} />
           <axesHelper args={[-20]} />
@@ -40,9 +40,9 @@ function Scene(props: SceneProps) {
                     props.spatialParams[props.fileLabels[index]]['Z']
                   ]} />
                   <Label position={[
-                      props.spatialParams[props.fileLabels[index]]["X"],
-                      props.spatialParams[props.fileLabels[index]]["Y"] -1,
-                      props.spatialParams[props.fileLabels[index]]["Z"]
+                    props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["Y"] -1,
+                    props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
                 </group>
@@ -60,6 +60,7 @@ function Scene(props: SceneProps) {
           />
           <Stats />
         </Canvas>
+      </Suspense>
       }
     </div>
   );

@@ -43,7 +43,7 @@ export function Plane(props: any) {
         {...props}
         ref={ref}
       >
-          <planeBufferGeometry attach="geometry" args={[40, 40, 3, 3]} />
+          <planeGeometry attach="geometry" args={[40, 40, 3, 3]} />
           <meshPhongMaterial attach="material" color="63ADF2" wireframe={false} opacity={0.8}/>
       </mesh>
     )
@@ -51,13 +51,8 @@ export function Plane(props: any) {
 
 export function Head(props:any) {
     // @ts-ignore
-  const { nodes, materials } = useGLTF('/scene.gltf')
-    const ref = useRef<THREE.Mesh>(null);
-    return (
-      <group {...props} dispose={null}>
-          <mesh castShadow={true} receiveShadow={true} geometry={nodes.Sketchfab_model.geometry} material={materials.head} material-envMapIntensity={0.8} />
-      </group>
-    )
+  const GLTF = useGLTF('/scene.gltf')
+  return (<primitive object={GLTF.scene} />)
 }
 
 export function Label(props:any) {
