@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState, useMemo} from "react";
-import {useFrame, extend} from "@react-three/fiber";
+import {useFrame} from "@react-three/fiber";
 import * as THREE from 'three';
-import { Html} from '@react-three/drei';
+import {Html} from '@react-three/drei';
+import { useGLTF } from '@react-three/drei'
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);
@@ -49,15 +50,13 @@ export function Plane(props: any) {
 }
 
 export function Head(props:any) {
+    // @ts-ignore
+  const { nodes, materials } = useGLTF('/scene.gltf')
     const ref = useRef<THREE.Mesh>(null);
     return (
-      <mesh
-        {...props}
-        ref={ref}
-      >
-          <planeBufferGeometry attach="geometry" args={[0,0,0,0]}/>
-          <meshPhongMaterial attach="material" color="63ADF2" wireframe={true} opacity={0.8}/>
-      </mesh>
+      <group {...props} dispose={null}>
+          <mesh castShadow={true} receiveShadow={true} geometry={nodes.Sketchfab_model.geometry} material={materials.head} material-envMapIntensity={0.8} />
+      </group>
     )
 }
 
