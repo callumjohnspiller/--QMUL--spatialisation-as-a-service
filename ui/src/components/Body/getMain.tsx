@@ -20,7 +20,7 @@ export function GetMain(
   taskToken: string | undefined, handleSubmit: () => void
 ) {
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState<boolean>(false);
 
   return (
     <main>
@@ -30,55 +30,68 @@ export function GetMain(
       {(uploadStatus && !fileUrls) && <CircularProgress />}
       {(submitted && !outputUrl) && <CircularProgress />}
       {(fileUrls && !submitted) &&
-        <ol>
-          {fileUrls.map((url, index) => {
-            return (<li key={index}>
-              <p>{fileLabels[index]}</p>
-              <MemoAudioFilePlayer audioURL={url} playing={playing} setPlaying={setPlaying}/>
-              <div>
-                <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                        aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
-                        value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
-                  handleChange(e, newValue, fileLabels[index], 'X');
-                }} />
-                Set Value for forward/back
-              </div>
-              <div>
-                <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                        aria-label={fileLabels[index] + '_Y'}
-                        valueLabelDisplay={'auto'}
-                        value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
-                  handleChange(e, newValue, fileLabels[index], 'Y');
-                }} />
-                Set Value for left/right
-              </div>
-              <div>
-                <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                        aria-label={fileLabels[index] + '_Y'}
-                        valueLabelDisplay='auto'
-                        value={spatialParams[fileLabels[index]]['Z']} onChange={(e, newValue) => {
-                  handleChange(e, newValue, fileLabels[index], 'Z');
-                }} />
-                Set Value for up/down
-              </div>
-            </li>);
-          })}
-          {(taskToken) ? <li>
-            <p>
-              Submit parameters
-            </p>
-            <Button
-              variant={'contained'}
-              onClick={() => {
-                handleSubmit();
-              }}>
-              Render 3D Audio
+          <div>
+            <Button onClick={() => {
+              setPlaying(true)
+            }}>
+              Play Stems
             </Button>
-          </li> : <li>Waiting for task token</li>}
-        </ol>
+            <Button onClick={() => {
+              setPlaying(false)
+            }}>
+              Pause Stems
+            </Button>
+            <ol>
+              {fileUrls.map((url, index) => {
+                return (
+                    <li key={index}>
+                      <MemoAudioFilePlayer audioURL={url} playing={playing} name={fileLabels[index]}/>
+                      <div>
+                        <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
+                                aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
+                                value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'X');
+                        }} />
+                        Set Value for forward/back
+                      </div>
+
+                  <div>
+                    <Slider min={-20} max={20} defaultValue={0} step={0.1}
+                            aria-label={fileLabels[index] + '_Y'}
+                            valueLabelDisplay={'auto'}
+                            value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
+                      handleChange(e, newValue, fileLabels[index], 'Y');
+                    }} />
+                    Set Value for left/right
+                  </div>
+                  <div>
+                    <Slider min={-20} max={20} defaultValue={0} step={0.1}
+                            aria-label={fileLabels[index] + '_Y'}
+                            valueLabelDisplay='auto'
+                            value={spatialParams[fileLabels[index]]['Z']} onChange={(e, newValue) => {
+                      handleChange(e, newValue, fileLabels[index], 'Z');
+                    }} />
+                    Set Value for up/down
+                  </div>
+                </li>);
+              })}
+              {(taskToken) ? <li>
+                <p>
+                  Submit parameters
+                </p>
+                <Button
+                    variant={'contained'}
+                    onClick={() => {
+                      handleSubmit();
+                    }}>
+                  Render 3D Audio
+                </Button>
+              </li> : <li>Waiting for task token</li>}
+            </ol>
+          </div>
       }
       {fileUrls && <Scene spatialParams={spatialParams} fileLabels={fileLabels} />}
-      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing} setPlaying={() => setPlaying(!playing)}/>}
+      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing}/>}
     </main>
   );
 }
