@@ -43,7 +43,7 @@ export function Plane(props: any) {
         ref={ref}
       >
           <planeBufferGeometry attach="geometry" args={[40, 40, 3, 3]} />
-          <meshPhongMaterial attach="material" color="" wireframe={false} opacity={0.8}/>
+          <meshPhongMaterial attach="material" color="63ADF2" wireframe={false} opacity={0.8}/>
       </mesh>
     )
 }
@@ -55,7 +55,7 @@ export function Head(props:any) {
         {...props}
         ref={ref}
       >
-          <planeBufferGeometry attach="geometry" args={[0,0,0,0]} />
+          <planeBufferGeometry attach="geometry" args={[0,0,0,0]}/>
           <meshPhongMaterial attach="material" color="63ADF2" wireframe={true} opacity={0.8}/>
       </mesh>
     )
