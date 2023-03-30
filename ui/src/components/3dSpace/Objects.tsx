@@ -44,7 +44,7 @@ export function Plane(props: any) {
         ref={ref}
       >
           <planeGeometry attach="geometry" args={[40, 40, 3, 3]} />
-          <meshPhongMaterial attach="material" color="0x63ADF2" wireframe={false} opacity={0.8}/>
+          <meshPhongMaterial attach="material" color={0x63ADF2} wireframe={false} opacity={0.8}/>
       </mesh>
     )
 }

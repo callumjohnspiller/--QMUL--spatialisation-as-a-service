@@ -2,7 +2,7 @@ import Uploader from '../Upload';
 import { Button, CircularProgress, Slider } from '@mui/material';
 import { MemoAudioFilePlayer } from '../AudioFilePlayer';
 import Scene from '../3dSpace/Scene';
-import React from 'react';
+import React, {useState} from 'react';
 import { BodyProps } from './index';
 
 export function GetMain(
@@ -20,6 +20,8 @@ export function GetMain(
   taskToken: string | undefined, handleSubmit: () => void
 ) {
 
+  const [playing, setPlaying] = useState(false);
+
   return (
     <main>
       {!uploadStatus && <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
@@ -32,7 +34,7 @@ export function GetMain(
           {fileUrls.map((url, index) => {
             return (<li key={index}>
               <p>{fileLabels[index]}</p>
-              <MemoAudioFilePlayer audioURL={url} />
+              <MemoAudioFilePlayer audioURL={url} playing={playing} setPlaying={setPlaying}/>
               <div>
                 <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
@@ -76,7 +78,7 @@ export function GetMain(
         </ol>
       }
       {fileUrls && <Scene spatialParams={spatialParams} fileLabels={fileLabels} />}
-      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} />}
+      {outputUrl && <MemoAudioFilePlayer audioURL={outputUrl} playing={playing} setPlaying={setPlaying}/>}
     </main>
   );
 }

@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Howl} from "howler";
 import {Button, Stack} from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 interface AudioFilePlayerProps {
-    audioURL: string
+    audioURL: string,
+	playing: boolean,
+	setPlaying: Function
 }
 
 function AudioFilePlayer(props: AudioFilePlayerProps) {
@@ -13,27 +15,25 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
 		html5: true
 	});
 
-	const playSound = () => {
-		if (!sound.playing()) {
+	useEffect(() => {
+		if (props.playing) {
 			sound.play();
+		} else {
+			sound.pause();
 		}
-	};
-
-	const pauseSound = () => {
-		sound.pause();
-	};
+	},[props.playing]);
 
 	return (
 		<Stack
 			spacing={2}
 		>
-			<Button onClick={() => playSound()}>
+			<Button onClick={() => props.setPlaying(true)}>
 				{"Play"}
 			</Button>
 			<div>
 				{(sound.playing() ? <PlayArrowIcon/> : "")}
 			</div>
-			<Button onClick={() => pauseSound()}>
+			<Button onClick={() => props.setPlaying(false)}>
 				{"Pause"}
 			</Button>
 		</Stack>
