@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { sfnClient } from '../../libs/stepFunctionsClient';
 import { SendTaskSuccessCommand } from '@aws-sdk/client-sfn';
 import { CreateQueueCommandOutput, ReceiveMessageResult } from '@aws-sdk/client-sqs';
-import { GetMain } from './getMain';
+import Header from '../Header/Header';
+import { getMain } from './getMain';
 import Slideshow from './Slideshow';
 
 interface BodyProps {
@@ -240,9 +241,14 @@ function Body(props: BodyProps) {
 
   return (
     <div>
-      {!onBoarded ?
-        <Slideshow slides={slides} onNavigateToApp={() => setOnBoarded(true)} />
-        : GetMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
+      <header>
+        <Header />
+      </header>
+      <div>
+        {!onBoarded ?
+          <Slideshow slides={slides} onNavigateToApp={() => setOnBoarded(true)} />
+          : GetMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
+      </div>
     </div>
   );
 }
