@@ -32,9 +32,9 @@ function Scene(props: SceneProps) {
                     props.spatialParams[props.fileLabels[index]]['Z']
                   ]} />
                   <Label position={[
-                      props.spatialParams[props.fileLabels[index]]["X"] -3,
-                      props.spatialParams[props.fileLabels[index]]["Y"] -3,
-                      props.spatialParams[props.fileLabels[index]]["Z"] -3
+                      props.spatialParams[props.fileLabels[index]]["X"],
+                      props.spatialParams[props.fileLabels[index]]["Y"] -1,
+                      props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label}>
                   </Label>
                 </group>

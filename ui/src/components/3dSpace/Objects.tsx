@@ -65,7 +65,7 @@ export function Label(props:any) {
     const ref = useRef<THREE.Mesh>(null);
     return (
       <Html center position={props.position}>
-          <p>props.content</p>
+          <p>{props.content}</p>
       </Html>
     )
 }
