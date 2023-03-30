@@ -8,13 +8,6 @@ interface HowlerProps {
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setPlaybackPosition(howls[props.audioURLS[0]].seek());
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [])
-
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
