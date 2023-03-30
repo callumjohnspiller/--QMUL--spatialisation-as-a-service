@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Howl} from "howler";
 import {Button, ButtonGroup, Slider} from "@mui/material";
 
@@ -7,16 +7,19 @@ interface HowlerProps {
 }
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
-    let howls: any = {};
-    const fileLength = new Howl({
-        src: props.audioURLS[0],
-        preload: 'metadata'
-    }).duration();
-    console.log(fileLength);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPlaybackPosition(howls[props.audioURLS[0]].seek());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [])
+
+    let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
-            src: url
+            src: url,
+            preload: true
         })
     })
 
@@ -66,7 +69,7 @@ function HowlerGroup(props: HowlerProps) {
             <Slider
                 size="small"
                 min={0}
-                max={fileLength}
+                max={howls[props.audioURLS[0]]}
                 value={playbackPosition}
                 onChange={handleChange}
                 defaultValue={0}
