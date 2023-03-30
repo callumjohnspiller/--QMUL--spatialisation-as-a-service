@@ -33,7 +33,7 @@ export function GetMain(
       {(submitted && !outputUrl) && <CircularProgress />}
       {(fileUrls && !submitted) &&
           <div>
-            <MemoHowlerGroup audioURLS={fileUrls}/>
+            <MemoHowlerGroup audioURLS={fileUrls} spatialParams={spatialParams} fileLabels={fileLabels}/>
             <ol style={{width: 500}}>
               {fileUrls.map((url, index) => {
                 return (
