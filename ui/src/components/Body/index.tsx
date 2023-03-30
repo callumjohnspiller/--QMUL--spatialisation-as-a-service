@@ -241,14 +241,9 @@ function Body(props: BodyProps) {
 
   return (
     <div>
-      <header>
-        <Header />
-      </header>
-      <div>
-        {!onBoarded ?
-          <Slideshow slides={slides} onNavigateToApp={() => setOnBoarded(true)} />
-          : GetMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
-      </div>
+      {!onBoarded ?
+        <Slideshow slides={slides} onNavigateToApp={() => setOnBoarded(true)} />
+        : getMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
     </div>
   );
 }
