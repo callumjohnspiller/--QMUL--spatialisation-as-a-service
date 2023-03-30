@@ -56,7 +56,7 @@ export function Head(props:any) {
         ref={ref}
       >
           <planeBufferGeometry attach="geometry" args={[0,0,0,0]} />
-          <meshPhongMaterial attach="material" color="gray" wireframe={true} opacity={0.8}/>
+          <meshPhongMaterial attach="material" color="63ADF2" wireframe={true} opacity={0.8}/>
       </mesh>
     )
 }
