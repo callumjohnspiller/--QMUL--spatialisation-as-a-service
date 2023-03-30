@@ -3,6 +3,8 @@ import {useFrame} from "@react-three/fiber";
 import * as THREE from 'three';
 import {Html} from '@react-three/drei';
 import { useGLTF } from '@react-three/drei'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+
 
 export function Box(props: any) {
     const ref = useRef<THREE.Mesh>(null);
@@ -44,14 +46,14 @@ export function Plane(props: any) {
         ref={ref}
       >
           <planeGeometry attach="geometry" args={[40, 40, 3, 3]} />
-          <meshPhongMaterial attach="material" color="63ADF2" wireframe={false} opacity={0.8}/>
+          <meshPhongMaterial attach="material" color="0x63ADF2" wireframe={false} opacity={0.8}/>
       </mesh>
     )
 }
 
 export function Head(props:any) {
     // @ts-ignore
-  const GLTF = useGLTF('/scene.gltf')
+  const GLTF = useGLTF('/scene.gltf', true, true, GLTFLoader )
   return (<primitive object={GLTF.scene} />)
 }
 
@@ -64,4 +66,4 @@ export function Label(props:any) {
     )
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload(['/scene.gltf', '/scene.bin', '/textures/*'])
