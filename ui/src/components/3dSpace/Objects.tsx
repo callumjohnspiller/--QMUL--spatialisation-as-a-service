@@ -63,3 +63,5 @@ export function Label(props:any) {
       </Html>
     )
 }
+
+useGLTF.preload('/scene.gltf')
