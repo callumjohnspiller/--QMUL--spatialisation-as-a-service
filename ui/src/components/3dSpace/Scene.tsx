@@ -25,7 +25,7 @@ function Scene(props: SceneProps) {
           <Text
             scale={[6, 6, 6]}
             color="black" // default
-            position={[0, 0, -20]}
+            position={[0, 0, -19.5]}
           >
             FORWARDS
           </Text>
