@@ -1,5 +1,5 @@
 import Uploader from '../Upload';
-import { Button, CircularProgress, Slider } from '@mui/material';
+import {Button, CircularProgress, FormControlLabel, FormGroup, Slider, Switch} from '@mui/material';
 import { MemoAudioFilePlayer } from '../AudioFilePlayers';
 import Scene from '../3dSpace/Scene';
 import React, {useState} from 'react';
@@ -20,9 +20,11 @@ export function GetMain(
   handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void,
   taskToken: string | undefined, handleSubmit: () => void
 ) {
-
-  const [playing, setPlaying] = useState<boolean>(false);
-
+  const [mutedChannels, setMutedChannels] = useState<any>({});
+  const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+    // setMuted(event.target.checked);
+  };
   return (
     <main>
       {!uploadStatus && <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
@@ -32,21 +34,15 @@ export function GetMain(
       {(submitted && !outputUrl) && <CircularProgress />}
       {(fileUrls && !submitted) &&
           <div>
-            <Button onClick={() => {
-              setPlaying(true)
-            }}>
-              Play Stems
-            </Button>
-            <Button onClick={() => {
-              setPlaying(false)
-            }}>
-              Pause Stems
-            </Button>
             <MemoHowlerGroup audioURLS={fileUrls}/>
-            <ol>
+            <ol style={{width: 500}}>
               {fileUrls.map((url, index) => {
                 return (
                     <li key={index}>
+                      <p>{fileLabels[index]}</p>
+                      <FormGroup>
+                        <FormControlLabel control={<Switch onChange={toggleMute} inputProps={{ 'aria-label': `${url}` }}/>} label={`Mute`} />
+                      </FormGroup>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
                                 aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
