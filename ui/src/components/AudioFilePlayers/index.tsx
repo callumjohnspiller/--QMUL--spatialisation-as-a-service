@@ -23,6 +23,19 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
 		sound.pause();
 	};
 
+	const downloadFile = async () => {
+		// file object
+		const file = fetch(props.audioURL).then(response => response.blob()).then(blob => {return blob});
+		// anchor link
+		const element = document.createElement("a");
+		element.href = URL.createObjectURL(await file);
+		element.download ="output.wav";
+		// simulate link click
+		document.body.appendChild(element);
+		// Required for this to work in FireFox
+		element.click();
+	}
+
 	return (
 		<Stack
 			spacing={2}
@@ -35,6 +48,9 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
 			</div>
 			<Button onClick={() => pauseSound()}>
 				{"Pause"}
+			</Button>
+			<Button onClick={() => downloadFile()}>
+				{"Download"}
 			</Button>
 		</Stack>
 	);
