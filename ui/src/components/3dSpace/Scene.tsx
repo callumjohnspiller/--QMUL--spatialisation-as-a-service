@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats, Text } from '@react-three/drei';
-import { Box, Head, Label, Plane } from './Objects';
+import { Box, Label, Plane } from './Objects';
 
 interface SceneProps {
   spatialParams: any,
@@ -29,7 +29,6 @@ function Scene(props: SceneProps) {
           >
             FORWARDS
           </Text>
-          <Head/>
           {
             props.fileLabels.map((label, index) => {
               return (

@@ -196,7 +196,6 @@ function Body(props: BodyProps) {
       const input: any = {
         output: JSON.stringify(spatialParams), taskToken: taskToken
       };
-      console.log(input);
       const command = new SendTaskSuccessCommand(input);
       return await sfnClient.send(command);
     }
