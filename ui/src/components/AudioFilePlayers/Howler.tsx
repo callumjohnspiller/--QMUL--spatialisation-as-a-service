@@ -3,12 +3,9 @@ import {Howl} from "howler";
 import {Button, ButtonGroup, Slider} from "@mui/material";
 
 interface HowlerProps {
-    audioURLS: string[],
-    spatialParams: any,
-    fileLabels: any
+    audioURLS: string[]
 }
 function HowlerGroup(props: HowlerProps) {
-    Howler.pos(0,0,0,);
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
@@ -16,22 +13,15 @@ function HowlerGroup(props: HowlerProps) {
             src: url,
             preload: true
         });
-        howls[url].pannerAttr({
-            panningModel: 'HRTF',
-            rolloffFactor: 2.5,
-            distanceModel: 'exponential'
-        });
-    })
+    });
 
     useEffect(() => {
-        props.audioURLS.forEach(function(url, index) {
-            howls[url].pos(props.spatialParams[props.fileLabels[index]]['X'], props.spatialParams[props.fileLabels[index]]['Y'], props.spatialParams[props.fileLabels[index]]['Z']);
-        });
-    }, [props.spatialParams]);
-
-    useEffect(() => {
-
-    })
+        return () => {
+            props.audioURLS.forEach(function(url) {
+                howls[url].stop();
+            });
+        }
+    }, [])
 
     const handlePlay = () => {
         props.audioURLS.forEach(function(url) {
