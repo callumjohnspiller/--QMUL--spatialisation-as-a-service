@@ -4,7 +4,7 @@ import { SendTaskSuccessCommand } from '@aws-sdk/client-sfn';
 import { CreateQueueCommandOutput, ReceiveMessageResult } from '@aws-sdk/client-sqs';
 import { GetMain } from './getMain';
 
-interface BodyProps {
+export interface BodyProps {
   uuid: string,
   createSQSQueue: () => Promise<CreateQueueCommandOutput | undefined>,
   getMessage: (queueURL: string | undefined) => Promise<ReceiveMessageResult>,

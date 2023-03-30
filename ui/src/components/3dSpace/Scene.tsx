@@ -35,7 +35,7 @@ function Scene(props: SceneProps) {
                       props.spatialParams[props.fileLabels[index]]["X"],
                       props.spatialParams[props.fileLabels[index]]["Y"] -1,
                       props.spatialParams[props.fileLabels[index]]["Z"]
-                  ]} content={label}>
+                  ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
                 </group>
 
