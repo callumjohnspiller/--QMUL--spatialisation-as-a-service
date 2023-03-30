@@ -1,7 +1,7 @@
 import React from "react";
-import {Canvas} from "@react-three/fiber";
+import {Canvas, useLoader} from "@react-three/fiber";
 import {OrbitControls, Stats} from '@react-three/drei';
-import { Box } from './Objects';
+import {Box} from './Objects';
 
 interface SceneProps {
     spatialParams: any,
@@ -21,9 +21,9 @@ function Scene(props: SceneProps) {
                             props.fileLabels.map((label, index) => {
                                 return <Box name={label}
                                             position={[
-                                                props.spatialParams[props.fileLabels[index]]["Z"],// Z
-                                                props.spatialParams[props.fileLabels[index]]["X"], // X
-                                                props.spatialParams[props.fileLabels[index]]["Y"] // Y
+                                                props.spatialParams[props.fileLabels[index]]["X"],
+                                                props.spatialParams[props.fileLabels[index]]["Y"],
+                                                props.spatialParams[props.fileLabels[index]]["Z"]
                                             ]}/>
                             })
                         }
