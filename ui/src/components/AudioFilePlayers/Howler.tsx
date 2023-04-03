@@ -15,11 +15,12 @@ function HowlerGroup(props: HowlerProps) {
             let tmp = howls;
             tmp[url] = new Howl({
                 src: url,
-                onload: function() {console.log("loaded " + url)}
+                onload: function() {
+                    console.log("loaded file");
+                    setDuration(tmp[url].duration());}
             });
             setHowls(tmp);
         });
-        setDuration(howls[props.audioURLS[0]].duration());
         console.log("set duration to " + duration);
 
         return () => {
@@ -45,14 +46,10 @@ function HowlerGroup(props: HowlerProps) {
     }, [props.mutes]);
 
     const handlePlay = () => {
-        console.log("play press")
         if (!howls[props.audioURLS[0]].playing()) {
             props.audioURLS.forEach(url => {
-                console.log("playing stem" + url)
                 howls[url].play();
             });
-        } else {
-            console.log("current stem playing did not start again")
         }
     }
 
@@ -61,10 +58,8 @@ function HowlerGroup(props: HowlerProps) {
             howls[url].pause();
         });
         let pos = howls[props.audioURLS[0]].seek();
-        console.log("reseek to " + pos)
         props.audioURLS.forEach(function(url) {
             howls[url].seek(pos);
-            console.log("seeked to " + pos)
         });
     }
 

@@ -29,6 +29,7 @@ export function GetMain(
       currentMutes.push(event!.target!.attributes!.item(2)!.value);
     }
     setMutedChannels(currentMutes);
+    console.log("current mutes: " + mutedChannels)
   };
   return (
     <main>
@@ -50,18 +51,18 @@ export function GetMain(
                       </FormGroup>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                                aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
-                                value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
-                          handleChange(e, newValue, fileLabels[index], 'X');
+                                aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
+                                value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'Y');
                         }} />
                       </div>
 
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_Y'}
+                            aria-label={fileLabels[index] + '_X'}
                             valueLabelDisplay={'auto'}
-                            value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
-                      handleChange(e, newValue, fileLabels[index], 'Y');
+                            value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
+                      handleChange(e, newValue, fileLabels[index], 'X');
                     }} />
                   </div>
                   <div>
