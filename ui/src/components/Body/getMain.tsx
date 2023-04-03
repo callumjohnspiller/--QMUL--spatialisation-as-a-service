@@ -1,5 +1,16 @@
 import Uploader from '../Upload';
-import { Button, Card, CardContent, CircularProgress, FormControlLabel, FormGroup, Slider, Switch } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  FormControlLabel,
+  FormGroup,
+  Slider,
+  Stack,
+  Switch,
+  Typography
+} from '@mui/material';
 import { MemoAudioFilePlayer } from '../AudioFilePlayers';
 import Scene from '../3dSpace/Scene';
 import React, {useState} from 'react';
@@ -49,14 +60,14 @@ export function GetMain(
       {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
       {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
       {(fileUrls && !submitted) &&
-          <Card sx={{ position: 'absolute', margin: 10, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.5 }}>
+          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.7 }}>
             <CardContent>
-            <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
-            <ul style={{width: 500}}>
-              {fileUrls.map((url, index) => {
-                return (
-                    <li>
-                      <p>{fileLabels[index]}</p>
+              <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
+              <div style={{width: 400}}>
+                {fileUrls.map((url, index) => {
+                  return (
+                    <Stack sx={{ height: 300 }} spacing={1} direction="row">
+                      <Typography variant="h2">{fileLabels[index]}</Typography>
                       <FormGroup>
                         <FormControlLabel
                           control={
@@ -66,47 +77,55 @@ export function GetMain(
                             }
                             inputProps={{ 'aria-label': `${url}` }}/>}
                             label={`Mute`}
+                          />
+                        </FormGroup>
+                        <Slider
+                          min={-20} max={20} defaultValue={0} step={0.1}
+                          aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
+                          value={spatialParams[fileLabels[index]]['Y']}
+                          onChange={(e, newValue) => {
+                            handleChange(e, newValue, fileLabels[index], 'Y');
+                            }
+                          }
                         />
-                      </FormGroup>
-                      <div>
-                        <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                                aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
-                                value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
-                          handleChange(e, newValue, fileLabels[index], 'Y');
-                        }} />
-                      </div>
-                  <div>
-                    <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_X'}
-                            valueLabelDisplay={'auto'}
-                            value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
-                      handleChange(e, newValue, fileLabels[index], 'X');
-                    }} />
-                  </div>
-                  <div>
-                    <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_Z'}
-                            valueLabelDisplay='auto'
-                            value={spatialParams[fileLabels[index]]['Z']} onChange={(e, newValue) => {
-                      handleChange(e, newValue, fileLabels[index], 'Z');
-                    }} />
-                  </div>
-                </li>);
-              })}
+                        <Slider
+                          min={-20} max={20} defaultValue={0} step={0.1}
+                          aria-label={fileLabels[index] + '_X'}
+                          valueLabelDisplay={'auto'}
+                          value={spatialParams[fileLabels[index]]['X']}
+                          onChange={(e, newValue) => {
+                            handleChange(e, newValue, fileLabels[index], 'X');
+                            }
+                          }
+                        />
+                        <Slider
+                          min={-20} max={20} defaultValue={0} step={0.1}
+                          aria-label={fileLabels[index] + '_Z'}
+                          valueLabelDisplay='auto'
+                          value={spatialParams[fileLabels[index]]['Z']}
+                          onChange={(e, newValue) => {
+                            handleChange(e, newValue, fileLabels[index], 'Z');
+                          }
+                        }
+                        />
+                    </Stack>
+                  );
+                })}
 
-              {(taskToken) ? <li>
-                <p>
-                  Submit parameters
-                </p>
-                <Button
-                    variant={'contained'}
-                    onClick={() => {
-                      handleSubmit();
-                    }}>
-                  Render 3D Audio
-                </Button>
-              </li> : <li>Waiting for task token</li>}
-            </ul>
+                {(taskToken) ?
+                  <li>
+                  <Typography>
+                    Submit parameters
+                  </Typography>
+                  <Button
+                      variant={'contained'}
+                      onClick={() => {
+                        handleSubmit();
+                      }}>
+                    Render 3D Audio
+                  </Button>
+                </li> : <li>Waiting for task token</li>}
+              </div>
             </CardContent>
           </Card>
       }
