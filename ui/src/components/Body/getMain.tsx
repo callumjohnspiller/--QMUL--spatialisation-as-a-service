@@ -20,17 +20,19 @@ export function GetMain(
   handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void,
   taskToken: string | undefined, handleSubmit: () => void
 ) {
+
   const [mutedChannels, setMutedChannels] = useState<string[]>([]);
   const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let currentMutes = mutedChannels;
-    if (currentMutes.includes(event!.target!.attributes!.item(2)!.value)) {
-      currentMutes = currentMutes.filter(e => e !== event!.target!.attributes!.item(2)!.value)
+    if (mutedChannels.includes(event!.target!.attributes!.item(2)!.value)) {
+      setMutedChannels(mutedChannels.filter(e => e !== event!.target!.attributes!.item(2)!.value));
     } else {
-      currentMutes.push(event!.target!.attributes!.item(2)!.value);
+      let tmp = mutedChannels;
+      tmp.push(event!.target!.attributes!.item(2)!.value)
+      setMutedChannels(tmp);
     }
-    setMutedChannels(currentMutes);
-    console.log("current mutes: " + mutedChannels)
+    console.log("current mutes after toggle: " + mutedChannels)
   };
+
   return (
     <main>
       {!uploadStatus && <Uploader uuid={props.uuid} setUploadStatus={() => setUploadStatus(true)} stemCount={stemCount}
@@ -56,14 +58,13 @@ export function GetMain(
                           handleChange(e, newValue, fileLabels[index], 'Y');
                         }} />
                       </div>
-
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
                             aria-label={fileLabels[index] + '_X'}
                             valueLabelDisplay={'auto'}
                             value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
                       handleChange(e, newValue, fileLabels[index], 'X');
-                    }} />
+                    }}/>
                   </div>
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}

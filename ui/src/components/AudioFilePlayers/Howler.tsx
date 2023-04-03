@@ -31,9 +31,7 @@ function HowlerGroup(props: HowlerProps) {
     }, [])
 
     useEffect(() => {
-        console.log("mute change");
-        console.log(props.audioURLS);
-        console.log(props.mutes);
+        console.log("effect")
         props.audioURLS.forEach(url => {
             if (props.mutes.includes(url)) {
                 howls[url].mute(true);
