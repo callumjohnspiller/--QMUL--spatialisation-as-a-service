@@ -66,7 +66,7 @@ export function GetMain(
                   </div>
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_Y'}
+                            aria-label={fileLabels[index] + '_Z'}
                             valueLabelDisplay='auto'
                             value={spatialParams[fileLabels[index]]['Z']} onChange={(e, newValue) => {
                       handleChange(e, newValue, fileLabels[index], 'Z');
