@@ -20,9 +20,15 @@ export function GetMain(
   handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void,
   taskToken: string | undefined, handleSubmit: () => void
 ) {
-  const [mutedChannels, setMutedChannels] = useState({"": ""});
+  const [mutedChannels, setMutedChannels] = useState<string[]>([]);
   const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
+    let currentMutes = mutedChannels;
+    if (currentMutes.includes(event!.target!.attributes!.item(2)!.value)) {
+      currentMutes = currentMutes.filter(e => e !== event!.target!.attributes!.item(2)!.value)
+    } else {
+      currentMutes.push(event!.target!.attributes!.item(2)!.value)
+    }
+    setMutedChannels(currentMutes);
   };
   return (
     <main>

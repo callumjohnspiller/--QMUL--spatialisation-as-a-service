@@ -4,7 +4,7 @@ import {Button, ButtonGroup, Slider} from "@mui/material";
 
 interface HowlerProps {
     audioURLS: string[],
-    mutes: {}
+    mutes: string[]
 }
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
@@ -13,8 +13,7 @@ function HowlerGroup(props: HowlerProps) {
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
             src: url,
-            preload: true,
-            onload: function() {setFileLength(howls[url].duration())}
+            preload: true
         });
     });
 
@@ -32,16 +31,23 @@ function HowlerGroup(props: HowlerProps) {
 
     const handleMutes = () => {
         props.audioURLS.forEach(function(url) {
-            if (url in props.mutes) {
-                howls[url].mute();
+            if (props.mutes.includes(url)) {
+                howls[url].mute(true);
+            } else {
+                howls[url].mute(false);
             }
         });
     }
 
     const handlePlay = () => {
-        props.audioURLS.forEach(function(url) {
-            howls[url].play();
-        });
+        if (!fileLength) {
+            setFileLength(howls[props.audioURLS[0]].duration())
+        }
+        if (!howls[props.audioURLS[0]].playing()) {
+            props.audioURLS.forEach(function(url) {
+                howls[url].play();
+            });
+        }
     }
 
     const handlePause = () => {
@@ -55,7 +61,8 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     const handleChange = (event: Event, newValue: number | number[]) => {
-        console.log(howls[props.audioURLS[0]].duration())
+        console.log(howls[props.audioURLS[0]].seek());
+        console.log(newValue);
         if(howls[props.audioURLS[0]].playing()) {
             handlePause();
             setPlaybackPosition(newValue as number);
