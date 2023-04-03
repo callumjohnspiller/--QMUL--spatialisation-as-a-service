@@ -8,18 +8,19 @@ interface HowlerProps {
 }
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
-    const [fileLength, setFileLength] = React.useState<number>();
+    const [fileLength, setFileLength] = React.useState<number>(0);
 
+    // Load in audio files
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
-            src: url,
-            preload: true
+            src: url
         });
     });
 
     useEffect(() => {
         return () => {
+            console.log("dismounting");
             props.audioURLS.forEach(function(url) {
                 howls[url].stop();
             });
@@ -27,26 +28,29 @@ function HowlerGroup(props: HowlerProps) {
     }, [])
 
     useEffect(() => {
-        handleMutes();
-        console.log(props.mutes)
-    }, [props.mutes])
-
-    const handleMutes = () => {
+        console.log("mute change");
         props.audioURLS.forEach(function(url) {
             if (props.mutes.includes(url)) {
                 howls[url].mute(true);
+                console.log("file muted")
             } else {
                 howls[url].mute(false);
+                console.log("file unmuted")
             }
         });
-    }
+    }, [props.mutes]);
 
     const handlePlay = () => {
+        console.log("play press")
         if (!fileLength) {
+            console.log("setting file length")
             setFileLength(howls[props.audioURLS[0]].duration())
+            console.log(fileLength)
         }
         if (!howls[props.audioURLS[0]].playing()) {
+            console.log("current stem playing")
             props.audioURLS.forEach(function(url) {
+                console.log("playing stem")
                 howls[url].play();
             });
         }
@@ -55,10 +59,13 @@ function HowlerGroup(props: HowlerProps) {
     const handlePause = () => {
         props.audioURLS.forEach(function(url) {
             howls[url].pause();
+            console.log("stopping stem")
         });
         let pos = howls[props.audioURLS[0]].seek();
+        console.log("reseek to " + pos)
         props.audioURLS.forEach(function(url) {
             howls[url].seek(pos);
+            console.log("seeked to " + pos)
         });
     }
 
