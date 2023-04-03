@@ -8,8 +8,6 @@ interface WelcomeScreenProps {
   onClick: () => void;
 }
 
-const [onboarded, setOnboarded] = useState<boolean>(false);
-
 const Title = styled.div`
   font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
   font-size: 64px;
@@ -35,6 +33,7 @@ const AnimatedSubtitle = animated(Subtitle);
 const AnimatedButtonContainer = animated(ButtonContainer);
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
+  const [onboarded, setOnboarded] = useState<boolean>(false);
   const styles: SpringValues<PickAnimated<{
     delay: number;
     from: { opacity: number };
