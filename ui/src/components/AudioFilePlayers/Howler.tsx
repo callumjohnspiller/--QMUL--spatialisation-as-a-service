@@ -94,7 +94,7 @@ function HowlerGroup(props: HowlerProps) {
             </ButtonGroup>
             {howls &&
               <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                  <Typography variant="caption">
+                  <Typography variant="caption" sx={{minWidth: 20}}>
                       {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60)}`}
                   </Typography>
                   <Slider
@@ -104,7 +104,7 @@ function HowlerGroup(props: HowlerProps) {
                     max={duration}
                     onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
                   />
-                  <Typography variant="caption">
+                  <Typography variant="caption" sx={{minWidth: 20}}>
                       {duration ? `${Math.floor(duration % 3600 / 60)}: ${Math.floor(duration % 3600 % 60)}`: ""}
                   </Typography>
               </Stack>

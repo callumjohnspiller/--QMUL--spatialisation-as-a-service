@@ -57,23 +57,24 @@ export function GetMain(
           />
       </div>
       }
-      {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
-      {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
+      {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
+      {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
       {(fileUrls && !submitted) &&
-          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.7 }}>
-            <CardContent>
+          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.7 }}>
+            <CardContent sx={{opacity: 1}}>
               <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
               <div style={{width: 400}}>
                 {fileUrls.map((url, index) => {
                   return (
                     <Stack sx={{ height: 300 }} spacing={1} direction="row">
-                      <Typography variant="h2">{fileLabels[index]}</Typography>
+                      <Typography>{fileLabels[index]}</Typography>
                       <FormGroup>
                         <FormControlLabel
                           control={
                           <Switch
                             onChange={(e, newValue) => {
-                              handleMute(e, newValue)}
+                              handleMute(e, newValue)
+                              }
                             }
                             inputProps={{ 'aria-label': `${url}` }}/>}
                             label={`Mute`}
@@ -113,18 +114,13 @@ export function GetMain(
                 })}
 
                 {(taskToken) ?
-                  <li>
-                  <Typography>
-                    Submit parameters
-                  </Typography>
                   <Button
                       variant={'contained'}
                       onClick={() => {
                         handleSubmit();
                       }}>
                     Render 3D Audio
-                  </Button>
-                </li> : <li>Waiting for task token</li>}
+                  </Button> : <p>Waiting for task token</p>}
               </div>
             </CardContent>
           </Card>
