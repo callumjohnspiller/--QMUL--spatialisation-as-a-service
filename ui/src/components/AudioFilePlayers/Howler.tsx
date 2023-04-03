@@ -9,6 +9,7 @@ interface HowlerProps {
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
     const [fileLength, setFileLength] = React.useState<number>();
+
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
@@ -27,6 +28,7 @@ function HowlerGroup(props: HowlerProps) {
 
     useEffect(() => {
         handleMutes();
+        console.log(props.mutes)
     }, [props.mutes])
 
     const handleMutes = () => {
