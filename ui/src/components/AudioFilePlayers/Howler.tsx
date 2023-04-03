@@ -21,21 +21,24 @@ function HowlerGroup(props: HowlerProps) {
             });
             setHowls(tmp);
         });
-        console.log("set duration to " + duration);
 
         return () => {
             props.audioURLS.forEach(function(url) {
                 howls[url].stop();
             });
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        console.log("duration set to: " + duration)
+    }, [duration])
 
     useEffect(() => {
         console.log("effect")
         props.audioURLS.forEach(url => {
-            if (props.mutes.includes(url)) {
+            if (props.mutes.includes(url) && !howls[url].muted()) {
                 howls[url].mute(true);
-                console.log("file muted")
+                console.log("file muted");
             } else {
                 howls[url].mute(false);
                 console.log("file unmuted")

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { animated, PickAnimated, SpringValues, useSpring } from '@react-spring/web';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
@@ -7,6 +7,8 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 interface WelcomeScreenProps {
   onClick: () => void;
 }
+
+const [onboarded, setOnboarded] = useState<boolean>(false);
 
 const Title = styled.div`
   font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
@@ -63,6 +65,11 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
     delay: 2000
   });
 
+  function handleOnboarding() {
+    setOnboarded(true);
+    onClick();
+  }
+
   return (
     <div>
       <AnimatedTitle style={styles}>
@@ -73,7 +80,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
         <HeadphonesIcon sx={{padding: 5, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 1, width: 80, height: 80}}/>
       </AnimatedSubtitle>
       <AnimatedButtonContainer style={styles3}>
-        <Button onClick={onClick}
+        <Button onClick={handleOnboarding}
                 variant="contained"
                 sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
         <Button onClick={onClick}
