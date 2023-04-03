@@ -4,17 +4,18 @@ import {Button, ButtonGroup, Slider} from "@mui/material";
 
 interface HowlerProps {
     audioURLS: string[],
-    mutes: string[]
+    mutes: {}
 }
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
+    const [fileLength, setFileLength] = React.useState<number>();
     let howls: any = {};
     props.audioURLS.forEach(function(url) {
         howls[url] = new Howl({
             src: url,
-            preload: true
+            preload: true,
+            onload: function() {setFileLength(howls[url].duration())}
         });
-        console.log(howls[url].duration())
     });
 
     useEffect(() => {
@@ -26,8 +27,16 @@ function HowlerGroup(props: HowlerProps) {
     }, [])
 
     useEffect(() => {
-        console.log("mute change recieved")
+        handleMutes();
     }, [props.mutes])
+
+    const handleMutes = () => {
+        props.audioURLS.forEach(function(url) {
+            if (url in props.mutes) {
+                howls[url].mute();
+            }
+        });
+    }
 
     const handlePlay = () => {
         props.audioURLS.forEach(function(url) {
@@ -73,15 +82,19 @@ function HowlerGroup(props: HowlerProps) {
                     Pause
                 </Button>
             </ButtonGroup>
-            <Slider
+            {
+                fileLength !== 0
+              &&
+              <Slider
                 size="small"
                 min={0}
-                max={howls[props.audioURLS[0]].duration()}
+                max={fileLength}
                 value={playbackPosition}
                 onChange={handleChange}
                 defaultValue={0}
                 aria-label="Small"
-            />
+              />
+            }
         </div>
     );
 }

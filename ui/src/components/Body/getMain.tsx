@@ -20,10 +20,9 @@ export function GetMain(
   handleChange: (event: Event, newValue: (number | number[]), label: string, dimension: string) => void,
   taskToken: string | undefined, handleSubmit: () => void
 ) {
-  const [mutedChannels, setMutedChannels] = useState<string[]>([]);
+  const [mutedChannels, setMutedChannels] = useState({"": ""});
   const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
-    setMutedChannels(["test"])
   };
   return (
     <main>
