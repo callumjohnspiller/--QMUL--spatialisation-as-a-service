@@ -1,12 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { animated, useTransition } from '@react-spring/web';
 import { Button, Card, CardContent, Typography } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
-
-interface Slide {
-  title: string;
-  content: string;
-}
 
 interface Props {
   onNavigateToApp: () => void;
@@ -14,7 +9,8 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ onNavigateToApp }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
-  const slides = [
+  const AnimatedDiv = useMemo(() => animated.div, []);
+  const slides = useMemo (() => [
     {
       title: 'Welcome!',
       content: 'This app is designed to demonstrate the capabilities of spatial audio!',
@@ -43,7 +39,7 @@ const Onboarding: React.FC<Props> = ({ onNavigateToApp }) => {
       title: 'So what is next?',
       content: 'In this app, you are going to make your own 3D sound world, using your favourite piece of music!\n\nYou will upload a music file, then the app will separate that file into instruments, which you can then position around your listening position; like making your own concert hall where you choose where all the musicians sit!\n\nHave your music file at the ready, and we can begin!',
     },
-  ];
+  ], []);
   const handleNextSlide = () => {
     setCurrentSlideIndex((currentIndex) =>
       currentIndex === slides.length - 1 ? currentIndex : currentIndex + 1,
@@ -67,7 +63,7 @@ const Onboarding: React.FC<Props> = ({ onNavigateToApp }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {transitions((style, slide) => (
-        <animated.div style={{ ...style, position: 'absolute', padding: 50 }} >
+        <AnimatedDiv style={{ ...style, position: 'absolute', padding: 50 }} >
           <Card sx={{
             display: 'flex',
             alignItems: 'center',
@@ -94,7 +90,7 @@ const Onboarding: React.FC<Props> = ({ onNavigateToApp }) => {
               </ButtonGroup>
             </CardContent>
           </Card>
-        </animated.div>
+        </AnimatedDiv>
       ))}
     </div>
   );
