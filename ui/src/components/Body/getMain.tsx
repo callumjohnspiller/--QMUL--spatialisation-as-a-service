@@ -37,7 +37,7 @@ export function GetMain(
   return (
     <div style={{ position: 'relative' }}>
       {!uploadStatus &&
-        <div style={{position: 'absolute', top: "50%", left: "50%", height: "50vh", width: "50vw"}}>
+        <div style={{position: 'absolute', height: "50vh", width: "50vw"}}>
           <Uploader
             uuid={props.uuid}
             setUploadStatus={() => setUploadStatus(true)}

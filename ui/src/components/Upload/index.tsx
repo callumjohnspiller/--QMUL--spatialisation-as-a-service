@@ -42,7 +42,7 @@ function Uploader(props: UploaderProps) {
 	};
 
 	const handleUploadClick = async () => {
-		if (!file) {
+		if (!file || !props.stemCount) {
 			return;
 		}
 
