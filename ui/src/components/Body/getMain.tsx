@@ -66,7 +66,7 @@ export function GetMain(
               <div style={{width: 400, justifyContent: 'center'}}>
                 {fileUrls.map((url, index) => {
                   return (
-                    <Stack sx={{padding: 2}} spacing={2}>
+                    <Stack sx={{padding: 2, justifyItems: 'center'}} spacing={2}>
                       <Typography>{fileLabels[index]}</Typography>
                       <FormGroup>
                         <FormControlLabel
