@@ -19,7 +19,7 @@ function HowlerGroup(props: HowlerProps) {
             });
             setHowls(tmp);
         });
-        setDuration(howls[props.audioURLS[0]]._duration);
+        setDuration(howls[props.audioURLS[0]].duration());
         console.log("set duration to " + duration);
 
         return () => {
@@ -51,14 +51,14 @@ function HowlerGroup(props: HowlerProps) {
                 console.log("playing stem" + url)
                 howls[url].play();
             });
+        } else {
+            console.log("current stem playing did not start again")
         }
-        console.log("current stem playing did not start again")
     }
 
     const handlePause = () => {
         props.audioURLS.forEach(function(url) {
             howls[url].pause();
-            console.log("stopping stem")
         });
         let pos = howls[props.audioURLS[0]].seek();
         console.log("reseek to " + pos)

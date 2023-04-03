@@ -50,18 +50,18 @@ export function GetMain(
                       </FormGroup>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                                aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
-                                value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
-                          handleChange(e, newValue, fileLabels[index], 'Y');
+                                aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
+                                value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'X');
                         }} />
                       </div>
 
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_X'}
+                            aria-label={fileLabels[index] + '_Y'}
                             valueLabelDisplay={'auto'}
-                            value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
-                      handleChange(e, newValue, fileLabels[index], 'X');
+                            value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
+                      handleChange(e, newValue, fileLabels[index], 'Y');
                     }} />
                   </div>
                   <div>
