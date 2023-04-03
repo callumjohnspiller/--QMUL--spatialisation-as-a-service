@@ -26,7 +26,7 @@ const Subtitle = styled.h2`
 const ButtonContainer = styled.div`
   text-align: center;
   margin-top: 1vh;
-`
+`;
 
 const AnimatedTitle = animated(Title);
 const AnimatedSubtitle = animated(Subtitle);

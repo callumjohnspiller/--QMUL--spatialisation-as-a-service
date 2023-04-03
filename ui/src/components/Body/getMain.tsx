@@ -25,13 +25,13 @@ export function GetMain(
   const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event)
     let eventTarget = event!.target!.attributes!.item(2)!.value;
-    let eventMessage = event!.target!.value;
-    if (eventMessage == "on" && !mutedChannels.includes(eventTarget)) {
+    let eventMessage = event!.target!.checked;
+    if (eventMessage && !mutedChannels.includes(eventTarget)) {
       let tmp = mutedChannels;
       tmp.push(event!.target!.attributes!.item(2)!.value)
       setMutedChannels(tmp);
     }
-    if (eventMessage == "off") {
+    if (!eventMessage) {
       setMutedChannels(mutedChannels.filter(e => e !== event!.target!.attributes!.item(2)!.value));
     }
     console.log("current mutes after toggle: " + mutedChannels);
