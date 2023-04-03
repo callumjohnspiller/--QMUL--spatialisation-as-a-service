@@ -9,7 +9,6 @@ interface HowlerProps {
 function HowlerGroup(props: HowlerProps) {
     const [howls, setHowls] = useState<any>({});
     const [duration, setDuration] = useState<number>();
-    const [timer, setTimer] = useState<Function>();
     const [position, setPosition] = useState<number>(0);
 
     useEffect(() => {
@@ -39,7 +38,6 @@ function HowlerGroup(props: HowlerProps) {
     }, []);
 
     useEffect(() => {
-        console.log("effect");
         props.audioURLS.forEach(url => {
             if (props.mutes.includes(url)) {
                 howls[url].mute(true);
@@ -72,9 +70,22 @@ function HowlerGroup(props: HowlerProps) {
         });
     }
 
+    const handlePositionChange = (e: Event, newValue: number | number[]) => {
+        console.log(e);
+        if (e.type == 'null') {
+            props.audioURLS.forEach(function(url) {
+                howls[url].pause();
+            });
+            let pos = newValue;
+            props.audioURLS.forEach(function(url) {
+                howls[url].seek(pos);
+            });
+        }
+    }
+
     return (
         <div>
-            <ButtonGroup>
+            <ButtonGroup style={{alignItems:"center"}}>
                 <Button onClick={handlePlay}>
                     Play
                 </Button>
@@ -84,10 +95,12 @@ function HowlerGroup(props: HowlerProps) {
             </ButtonGroup>
             {howls &&
               <Slider
+                style={{width:500, alignItems:"center"}}
                 size="small"
                 value={position}
                 min={0}
                 max={duration}
+                onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
               />
             }
         </div>
