@@ -30,18 +30,13 @@ function HowlerGroup(props: HowlerProps) {
     }, []);
 
     useEffect(() => {
-        console.log("duration set to: " + duration)
-    }, [duration])
-
-    useEffect(() => {
         console.log("effect")
         props.audioURLS.forEach(url => {
             if (props.mutes.includes(url) && !howls[url].muted()) {
                 howls[url].mute(true);
-                console.log("file muted");
-            } else {
+            }
+            if (!props.mutes.includes(url)) {
                 howls[url].mute(false);
-                console.log("file unmuted")
             }
         });
     }, [props.mutes]);

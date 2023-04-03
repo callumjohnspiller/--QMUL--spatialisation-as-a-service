@@ -22,22 +22,18 @@ export function GetMain(
 ) {
 
   const [mutedChannels, setMutedChannels] = useState<string[]>([]);
-  const [eventTarget, setEventTarget] = useState<string>("");
-  const [muted, setMuted] = useState<boolean>();
-  const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event)
-    setEventTarget(event!.target!.attributes!.item(2)!.value);
-    setMuted(event!.target!.checked);
-    if (muted && !mutedChannels.includes(eventTarget)) {
+
+  function handleMute(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
+    if (newValue && !mutedChannels.includes(e!.target!.attributes!.item(2)!.value)) {
       let tmp = mutedChannels;
-      tmp.push(eventTarget);
+      tmp.push(e!.target!.attributes!.item(2)!.value);
       setMutedChannels(tmp);
     }
-    if (!muted) {
-      setMutedChannels(mutedChannels.filter(e => e !== eventTarget));
+    if (!newValue) {
+      setMutedChannels(mutedChannels.filter((val) => { return val !== e!.target!.attributes!.item(2)!.value}))
     }
-    console.log("current mutes after toggle: " + mutedChannels);
-  };
+    console.log(mutedChannels);
+  }
 
   return (
     <main>
@@ -55,7 +51,15 @@ export function GetMain(
                     <li key={index}>
                       <p>{fileLabels[index]}</p>
                       <FormGroup>
-                        <FormControlLabel control={<Switch onChange={toggleMute} inputProps={{ 'aria-label': `${url}` }}/>} label={`Mute`} />
+                        <FormControlLabel
+                          control={
+                          <Switch
+                            onChange={(e, newValue) => {
+                              handleMute(e, newValue)}
+                            }
+                            inputProps={{ 'aria-label': `${url}` }}/>}
+                            label={`Mute`}
+                        />
                       </FormGroup>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
@@ -70,7 +74,7 @@ export function GetMain(
                             valueLabelDisplay={'auto'}
                             value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
                       handleChange(e, newValue, fileLabels[index], 'X');
-                    }}/>
+                    }} />
                   </div>
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
