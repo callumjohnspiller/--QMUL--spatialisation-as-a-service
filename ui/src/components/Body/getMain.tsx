@@ -50,21 +50,19 @@ export function GetMain(
                       </FormGroup>
                       <div>
                         <Slider size={'medium'} min={-20} max={20} defaultValue={0} step={0.1}
-                                aria-label={fileLabels[index] + '_X'} valueLabelDisplay={'auto'}
-                                value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
-                          handleChange(e, newValue, fileLabels[index], 'X');
+                                aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
+                                value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'Y');
                         }} />
-                        Set Value for forward/back
                       </div>
 
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
-                            aria-label={fileLabels[index] + '_Y'}
+                            aria-label={fileLabels[index] + '_X'}
                             valueLabelDisplay={'auto'}
-                            value={spatialParams[fileLabels[index]]['Y']} onChange={(e, newValue) => {
-                      handleChange(e, newValue, fileLabels[index], 'Y');
+                            value={spatialParams[fileLabels[index]]['X']} onChange={(e, newValue) => {
+                      handleChange(e, newValue, fileLabels[index], 'X');
                     }} />
-                    Set Value for left/right
                   </div>
                   <div>
                     <Slider min={-20} max={20} defaultValue={0} step={0.1}
@@ -73,7 +71,6 @@ export function GetMain(
                             value={spatialParams[fileLabels[index]]['Z']} onChange={(e, newValue) => {
                       handleChange(e, newValue, fileLabels[index], 'Z');
                     }} />
-                    Set Value for up/down
                   </div>
                 </li>);
               })}
