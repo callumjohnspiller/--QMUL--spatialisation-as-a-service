@@ -84,8 +84,8 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     return (
-        <div>
-            <ButtonGroup style={{alignItems:"center"}}>
+        <div style={{alignItems:"center"}}>
+            <ButtonGroup>
                 <Button onClick={handlePlay}>
                     Play
                 </Button>
@@ -95,7 +95,6 @@ function HowlerGroup(props: HowlerProps) {
             </ButtonGroup>
             {howls &&
               <Slider
-                style={{width:500, alignItems:"center"}}
                 size="small"
                 value={position}
                 min={0}
