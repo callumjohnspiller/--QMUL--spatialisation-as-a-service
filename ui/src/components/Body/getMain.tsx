@@ -23,6 +23,7 @@ export function GetMain(
   const [mutedChannels, setMutedChannels] = useState<string[]>([]);
   const toggleMute = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
+    setMutedChannels(["test"])
   };
   return (
     <main>
@@ -33,7 +34,7 @@ export function GetMain(
       {(submitted && !outputUrl) && <CircularProgress />}
       {(fileUrls && !submitted) &&
           <div>
-            <MemoHowlerGroup audioURLS={fileUrls}/>
+            <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
             <ol style={{width: 500}}>
               {fileUrls.map((url, index) => {
                 return (

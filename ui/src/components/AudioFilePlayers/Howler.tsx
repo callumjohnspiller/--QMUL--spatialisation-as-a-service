@@ -3,7 +3,8 @@ import {Howl} from "howler";
 import {Button, ButtonGroup, Slider} from "@mui/material";
 
 interface HowlerProps {
-    audioURLS: string[]
+    audioURLS: string[],
+    mutes: string[]
 }
 function HowlerGroup(props: HowlerProps) {
     const [playbackPosition, setPlaybackPosition] = React.useState<number>(0);
@@ -22,6 +23,10 @@ function HowlerGroup(props: HowlerProps) {
             });
         }
     }, [])
+
+    useEffect(() => {
+        console.log("mute change recieved")
+    }, [props.mutes])
 
     const handlePlay = () => {
         props.audioURLS.forEach(function(url) {
