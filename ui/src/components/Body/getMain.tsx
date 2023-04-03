@@ -1,5 +1,5 @@
 import Uploader from '../Upload';
-import {Button, CircularProgress, FormControlLabel, FormGroup, Slider, Switch} from '@mui/material';
+import { Button, Card, CardContent, CircularProgress, FormControlLabel, FormGroup, Slider, Switch } from '@mui/material';
 import { MemoAudioFilePlayer } from '../AudioFilePlayers';
 import Scene from '../3dSpace/Scene';
 import React, {useState} from 'react';
@@ -49,7 +49,8 @@ export function GetMain(
       {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
       {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw"}}/>}
       {(fileUrls && !submitted) &&
-          <div style={{ position: 'absolute', top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", fillOpacity: 0.5 }}>
+          <Card sx={{ position: 'absolute', margin: 10, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.5 }}>
+            <CardContent>
             <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
             <ul style={{width: 500}}>
               {fileUrls.map((url, index) => {
@@ -106,10 +107,11 @@ export function GetMain(
                 </Button>
               </li> : <li>Waiting for task token</li>}
             </ul>
-          </div>
+            </CardContent>
+          </Card>
       }
       {fileUrls && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}><Scene spatialParams={spatialParams} fileLabels={fileLabels} /></div>}
-      {outputUrl && <div style={{ position: 'absolute', top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", fillOpacity: 0.5 }}><MemoAudioFilePlayer audioURL={outputUrl}/></div>}
+      {outputUrl && <Card sx={{ position: 'absolute', margin: 10, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.5 }}><CardContent><MemoAudioFilePlayer audioURL={outputUrl}/></CardContent></Card>}
     </div>
   );
 }
