@@ -84,7 +84,7 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     return (
-        <div style={{alignItems:"center"}}>
+        <div>
             <ButtonGroup>
                 <Button onClick={handlePlay}>
                     Play

@@ -62,7 +62,7 @@ function Uploader(props: UploaderProps) {
 	};
 
 	return (
-		<>
+		<div>
 			<Input type="file" onChange={handleFileChange}/>
 			{
 				(!validFile) ? <div>Please upload either a .wav or .mp3 file</div> : <div></div>
@@ -87,7 +87,7 @@ function Uploader(props: UploaderProps) {
 			<div>
 				{(file && validFile) ? <Button onClick={handleUploadClick}>Upload</Button> : <div></div> }
 			</div>
-		</>
+		</div>
 	);
 }
 
