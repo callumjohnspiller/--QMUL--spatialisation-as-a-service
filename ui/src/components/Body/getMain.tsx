@@ -25,7 +25,7 @@ export function GetMain(
 
   function handleMute(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
     if (newValue && !mutedChannels.includes(e!.target!.attributes!.item(2)!.value)) {
-      let tmp = mutedChannels;
+      let tmp = [...mutedChannels];
       tmp.push(e!.target!.attributes!.item(2)!.value);
       setMutedChannels(tmp);
     }
