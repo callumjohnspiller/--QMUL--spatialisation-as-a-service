@@ -70,7 +70,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
   }
 
   return (
-    <div>
+    <div style={{position: "relative"}}>
       {!onboarded &&
         <div>
           <AnimatedTitle style={styles}>
@@ -92,7 +92,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
       }
       {
         onboarded &&
-        <Onboarding onNavigateToApp={onClick}/>
+        <div>
+          <Onboarding onNavigateToApp={onClick}/>
+        </div>
       }
     </div>
   );
