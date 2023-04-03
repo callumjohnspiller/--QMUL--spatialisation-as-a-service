@@ -6,8 +6,8 @@ import {
 	Button,
 	MenuItem,
 	Select,
-	SelectChangeEvent
-} from "@mui/material";
+	SelectChangeEvent, Typography
+} from '@mui/material';
 
 interface UploaderProps {
   setStemCount: Function;
@@ -70,7 +70,7 @@ function Uploader(props: UploaderProps) {
 			<div>{file && `${file.name} - ${file.type}`}</div>
 			{
 				(validFile) ? <FormControl>
-          How many parts do you want this file separated into?
+          <Typography>How many parts do you want this file separated into?</Typography>
 					<Select
 						labelId="demo-simple-select-label"
 						id="demo-simple-select"

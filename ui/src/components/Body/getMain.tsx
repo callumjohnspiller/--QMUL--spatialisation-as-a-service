@@ -61,7 +61,7 @@ export function GetMain(
       {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
       {(fileUrls && !submitted) &&
           <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8, maxHeight: 800, overflow: 'auto' }}>
-            <CardContent sx={{opacity: 1, justifyItems: 'center'}}>
+            <CardContent sx={{opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto'}}>
               <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
               <div style={{width: 400, justifyContent: 'center'}}>
                 {fileUrls.map((url, index) => {
