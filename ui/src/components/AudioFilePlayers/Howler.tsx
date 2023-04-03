@@ -69,7 +69,7 @@ function HowlerGroup(props: HowlerProps) {
             <Slider
                 size="small"
                 min={0}
-                max={howls[props.audioURLS[0]]}
+                max={howls[props.audioURLS[0]].duration()}
                 value={playbackPosition}
                 onChange={handleChange}
                 defaultValue={0}

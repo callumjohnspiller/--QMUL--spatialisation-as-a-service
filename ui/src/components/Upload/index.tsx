@@ -79,7 +79,6 @@ function Uploader(props: UploaderProps) {
 					>
 						<MenuItem value={2}>Two</MenuItem>
 						<MenuItem value={4}>Four</MenuItem>
-						<MenuItem value={5}>Five</MenuItem>
 					</Select>
 				</FormControl>
 					: 
