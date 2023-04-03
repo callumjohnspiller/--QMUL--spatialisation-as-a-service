@@ -76,6 +76,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
         <Button onClick={onClick}
                 variant="contained"
                 sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
+        <Button onClick={onClick}
+                variant="outlined"
+                sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Skip Introduction</Button>
       </AnimatedButtonContainer>
     </div>
   );

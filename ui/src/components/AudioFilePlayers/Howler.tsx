@@ -1,25 +1,27 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from 'react';
 import {Howl} from "howler";
-import {Button, ButtonGroup, Slider} from "@mui/material";
+import {Button, ButtonGroup} from "@mui/material";
 
 interface HowlerProps {
     audioURLS: string[],
     mutes: string[]
 }
 function HowlerGroup(props: HowlerProps) {
-
-    // Load in audio files
-    let howls: any = {};
-    props.audioURLS.forEach(function(url) {
-        howls[url] = new Howl({
-            src: url,
-            onload: function() {console.log("loaded" + url)}
-        });
-    });
-
-    console.log(howls);
+    const [howls, setHowls] = useState<any>({});
+    const [duration, setDuration] = useState<number>();
 
     useEffect(() => {
+        props.audioURLS.forEach(function(url) {
+            let tmp = howls;
+            tmp[url] = new Howl({
+                src: url,
+                onload: function() {console.log("loaded " + url)}
+            });
+            setHowls(tmp);
+        });
+        setDuration(howls[props.audioURLS[0]]._duration);
+        console.log("set duration to " + duration);
+
         return () => {
             props.audioURLS.forEach(function(url) {
                 howls[url].stop();
