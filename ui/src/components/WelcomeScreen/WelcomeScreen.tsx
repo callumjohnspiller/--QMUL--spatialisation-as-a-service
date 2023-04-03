@@ -3,6 +3,7 @@ import { animated, PickAnimated, SpringValues, useSpring } from '@react-spring/w
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
+import Onboarding from './Onboarding';
 
 interface WelcomeScreenProps {
   onClick: () => void;
@@ -66,26 +67,33 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
 
   function handleOnboarding() {
     setOnboarded(true);
-    onClick();
   }
 
   return (
     <div>
-      <AnimatedTitle style={styles}>
-        Spatialisation As A Service
-      </AnimatedTitle>
-      <AnimatedSubtitle style={styles2}>
-        (Don't forget your headphones!)
-        <HeadphonesIcon sx={{padding: 5, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 1, width: 80, height: 80}}/>
-      </AnimatedSubtitle>
-      <AnimatedButtonContainer style={styles3}>
-        <Button onClick={handleOnboarding}
-                variant="contained"
-                sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
-        <Button onClick={onClick}
-                variant="outlined"
-                sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Skip Introduction</Button>
-      </AnimatedButtonContainer>
+      {!onboarded &&
+        <div>
+          <AnimatedTitle style={styles}>
+            Spatialisation As A Service
+          </AnimatedTitle>
+          <AnimatedSubtitle style={styles2}>
+            (Don't forget your headphones!)
+            <HeadphonesIcon sx={{padding: 5, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 1, width: 80, height: 80}}/>
+          </AnimatedSubtitle>
+          <AnimatedButtonContainer style={styles3}>
+            <Button onClick={handleOnboarding}
+                    variant="contained"
+                    sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
+            <Button onClick={onClick}
+                    variant="outlined"
+                    sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Skip Introduction</Button>
+          </AnimatedButtonContainer>
+        </div>
+      }
+      {
+        onboarded &&
+        <Onboarding onNavigateToApp={onClick}/>
+      }
     </div>
   );
 };
