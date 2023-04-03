@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Howl} from "howler";
-import { Button, ButtonGroup, Slider } from '@mui/material';
+import { Button, ButtonGroup, Slider, Stack, Typography } from '@mui/material';
 
 interface HowlerProps {
     audioURLS: string[],
@@ -71,7 +71,6 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     const handlePositionChange = (e: Event, newValue: number | number[]) => {
-        console.log(e);
         if (e.type == "mousedown") {
             props.audioURLS.forEach(function(url) {
                 howls[url].pause();
@@ -94,13 +93,21 @@ function HowlerGroup(props: HowlerProps) {
                 </Button>
             </ButtonGroup>
             {howls &&
-              <Slider
-                size="small"
-                value={position}
-                min={0}
-                max={duration}
-                onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
-              />
+              <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                  <Typography variant="caption">
+                      {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60)}`}
+                  </Typography>
+                  <Slider
+                    size="small"
+                    value={position}
+                    min={0}
+                    max={duration}
+                    onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
+                  />
+                  <Typography variant="caption">
+                      {duration ? `${Math.floor(duration % 3600 / 60)}: ${Math.floor(duration % 3600 % 60)}`: ""}
+                  </Typography>
+              </Stack>
             }
         </div>
     );
