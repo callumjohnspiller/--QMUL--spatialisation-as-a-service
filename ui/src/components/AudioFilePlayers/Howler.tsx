@@ -14,6 +14,7 @@ function HowlerGroup(props: HowlerProps) {
             src: url,
             preload: true
         });
+        console.log(howls[url].duration())
     });
 
     useEffect(() => {
@@ -45,6 +46,7 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     const handleChange = (event: Event, newValue: number | number[]) => {
+        console.log(howls[props.audioURLS[0]].duration())
         if(howls[props.audioURLS[0]].playing()) {
             handlePause();
             setPlaybackPosition(newValue as number);
