@@ -72,7 +72,7 @@ function HowlerGroup(props: HowlerProps) {
 
     const handlePositionChange = (e: Event, newValue: number | number[]) => {
         console.log(e);
-        if (e.type == 'null') {
+        if (e.type == "mousedown") {
             props.audioURLS.forEach(function(url) {
                 howls[url].pause();
             });

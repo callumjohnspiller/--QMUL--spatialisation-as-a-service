@@ -32,7 +32,6 @@ export function GetMain(
     if (!newValue) {
       setMutedChannels(mutedChannels.filter((val) => { return val !== e!.target!.attributes!.item(2)!.value}))
     }
-    console.log(mutedChannels);
   }
 
   return (
