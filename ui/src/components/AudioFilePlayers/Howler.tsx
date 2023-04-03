@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Howl} from "howler";
-import { Button, ButtonGroup, Slider, Stack, Typography } from '@mui/material';
+import { Button, ButtonGroup, Divider, Slider, Stack, Typography } from '@mui/material';
 
 interface HowlerProps {
     audioURLS: string[],
@@ -83,8 +83,8 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     return (
-        <div>
-            <ButtonGroup>
+        <div style={{justifyContent: 'center'}}>
+            <ButtonGroup sx={{}}>
                 <Button onClick={handlePlay}>
                     Play
                 </Button>
@@ -93,9 +93,15 @@ function HowlerGroup(props: HowlerProps) {
                 </Button>
             </ButtonGroup>
             {howls &&
-              <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                  <Typography variant="caption" sx={{minWidth: 20}}>
-                      {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60)}`}
+              <Stack
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-around"
+                divider={<Divider orientation="vertical" flexItem />}
+              >
+                  <Typography variant="caption">
+                      {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`}
                   </Typography>
                   <Slider
                     size="small"
@@ -104,7 +110,7 @@ function HowlerGroup(props: HowlerProps) {
                     max={duration}
                     onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
                   />
-                  <Typography variant="caption" sx={{minWidth: 20}}>
+                  <Typography variant="caption">
                       {duration ? `${Math.floor(duration % 3600 / 60)}: ${Math.floor(duration % 3600 % 60)}`: ""}
                   </Typography>
               </Stack>

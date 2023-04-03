@@ -60,13 +60,13 @@ export function GetMain(
       {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
       {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
       {(fileUrls && !submitted) &&
-          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.7 }}>
+          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8 }}>
             <CardContent sx={{opacity: 1}}>
               <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
               <div style={{width: 400}}>
                 {fileUrls.map((url, index) => {
                   return (
-                    <Stack sx={{ height: 300 }} spacing={1} direction="row">
+                    <Stack sx={{padding: 2}} spacing={2}>
                       <Typography>{fileLabels[index]}</Typography>
                       <FormGroup>
                         <FormControlLabel
@@ -79,36 +79,36 @@ export function GetMain(
                             inputProps={{ 'aria-label': `${url}` }}/>}
                             label={`Mute`}
                           />
-                        </FormGroup>
-                        <Slider
-                          min={-20} max={20} defaultValue={0} step={0.1}
-                          aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
-                          value={spatialParams[fileLabels[index]]['Y']}
-                          onChange={(e, newValue) => {
-                            handleChange(e, newValue, fileLabels[index], 'Y');
-                            }
-                          }
-                        />
-                        <Slider
-                          min={-20} max={20} defaultValue={0} step={0.1}
-                          aria-label={fileLabels[index] + '_X'}
-                          valueLabelDisplay={'auto'}
-                          value={spatialParams[fileLabels[index]]['X']}
-                          onChange={(e, newValue) => {
-                            handleChange(e, newValue, fileLabels[index], 'X');
-                            }
-                          }
-                        />
-                        <Slider
-                          min={-20} max={20} defaultValue={0} step={0.1}
-                          aria-label={fileLabels[index] + '_Z'}
-                          valueLabelDisplay='auto'
-                          value={spatialParams[fileLabels[index]]['Z']}
-                          onChange={(e, newValue) => {
-                            handleChange(e, newValue, fileLabels[index], 'Z');
+                      </FormGroup>
+                      <Slider
+                        min={-20} max={20} defaultValue={0} step={0.1}
+                        aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
+                        value={spatialParams[fileLabels[index]]['Y']}
+                        onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'Y');
                           }
                         }
-                        />
+                      />
+                      <Slider
+                        min={-20} max={20} defaultValue={0} step={0.1}
+                        aria-label={fileLabels[index] + '_X'}
+                        valueLabelDisplay={'auto'}
+                        value={spatialParams[fileLabels[index]]['X']}
+                        onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'X');
+                          }
+                        }
+                      />
+                      <Slider
+                        min={-20} max={20} defaultValue={0} step={0.1}
+                        aria-label={fileLabels[index] + '_Z'}
+                        valueLabelDisplay='auto'
+                        value={spatialParams[fileLabels[index]]['Z']}
+                        onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'Z');
+                        }
+                      }
+                      />
                     </Stack>
                   );
                 })}
