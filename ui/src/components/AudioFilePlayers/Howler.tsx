@@ -100,7 +100,7 @@ function HowlerGroup(props: HowlerProps) {
                 justifyContent="space-around"
                 divider={<Divider orientation="vertical" flexItem />}
               >
-                  <Typography variant="caption">
+                  <Typography variant="caption" noWrap={true}>
                       {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`}
                   </Typography>
                   <Slider
@@ -110,7 +110,7 @@ function HowlerGroup(props: HowlerProps) {
                     max={duration}
                     onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
                   />
-                  <Typography variant="caption">
+                  <Typography variant="caption" noWrap={true}>
                       {duration ? `${Math.floor(duration % 3600 / 60)}: ${Math.floor(duration % 3600 % 60)}`: ""}
                   </Typography>
               </Stack>
