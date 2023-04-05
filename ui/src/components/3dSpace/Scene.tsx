@@ -40,14 +40,14 @@ function Scene(props: SceneProps) {
               return (
                 <group>
                   <Box name={label} position={[
-                    props.spatialParams[props.fileLabels[index]]["X"],
-                    Math.abs(props.spatialParams[props.fileLabels[index]]["Y"]) * -1,
+                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    -props.spatialParams[props.fileLabels[index]]["Y"],
                     -props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
                   <Label position={[
-                    props.spatialParams[props.fileLabels[index]]["X"],
-                    Math.abs(props.spatialParams[props.fileLabels[index]]["Y"]) * -1,
-                    props.spatialParams[props.fileLabels[index]]["Z"]
+                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    -props.spatialParams[props.fileLabels[index]]["Y"],
+                    -props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
                 </group>

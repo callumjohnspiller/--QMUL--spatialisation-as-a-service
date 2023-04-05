@@ -52,8 +52,16 @@ export function Plane(props: any) {
 export function Label(props:any) {
     const ref = useRef<THREE.Mesh>(null);
     return (
-      <Html center position={props.position}>
-          <p>{props.content}</p>
+      <Html
+        as ='div'
+        center={true}
+        position={props.position}
+        transform={true}
+        style={{
+            width: 200
+        }}
+      >
+          {props.content}
       </Html>
     )
 }
