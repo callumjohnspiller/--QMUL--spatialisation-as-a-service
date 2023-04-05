@@ -93,7 +93,8 @@ export function GetMain(
           margin: 'auto',
           width: '60%',
           padding: 100,
-          zIndex: 1
+          zIndex: 3,
+          backgroundColor: 'red'
         }}
         >
           <CircularProgress

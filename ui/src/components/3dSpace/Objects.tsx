@@ -31,7 +31,7 @@ export function Box(props: any) {
             geometry={geometry}
         >
             <boxGeometry />
-            <meshBasicMaterial color={"green"} wireframe={true} />
+            <meshBasicMaterial color={props.color} />
         </mesh>
     );
 }
@@ -55,12 +55,14 @@ export function Label(props:any) {
       <Html
         as='div'
         center
+        occlude={true}
         position={props.position}
       >
           <p style={{
               width: 200,
               fontSize: 20,
-              backgroundColor: 'papayawhip'
+              backgroundColor: 'papayawhip',
+              textAlign: 'center'
           }}>
               {props.content}
           </p>

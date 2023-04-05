@@ -32,30 +32,31 @@ function Scene(props: SceneProps) {
           <Label
             scale={[2, 2, 2]}
             position={[-10, 9, -19.5]}
-            content={"Use the sliders to edit the instrument positions.Click and drag the model to look around.\nUse mouse wheel to zoom in and out."}
+            content={"Use the sliders to edit the instrument positions."}
           />
           <Label
             scale={[2, 2, 2]}
             position={[0, 9, -19.5]}
-            content={"Click and drag the model to look around.\nUse mouse wheel to zoom in and out."}
+            content={"Click and drag the model to look around."}
           />
           <Label
             scale={[2, 2, 2]}
-            position={[0, 9, -19.5]}
+            position={[10, 9, -19.5]}
             content={"Use mouse wheel to zoom in and out."}
           />
           {
             props.fileLabels.map((label, index) => {
+              var randomColor = Math.floor(Math.random()*16777215).toString(16);
               return (
                 <group>
-                  <Box name={label} position={[
+                  <Box color={'#'+randomColor} name={label} position={[
                     props.spatialParams[props.fileLabels[index]]["Y"],
                     -props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
                   <Label position={[
-                    props.spatialParams[props.fileLabels[index]]["Y"] - 1,
-                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["Y"],
+                    props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
