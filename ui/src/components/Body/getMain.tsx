@@ -48,14 +48,12 @@ export function GetMain(
   return (
     <div style={{ position: 'relative' }}>
       {!uploadStatus &&
-        <div style={{position: 'absolute', height: "50vh", width: "50vw"}}>
-          <Uploader
-            uuid={props.uuid}
-            setUploadStatus={() => setUploadStatus(true)}
-            stemCount={stemCount}
-            setStemCount={setStemCount}
-          />
-      </div>
+        <Uploader
+          uuid={props.uuid}
+          setUploadStatus={() => setUploadStatus(true)}
+          stemCount={stemCount}
+          setStemCount={setStemCount}
+        />
       }
       {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
       {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
