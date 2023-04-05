@@ -47,7 +47,8 @@ export function GetMain(
 
   return (
     <div style={{ position: 'relative' }}>
-      {!uploadStatus &&
+      {
+        !uploadStatus &&
         <Uploader
           uuid={props.uuid}
           setUploadStatus={() => setUploadStatus(true)}
@@ -55,8 +56,55 @@ export function GetMain(
           setStemCount={setStemCount}
         />
       }
-      {(uploadStatus && !fileUrls) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
-      {(submitted && !outputUrl) && <CircularProgress sx={{position: 'absolute', top: "50%", left: "50%", height: "10vh", width: "10vw", zIndex: 1}}/>}
+      {
+        (uploadStatus && !fileUrls) &&
+        <div style={{
+          display: 'block',
+          margin: 'auto',
+          width: '60%',
+          padding: 100,
+          zIndex: 1,
+        }}
+        >
+          <Stack spacing={3}>
+            <CircularProgress
+              sx={{
+                display: 'block',
+                margin: 'auto',
+              }}
+              size={60}
+            />
+            <Typography
+              sx={{
+                display: 'block',
+                margin: 'auto',
+                textAlign: 'center'
+              }}
+            fontSize={20}
+            >
+              Please be patient; separating the audio can take a couple of minutes!
+            </Typography>
+          </Stack>
+        </div>
+      }
+      {(submitted && !outputUrl) &&
+        <div style={{
+          display: 'block',
+          margin: 'auto',
+          width: '60%',
+          padding: 100,
+          zIndex: 1
+        }}
+        >
+          <CircularProgress
+            sx={{
+              display: 'block',
+              margin: 'auto',
+            }}
+            size={60}
+          />
+        </div>
+      }
       {(fileUrls && !submitted) &&
           <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8, maxHeight: 800, overflow: 'auto' }}>
             <CardContent sx={{opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto'}}>
