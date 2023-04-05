@@ -53,12 +53,12 @@ export function Label(props:any) {
     const ref = useRef<THREE.Mesh>(null);
     return (
       <Html
-        as ='div'
-        center={true}
+        as='div'
+        center
         position={props.position}
-        transform={true}
         style={{
-            width: 200
+            width: 200,
+            fontSize: 15
         }}
       >
           {props.content}
