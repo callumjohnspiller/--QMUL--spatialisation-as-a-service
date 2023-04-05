@@ -128,20 +128,20 @@ export function GetMain(
                       </FormGroup>
                       <Slider
                         min={-20} max={20} defaultValue={0} step={0.1}
-                        aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
-                        value={spatialParams[fileLabels[index]]['Y']}
-                        onChange={(e, newValue) => {
-                          handleChange(e, newValue, fileLabels[index], 'Y');
-                          }
-                        }
-                      />
-                      <Slider
-                        min={-20} max={20} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_X'}
                         valueLabelDisplay={'auto'}
                         value={spatialParams[fileLabels[index]]['X']}
                         onChange={(e, newValue) => {
                           handleChange(e, newValue, fileLabels[index], 'X');
+                        }
+                        }
+                      />
+                      <Slider
+                        min={-20} max={20} defaultValue={0} step={0.1}
+                        aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
+                        value={spatialParams[fileLabels[index]]['Y']}
+                        onChange={(e, newValue) => {
+                          handleChange(e, newValue, fileLabels[index], 'Y');
                           }
                         }
                       />
