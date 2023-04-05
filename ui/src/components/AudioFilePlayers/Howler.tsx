@@ -102,7 +102,7 @@ function HowlerGroup(props: HowlerProps) {
                 spacing={{ xs: 2, sm: 2, md: 4 }}
                 alignItems="center"
                 justifyContent="space-around"
-                divider={<Divider orientation="vertical" flexItem />}
+                divider={<Divider orientation="vertical" />}
 
               >
                   <Typography variant="caption" noWrap={true}>

@@ -31,7 +31,7 @@ function Scene(props: SceneProps) {
           </Text>
           <Label
             scale={[2, 2, 2]}
-            position={[5, 0, -19.5]}
+            position={[0, 5, -19.5]}
             content={"Use the sliders to edit the instrument positions.\nClick and drag the model to look around.\nUse mouse wheel to zoom in and out."}
           >
           </Label>
@@ -40,14 +40,14 @@ function Scene(props: SceneProps) {
               return (
                 <group>
                   <Box name={label} position={[
-                    props.spatialParams[props.fileLabels[index]]['X'],
-                    -props.spatialParams[props.fileLabels[index]]['Y'],
-                    -props.spatialParams[props.fileLabels[index]]['Z']
+                    props.spatialParams[props.fileLabels[index]]["X"],
+                    Math.abs(props.spatialParams[props.fileLabels[index]]["Y"]) * -1,
+                    -props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
                   <Label position={[
                     props.spatialParams[props.fileLabels[index]]["X"],
-                    -props.spatialParams[props.fileLabels[index]]["Y"] -1,
-                    -props.spatialParams[props.fileLabels[index]]["Z"]
+                    Math.abs(props.spatialParams[props.fileLabels[index]]["Y"]) * -1,
+                    props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
                 </group>
