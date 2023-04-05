@@ -56,12 +56,14 @@ export function Label(props:any) {
         as='div'
         center
         position={props.position}
-        style={{
-            width: 200,
-            fontSize: 15
-        }}
       >
-          {props.content}
+          <p style={{
+              width: 200,
+              fontSize: 20,
+              backgroundColor: 'papayawhip'
+          }}>
+              {props.content}
+          </p>
       </Html>
     )
 }

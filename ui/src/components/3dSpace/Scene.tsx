@@ -31,23 +31,32 @@ function Scene(props: SceneProps) {
           </Text>
           <Label
             scale={[2, 2, 2]}
-            position={[0, 5, -19.5]}
-            content={"Use the sliders to edit the instrument positions.\nClick and drag the model to look around.\nUse mouse wheel to zoom in and out."}
-          >
-          </Label>
+            position={[-10, 9, -19.5]}
+            content={"Use the sliders to edit the instrument positions.Click and drag the model to look around.\nUse mouse wheel to zoom in and out."}
+          />
+          <Label
+            scale={[2, 2, 2]}
+            position={[0, 9, -19.5]}
+            content={"Click and drag the model to look around.\nUse mouse wheel to zoom in and out."}
+          />
+          <Label
+            scale={[2, 2, 2]}
+            position={[0, 9, -19.5]}
+            content={"Use mouse wheel to zoom in and out."}
+          />
           {
             props.fileLabels.map((label, index) => {
               return (
                 <group>
                   <Box name={label} position={[
-                    -props.spatialParams[props.fileLabels[index]]["Y"],
-                    -props.spatialParams[props.fileLabels[index]]["X"] -1,
-                    -props.spatialParams[props.fileLabels[index]]["Z"]
+                    props.spatialParams[props.fileLabels[index]]["Y"],
+                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
                   <Label position={[
-                    -props.spatialParams[props.fileLabels[index]]["Y"],
-                    -props.spatialParams[props.fileLabels[index]]["X"] -1,
-                    -props.spatialParams[props.fileLabels[index]]["Z"]
+                    props.spatialParams[props.fileLabels[index]]["Y"] - 1,
+                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
                 </group>
