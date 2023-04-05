@@ -83,8 +83,12 @@ function HowlerGroup(props: HowlerProps) {
     }
 
     return (
-        <div style={{justifyContent: 'center'}}>
-            <ButtonGroup sx={{}}>
+        <div style={{display: 'block', alignItems: 'center'}}>
+            <ButtonGroup sx={{
+                display: 'block',
+                margin: 'auto',
+                textAlign: 'center'
+            }}>
                 <Button onClick={handlePlay}>
                     Play
                 </Button>
@@ -94,13 +98,14 @@ function HowlerGroup(props: HowlerProps) {
             </ButtonGroup>
             {howls &&
               <Stack
-                spacing={2}
-                direction="row"
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
                 alignItems="center"
                 justifyContent="space-around"
                 divider={<Divider orientation="vertical" flexItem />}
+
               >
-                  <Typography variant="caption" noWrap={true}>
+                  <Typography variant="caption">
                       {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`}
                   </Typography>
                   <Slider
