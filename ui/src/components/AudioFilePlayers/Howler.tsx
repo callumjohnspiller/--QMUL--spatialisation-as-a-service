@@ -99,11 +99,10 @@ function HowlerGroup(props: HowlerProps) {
             {howls &&
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 2, sm: 2, md: 4 }}
+                spacing={{ xs: 0.5, sm: 2, md: 4 }}
                 alignItems="center"
                 justifyContent="space-around"
-                divider={<Divider orientation="vertical" />}
-
+                divider={<Divider orientation="vertical" flexItem={true}/>}
               >
                   <Typography variant="caption" noWrap={true}>
                       {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`}
