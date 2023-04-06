@@ -147,7 +147,7 @@ export function GetMain(
                       onClick={() => {
                         handleSubmit();
                       }}>
-                    Render 3D Audio
+                    Render High-Quality 3D Audio
                   </Button> : <p>Waiting for task token</p>}
               </div>
             </CardContent>

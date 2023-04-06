@@ -55,9 +55,9 @@ function HowlerGroup(props: HowlerProps) {
   useEffect(() => {
     props.audioURLS.map((url, index) => {
       howls[url].pos(
-        props.spatialParams[props.fileLabels[index]]['X'],
-        props.spatialParams[props.fileLabels[index]]['Y'],
-        props.spatialParams[props.fileLabels[index]]['Z']
+        -props.spatialParams[props.fileLabels[index]]['Y'],
+        -props.spatialParams[props.fileLabels[index]]['X'],
+        -props.spatialParams[props.fileLabels[index]]['Z']
       )
     })
   }, [props.spatialParams])
