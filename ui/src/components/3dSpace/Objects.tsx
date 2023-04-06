@@ -80,6 +80,7 @@ export function InstrumentLabel(props:any) {
         position={props.position}
       >
           <p style={{
+              width: 'min-content',
               fontSize: 15,
               textAlign: 'center',
               overflowWrap: 'break-word',

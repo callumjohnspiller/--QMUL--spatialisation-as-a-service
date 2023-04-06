@@ -175,6 +175,9 @@ export function GetMain(
                 zIndex: 3,
               }}
               >
+                <Typography>
+                  Rendering final output!
+                </Typography>
                 <CircularProgress
                   sx={{
                     display: 'block',
