@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats, Text } from '@react-three/drei';
-import { Box, Label, Plane } from './Objects';
+import { Box, InstrumentLabel, Label, Plane } from './Objects';
 
 interface SceneProps {
   spatialParams: any,
@@ -50,15 +50,15 @@ function Scene(props: SceneProps) {
                 <group>
                   <Box name={label} position={[
                     -props.spatialParams[props.fileLabels[index]]["Y"],
-                    props.spatialParams[props.fileLabels[index]]["X"],
-                    props.spatialParams[props.fileLabels[index]]["Z"]
+                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    -props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
-                  <Label position={[
+                  <InstrumentLabel position={[
                     -props.spatialParams[props.fileLabels[index]]["Y"],
-                    props.spatialParams[props.fileLabels[index]]["X"] - 1,
-                    props.spatialParams[props.fileLabels[index]]["Z"]
+                    -props.spatialParams[props.fileLabels[index]]["X"] - 1,
+                    -props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
-                  </Label>
+                  </InstrumentLabel>
                 </group>
 
               );

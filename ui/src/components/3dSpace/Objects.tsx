@@ -71,3 +71,23 @@ export function Label(props:any) {
       </Html>
     )
 }
+
+export function InstrumentLabel(props:any) {
+    return (
+      <Html
+        as='div'
+        center
+        position={props.position}
+      >
+          <p style={{
+              fontSize: 15,
+              textAlign: 'center',
+              overflowWrap: 'break-word',
+              hyphens: 'auto',
+              padding: '5px'
+          }}>
+              {props.content}
+          </p>
+      </Html>
+    )
+}
