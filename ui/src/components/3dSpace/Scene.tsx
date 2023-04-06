@@ -31,25 +31,24 @@ function Scene(props: SceneProps) {
           </Text>
           <Label
             scale={[2, 2, 2]}
-            position={[-10, 9, -19.5]}
+            position={[-15, 10, -19.5]}
             content={"Use the sliders to edit the instrument positions."}
           />
           <Label
             scale={[2, 2, 2]}
-            position={[0, 9, -19.5]}
+            position={[0, 10, -19.5]}
             content={"Click and drag the model to look around."}
           />
           <Label
             scale={[2, 2, 2]}
-            position={[10, 9, -19.5]}
+            position={[15, 10, -19.5]}
             content={"Use mouse wheel to zoom in and out."}
           />
           {
             props.fileLabels.map((label, index) => {
-              const randomColor = Math.floor(Math.random()*16777215).toString(16);
               return (
                 <group>
-                  <Box color={'#'+randomColor} name={label} position={[
+                  <Box name={label} position={[
                     props.spatialParams[props.fileLabels[index]]["Y"],
                     -props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]

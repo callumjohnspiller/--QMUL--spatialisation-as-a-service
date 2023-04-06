@@ -9,11 +9,7 @@ export function Box(props: any) {
     const [hovered, setHover] = useState(false);
     const [position, setPosition] = useState(props.position);
     const geometry = useMemo(() => new THREE.BoxGeometry(), []);
-
-    useEffect(() => {
-
-    })
-
+    const [boxColour, setBoxColour] = useState(Math.floor(Math.random()*16777215).toString(16));
 
     useEffect(() => {
         setPosition(props.position);
@@ -48,13 +44,12 @@ export function Plane(props: any) {
         ref={ref}
       >
           <planeGeometry attach="geometry" args={[40, 40, 3, 3]} />
-          <meshPhongMaterial attach="material" color={0x63ADF2} wireframe={false} opacity={0.8}/>
+          <meshPhongMaterial attach="material" color={0x63ADF2} wireframe={true} opacity={0.8}/>
       </mesh>
     )
 }
 
 export function Label(props:any) {
-    const ref = useRef<THREE.Mesh>(null);
     return (
       <Html
         as='div'
@@ -68,7 +63,8 @@ export function Label(props:any) {
               backgroundColor: 'papayawhip',
               textAlign: 'center',
               overflowWrap: 'break-word',
-              hyphens: 'auto'
+              hyphens: 'auto',
+              padding: '5px'
           }}>
               {props.content}
           </p>

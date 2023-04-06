@@ -98,13 +98,11 @@ function HowlerGroup(props: HowlerProps) {
             </ButtonGroup>
             {howls &&
               <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 0.5, sm: 2 }}
+                direction={'row'}
                 alignItems="center"
-                justifyContent="space-around"
                 divider={<Divider orientation="vertical" flexItem={true}/>}
               >
-                  <Typography variant="caption" noWrap={true}>
+                  <Typography variant="caption" noWrap={true} sx={{inlineSize: 'min-content'}}>
                       {`${Math.floor(position % 3600 / 60)}: ${Math.floor(position % 3600 % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`}
                   </Typography>
                   <Slider
@@ -114,7 +112,7 @@ function HowlerGroup(props: HowlerProps) {
                     max={duration}
                     onChange={(e, newValue) => {handlePositionChange(e, newValue)}}
                   />
-                  <Typography variant="caption" noWrap={true}>
+                  <Typography variant="caption" noWrap={true} sx={{inlineSize: 'min-content'}}>
                       {duration ? `${Math.floor(duration % 3600 / 60)}: ${Math.floor(duration % 3600 % 60)}`: ""}
                   </Typography>
               </Stack>
