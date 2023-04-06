@@ -99,7 +99,9 @@ function HowlerGroup(props: HowlerProps) {
             {howls &&
               <Stack
                 direction={'row'}
-                alignItems="center"
+                spacing={5}
+                justifyContent={'center'}
+                alignItems={'center'}
                 divider={<Divider orientation="vertical" flexItem={true}/>}
               >
                   <Typography variant="caption" noWrap={true} sx={{inlineSize: 'min-content'}}>

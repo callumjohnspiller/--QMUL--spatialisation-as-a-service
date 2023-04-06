@@ -50,12 +50,12 @@ function Scene(props: SceneProps) {
                 <group>
                   <Box name={label} position={[
                     props.spatialParams[props.fileLabels[index]]["Y"],
-                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} />
                   <Label position={[
-                    props.spatialParams[props.fileLabels[index]]["Y"],
-                    -props.spatialParams[props.fileLabels[index]]["X"],
+                    props.spatialParams[props.fileLabels[index]]["Y"] - 1,
+                    props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>
