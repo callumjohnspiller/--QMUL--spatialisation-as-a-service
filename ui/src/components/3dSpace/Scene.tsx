@@ -46,7 +46,7 @@ function Scene(props: SceneProps) {
           />
           {
             props.fileLabels.map((label, index) => {
-              var randomColor = Math.floor(Math.random()*16777215).toString(16);
+              const randomColor = Math.floor(Math.random()*16777215).toString(16);
               return (
                 <group>
                   <Box color={'#'+randomColor} name={label} position={[
@@ -56,7 +56,7 @@ function Scene(props: SceneProps) {
                   ]} />
                   <Label position={[
                     props.spatialParams[props.fileLabels[index]]["Y"],
-                    props.spatialParams[props.fileLabels[index]]["X"],
+                    -props.spatialParams[props.fileLabels[index]]["X"],
                     props.spatialParams[props.fileLabels[index]]["Z"]
                   ]} content={label.replace(/_(.)*/gm, "")}>
                   </Label>

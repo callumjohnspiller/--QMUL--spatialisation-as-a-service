@@ -10,6 +10,10 @@ export function Box(props: any) {
     const [position, setPosition] = useState(props.position);
     const geometry = useMemo(() => new THREE.BoxGeometry(), []);
 
+    useEffect(() => {
+
+    })
+
 
     useEffect(() => {
         setPosition(props.position);
@@ -55,15 +59,16 @@ export function Label(props:any) {
       <Html
         as='div'
         center
-        occlude={true}
         position={props.position}
       >
           <p style={{
               borderRadius: '25px',
-              width: 200,
-              fontSize: 20,
+              inlineSize: '150px',
+              fontSize: 15,
               backgroundColor: 'papayawhip',
-              textAlign: 'center'
+              textAlign: 'center',
+              overflowWrap: 'break-word',
+              hyphens: 'auto'
           }}>
               {props.content}
           </p>
