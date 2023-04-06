@@ -87,30 +87,11 @@ export function GetMain(
           </Stack>
         </div>
       }
-      {(submitted && !outputUrl) &&
-        <div style={{
-          display: 'block',
-          margin: 'auto',
-          width: '60%',
-          padding: 100,
-          zIndex: 3,
-          backgroundColor: 'red'
-        }}
-        >
-          <CircularProgress
-            sx={{
-              display: 'block',
-              margin: 'auto',
-            }}
-            size={60}
-          />
-        </div>
-      }
       {(fileUrls && !submitted) &&
           <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8, maxHeight: 800, overflow: 'auto' }}>
             <CardContent sx={{opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto'}}>
               <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
-              <div style={{width: 400, justifyContent: 'center'}}>
+              <div style={{width: 400, justifyContent: 'center', alignItems: 'center'}}>
                 {fileUrls.map((url, index) => {
                   return (
                     <Stack sx={{padding: 2, justifyItems: 'center'}} spacing={2}>
@@ -173,7 +154,39 @@ export function GetMain(
           </Card>
       }
       {fileUrls && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}><Scene spatialParams={spatialParams} fileLabels={fileLabels} /></div>}
-      {outputUrl && <Card sx={{ position: 'absolute', margin: 10, top: 30, right: 20, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.5 }}><CardContent><MemoAudioFilePlayer audioURL={outputUrl}/></CardContent></Card>}
+      {submitted &&
+        <Card
+          sx={{
+            position: 'absolute',
+            margin: 10,
+            top: 30,
+            right: 20,
+            zIndex: 1,
+            backgroundColor: "papayawhip",
+            opacity: 0.9
+        }}>
+          <CardContent>
+            {outputUrl ?
+              <MemoAudioFilePlayer audioURL={outputUrl}/> :
+              <div style={{
+                display: 'block',
+                margin: 'auto',
+                padding: 100,
+                zIndex: 3,
+              }}
+              >
+                <CircularProgress
+                  sx={{
+                    display: 'block',
+                    margin: 'auto',
+                  }}
+                  size={60}
+                />
+              </div>
+            }
+          </CardContent>
+        </Card>
+      }
     </div>
   );
 }
