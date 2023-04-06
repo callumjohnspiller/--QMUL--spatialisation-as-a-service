@@ -25,7 +25,6 @@ function Body(props: BodyProps) {
   const [spatialParams, setSpatialParams] = useState<any>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [outputUrl, setOutputUrl] = useState<string>();
-  const [onBoarded, setOnBoarded] = useState<boolean>(false);
 
   // Sets SQS URL after file is uploaded
   useEffect(() => {
@@ -42,6 +41,8 @@ function Body(props: BodyProps) {
     }
 
   }, [uploadStatus]);
+
+  // Waits for a final file to be rendered and sets output URL
 
   useEffect(() => {
     async function getConfirmation() {
@@ -64,7 +65,8 @@ function Body(props: BodyProps) {
     }
   }, [submitted]);
 
-  // Fetches message from SQS Queue
+  // Wait for source separation confirmation SQS message then delete from queue
+
   useEffect(() => {
     async function getMessageFromQueue() {
       let message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
@@ -86,7 +88,7 @@ function Body(props: BodyProps) {
     }
   }, [stemsSubmitted]);
 
-  // Converts message body into JSON
+  // Converts SQS message body into JSON once received from queue
   useEffect(() => {
     if (sqsMessage) {
       const str: string = (sqsMessage?.Messages && sqsMessage?.Messages[0].Body) ? sqsMessage.Messages[0].Body : '';
@@ -96,7 +98,7 @@ function Body(props: BodyProps) {
     }
   }, [sqsMessage]);
 
-  // Creates file label array from JSON
+  // Creates a file label array from JSON SQS message
   useEffect(() => {
     if (sqsMessageJson) {
       const pathArr: string[] = [];
@@ -107,7 +109,7 @@ function Body(props: BodyProps) {
     }
   }, [sqsMessageJson]);
 
-  // Sets up spatial parameters object
+  // Creates spatial parameters object
   useEffect(() => {
     if (fileLabels.length > 0) {
       const spatialParamsSetup: any = {};
@@ -118,7 +120,7 @@ function Body(props: BodyProps) {
     }
   }, [fileLabels]);
 
-  // Sets the urls for the separated files
+  // Sets the URLs for the separated file stems
   useEffect(() => {
     if (fileLabels.length > 0 && !fileUrls) {
       const arr: string[] = [];
@@ -129,7 +131,7 @@ function Body(props: BodyProps) {
     }
   }, [fileLabels]);
 
-  // Fetches task id from state machine
+  // Fetches task ID from Amazon Step Function once sources are separated.
   useEffect(() => {
     async function getTaskTokenMessage() {
       const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
@@ -146,6 +148,7 @@ function Body(props: BodyProps) {
     }
   }, [fileUrls]);
 
+  //
   useEffect(() => {
     async function getTokenMessage() {
       const message: ReceiveMessageResult = await props.getMessage(sqsQueueUrl);
@@ -163,6 +166,7 @@ function Body(props: BodyProps) {
 
   }, [sqsQueueUrl]);
 
+  // Callback function to Amazon Step Function confirming number of stems to separate uploaded file into.
   useEffect(() => {
 
     async function sendStemParams() {
@@ -190,6 +194,7 @@ function Body(props: BodyProps) {
     });
   };
 
+  // Function to handle confirmation of final spatial parameters.
   const handleSubmit = () => {
     async function sendSpatialParams() {
       const input: any = {
@@ -206,7 +211,23 @@ function Body(props: BodyProps) {
 
   return (
     <div>
-      {GetMain(uploadStatus, props, setUploadStatus, stemCount, setStemCount, fileUrls, submitted, outputUrl, fileLabels, spatialParams, handleChange, taskToken, handleSubmit)}
+      {
+        GetMain(
+          uploadStatus,
+          props,
+          setUploadStatus,
+          stemCount,
+          setStemCount,
+          fileUrls,
+          submitted,
+          outputUrl,
+          fileLabels,
+          spatialParams,
+          handleChange,
+          taskToken,
+          handleSubmit
+        )
+      }
     </div>
   );
 }

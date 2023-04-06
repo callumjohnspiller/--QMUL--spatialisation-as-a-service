@@ -20,7 +20,6 @@ function HowlerGroup(props: HowlerProps) {
       tmp[url] = new Howl({
         src: url,
         onload: function() {
-          console.log('loaded file');
           setDuration(tmp[url].duration());
         }
       });
@@ -58,9 +57,9 @@ function HowlerGroup(props: HowlerProps) {
         -props.spatialParams[props.fileLabels[index]]['Y'],
         -props.spatialParams[props.fileLabels[index]]['X'],
         -props.spatialParams[props.fileLabels[index]]['Z']
-      )
-    })
-  }, [props.spatialParams])
+      );
+    });
+  }, [props.spatialParams]);
 
   const updatePosition = () => {
     setPosition(howls[props.audioURLS[0]].seek());

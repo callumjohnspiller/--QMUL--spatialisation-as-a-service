@@ -70,7 +70,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
   }
 
   return (
-    <div style={{position: "relative"}}>
+    <div style={{ position: 'relative' }}>
       {!onboarded &&
         <div>
           <AnimatedTitle style={styles}>
@@ -78,22 +78,37 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onClick }) => {
           </AnimatedTitle>
           <AnimatedSubtitle style={styles2}>
             (Don't forget your headphones!)
-            <HeadphonesIcon sx={{padding: 5, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 1, width: 80, height: 80}}/>
+            <HeadphonesIcon sx={{
+              padding: 5,
+              display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: 1,
+              width: 80,
+              height: 80
+            }} />
           </AnimatedSubtitle>
           <AnimatedButtonContainer style={styles3}>
             <Button onClick={handleOnboarding}
-                    variant="contained"
-                    sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Enter</Button>
+                    variant='contained'
+                    sx={{
+                      padding: 2,
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      marginTop: 10
+                    }}>Enter</Button>
             <Button onClick={onClick}
-                    variant="outlined"
-                    sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Skip Introduction</Button>
+                    variant='outlined'
+                    sx={{ padding: 2, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}>Skip
+              Introduction</Button>
           </AnimatedButtonContainer>
         </div>
       }
       {
         onboarded &&
         <div>
-          <Onboarding onNavigateToApp={onClick}/>
+          <Onboarding onNavigateToApp={onClick} />
         </div>
       }
     </div>
