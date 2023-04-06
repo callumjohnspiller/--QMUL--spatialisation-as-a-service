@@ -21,7 +21,7 @@ const Onboarding: React.FC<Props> = ({ onNavigateToApp }) => {
     },
     {
       title: 'Stereo vs Spatial pt.1',
-      content: 'Stereo is great because it allows us to record music in a way that can position (or pan) sounds left and right by increasing or decreasing the volume in each ear. However, when we hear things in “real life”, lots of other factors are in play.\nSound never comes at us from just a left or right direction, but from all around us! Left, right, up, down, forwards, backwards, and every degree in between!\nIn addition, our human physiology comes into play; our head and ears actually block and shape sounds before they are picked up by our ear drums and brain.\nThis is why music can sound different coming through headphones compared to actually being in the room with musicians.',
+      content: 'Stereo is great because it allows us to record music in a way that can position (or pan) sounds left and right by increasing or decreasing the volume in each ear. However, when we hear things in “real life”, lots of other factors are at play...',
     },
     {
       title: 'Stereo vs Spatial pt.2',
