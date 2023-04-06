@@ -31,7 +31,7 @@ export function Box(props: any) {
             geometry={geometry}
         >
             <boxGeometry />
-            <meshBasicMaterial color={'#' + boxColour} />
+            <meshBasicMaterial color={'#' + boxColour} wireframe={true} />
         </mesh>
     );
 }
