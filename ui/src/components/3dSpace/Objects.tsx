@@ -59,6 +59,7 @@ export function Label(props:any) {
         position={props.position}
       >
           <p style={{
+              borderRadius: '25px',
               width: 200,
               fontSize: 20,
               backgroundColor: 'papayawhip',
