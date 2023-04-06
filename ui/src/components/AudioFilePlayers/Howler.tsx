@@ -4,7 +4,9 @@ import { Button, ButtonGroup, Divider, Slider, Stack, Typography } from '@mui/ma
 
 interface HowlerProps {
   audioURLS: string[],
-  mutes: string[]
+  mutes: string[],
+  spatialParams: any,
+  fileLabels: string[]
 }
 
 function HowlerGroup(props: HowlerProps) {
@@ -49,6 +51,16 @@ function HowlerGroup(props: HowlerProps) {
       }
     });
   }, [props.mutes]);
+
+  useEffect(() => {
+    props.audioURLS.map((url, index) => {
+      howls[url].pos(
+        props.spatialParams[props.fileLabels[index]]['X'],
+        props.spatialParams[props.fileLabels[index]]['Y'],
+        props.spatialParams[props.fileLabels[index]]['Z']
+      )
+    })
+  }, [props.spatialParams])
 
   const updatePosition = () => {
     setPosition(howls[props.audioURLS[0]].seek());

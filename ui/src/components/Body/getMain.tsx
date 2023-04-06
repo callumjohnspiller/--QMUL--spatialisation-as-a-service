@@ -90,7 +90,7 @@ export function GetMain(
       {(fileUrls && !submitted) &&
           <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8, maxHeight: 800, overflow: 'auto' }}>
             <CardContent sx={{opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto'}}>
-              <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels}/>
+              <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels} spatialParams={spatialParams} fileLabels={fileLabels}/>
               <div style={{width: 400, justifyContent: 'center', alignItems: 'center'}}>
                 {fileUrls.map((url, index) => {
                   return (
