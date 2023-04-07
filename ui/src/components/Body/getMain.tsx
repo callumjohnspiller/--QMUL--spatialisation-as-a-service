@@ -161,7 +161,7 @@ export function GetMain(
                     >
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Up
+                          {"Up  "}
                         </Typography>
                       </div>
                       <Slider
@@ -176,7 +176,7 @@ export function GetMain(
                       />
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Down
+                          {"Down"}
                         </Typography>
                       </div>
                     </Stack>
@@ -189,7 +189,7 @@ export function GetMain(
                     >
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Right
+                          {"Right"}
                         </Typography>
                       </div>
                       <Slider
@@ -203,7 +203,7 @@ export function GetMain(
                       />
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Left
+                          {"Left "}
                         </Typography>
                       </div>
                     </Stack>
@@ -216,7 +216,7 @@ export function GetMain(
                     >
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Back
+                          {"Back  "}
                         </Typography>
                       </div>
                       <Slider
@@ -231,7 +231,7 @@ export function GetMain(
                       />
                       <div style={{ width: 'min-content' }}>
                         <Typography variant='caption' noWrap={true}>
-                          Forward
+                          {"Forward"}
                         </Typography>
                       </div>
                     </Stack>
