@@ -31,7 +31,7 @@ export function Box(props: any) {
       geometry={geometry}
     >
       <boxGeometry />
-      <meshBasicMaterial color={'#' + boxColour} wireframe={true} />
+      <meshBasicMaterial color={'#' + boxColour} wireframe={true} wireframeLinewidth={3}/>
     </mesh>
   );
 }
@@ -44,7 +44,7 @@ export function Plane(props: any) {
       ref={ref}
     >
       <planeGeometry attach='geometry' args={[40, 40, 3, 3]} />
-      <meshPhongMaterial attach='material' color={0x63ADF2} wireframe={true} opacity={0.8} />
+      <meshPhongMaterial attach='material' color={0x63ADF2} wireframe={true} opacity={0.8} wireframeLinewidth={2}/>
     </mesh>
   );
 }
