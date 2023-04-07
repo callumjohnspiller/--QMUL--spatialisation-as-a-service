@@ -65,7 +65,7 @@ export function GetMain(
   }
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', justifyContent: 'center' }}>
       {
         !uploadStatus &&
         <Uploader
@@ -82,7 +82,8 @@ export function GetMain(
           margin: 'auto',
           width: '60%',
           padding: 100,
-          zIndex: 1
+          zIndex: 1,
+          justifyContent: 'center'
         }}
         >
           <Stack spacing={3}>
@@ -116,12 +117,13 @@ export function GetMain(
           backgroundColor: 'papayawhip',
           opacity: 0.8,
           maxHeight: 800,
-          overflow: 'auto'
+          overflow: 'auto',
+          justifyContent: 'center'
         }}>
-          <CardContent sx={{ opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto' }}>
+          <CardContent sx={{ opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto', justifyContent: 'center' }}>
             <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels} spatialParams={spatialParams}
                              fileLabels={fileLabels} />
-            <div style={{ width: 400, justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ width: 400, justifyContent: 'center'}}>
               {(taskToken) ?
                 <Button
                   disabled={buttonClicked}
@@ -129,7 +131,9 @@ export function GetMain(
                   onClick={() => {
                     handleSubmit();
                     setButtonClicked(true);
-                  }}>
+                  }}
+                  sx={{padding: 4}}
+                >
                   Render High-Quality 3D Audio
                 </Button> : <p>Waiting for task token</p>
               }
