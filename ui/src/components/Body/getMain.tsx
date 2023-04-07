@@ -139,7 +139,6 @@ export function GetMain(
                         control={
                           <Switch
                             disabled={channelSolo && mutedChannels.includes(url)}
-                            // value={mutedChannels.includes(url)}
                             onChange={(e, newValue) => {
                               handleMute(e, newValue);
                             }
@@ -166,9 +165,9 @@ export function GetMain(
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Up  "}
+                          Up
                         </Typography>
                       </div>
                       <Slider
@@ -181,9 +180,9 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Down"}
+                          Down
                         </Typography>
                       </div>
                     </Stack>
@@ -194,9 +193,9 @@ export function GetMain(
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Right"}
+                          Right
                         </Typography>
                       </div>
                       <Slider
@@ -208,9 +207,9 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Left "}
+                          Left
                         </Typography>
                       </div>
                     </Stack>
@@ -221,9 +220,9 @@ export function GetMain(
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Back  "}
+                          Back
                         </Typography>
                       </div>
                       <Slider
@@ -236,9 +235,9 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content' }}>
+                      <div style={{ width: 'min-content', minWidth: '50px' }}>
                         <Typography variant='caption' noWrap={true}>
-                          {"Forward"}
+                          Forward
                         </Typography>
                       </div>
                     </Stack>
