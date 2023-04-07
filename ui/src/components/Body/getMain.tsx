@@ -149,7 +149,7 @@ export function GetMain(
                       <FormControlLabel
                         control={
                           <Switch
-                            disabled={channelSolo && !mutedChannels.includes(url)}
+                            disabled={channelSolo && mutedChannels.includes(url)}
                             onChange={(e, newValue) => {
                               handleSolo(e, newValue);
                             }
