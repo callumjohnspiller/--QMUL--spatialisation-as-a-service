@@ -129,10 +129,10 @@ export function GetMain(
                   disabled={buttonClicked}
                   variant={'contained'}
                   onClick={() => {
-                    handleSubmit();
                     setButtonClicked(true);
+                    handleSubmit();
                   }}
-                  sx={{padding: 4}}
+                  sx={{margin: 'auto'}}
                 >
                   Render High-Quality 3D Audio
                 </Button> : <p>Waiting for task token</p>
