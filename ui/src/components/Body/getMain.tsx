@@ -35,6 +35,7 @@ export function GetMain(
 
   const [mutedChannels, setMutedChannels] = useState<string[]>([]);
   const [channelSolo, setChannelSolo] = useState<boolean>(false);
+  const [buttonClicked, setButtonClicked] = useState<boolean>(false);
 
   function handleMute(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
     if (newValue && !mutedChannels.includes(e!.target!.attributes!.item(2)!.value)) {
@@ -123,9 +124,11 @@ export function GetMain(
             <div style={{ width: 400, justifyContent: 'center', alignItems: 'center' }}>
               {(taskToken) ?
                 <Button
+                  disabled={buttonClicked}
                   variant={'contained'}
                   onClick={() => {
                     handleSubmit();
+                    setButtonClicked(true);
                   }}>
                   Render High-Quality 3D Audio
                 </Button> : <p>Waiting for task token</p>
