@@ -48,6 +48,17 @@ export function GetMain(
     }
   }
 
+  function handleSolo(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
+    if (newValue && fileUrls) {
+      setMutedChannels([])
+    }
+    if (!newValue) {
+      setMutedChannels(mutedChannels.filter((val) => {
+        return val !== e!.target!.attributes!.item(2)!.value;
+      }));
+    }
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       {
@@ -129,6 +140,16 @@ export function GetMain(
                             }
                             inputProps={{ 'aria-label': `${url}` }} />}
                         label={`Mute`}
+                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            onChange={(e, newValue) => {
+                              handleSolo(e, newValue);
+                            }
+                            }
+                            inputProps={{ 'aria-label': `${url}` }} />}
+                        label={`Solo`}
                       />
                     </FormGroup>
                     <Stack
