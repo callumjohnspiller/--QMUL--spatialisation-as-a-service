@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CircularProgress,
+  Divider,
   FormControlLabel,
   FormGroup,
   Slider,
@@ -13,9 +14,9 @@ import {
 } from '@mui/material';
 import { MemoAudioFilePlayer } from '../AudioFilePlayers';
 import Scene from '../3dSpace/Scene';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BodyProps } from './index';
-import {MemoHowlerGroup} from "../AudioFilePlayers/Howler";
+import { MemoHowlerGroup } from '../AudioFilePlayers/Howler';
 
 export function GetMain(
   uploadStatus: boolean,
@@ -41,7 +42,9 @@ export function GetMain(
       setMutedChannels(tmp);
     }
     if (!newValue) {
-      setMutedChannels(mutedChannels.filter((val) => { return val !== e!.target!.attributes!.item(2)!.value}))
+      setMutedChannels(mutedChannels.filter((val) => {
+        return val !== e!.target!.attributes!.item(2)!.value;
+      }));
     }
   }
 
@@ -63,14 +66,14 @@ export function GetMain(
           margin: 'auto',
           width: '60%',
           padding: 100,
-          zIndex: 1,
+          zIndex: 1
         }}
         >
           <Stack spacing={3}>
             <CircularProgress
               sx={{
                 display: 'block',
-                margin: 'auto',
+                margin: 'auto'
               }}
               size={60}
             />
@@ -80,7 +83,7 @@ export function GetMain(
                 margin: 'auto',
                 textAlign: 'center'
               }}
-            fontSize={20}
+              fontSize={20}
             >
               Please be patient; separating the audio can take a couple of minutes!
             </Typography>
@@ -88,26 +91,58 @@ export function GetMain(
         </div>
       }
       {(fileUrls && !submitted) &&
-          <Card sx={{ position: 'absolute', margin: 2, top: 30, right: 10, zIndex: 1, backgroundColor: "papayawhip", opacity: 0.8, maxHeight: 800, overflow: 'auto' }}>
-            <CardContent sx={{opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto'}}>
-              <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels} spatialParams={spatialParams} fileLabels={fileLabels}/>
-              <div style={{width: 400, justifyContent: 'center', alignItems: 'center'}}>
-                {fileUrls.map((url, index) => {
-                  return (
-                    <Stack sx={{padding: 2, justifyItems: 'center'}} spacing={2}>
-                      <Typography>{fileLabels[index]}</Typography>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={
+        <Card sx={{
+          position: 'absolute',
+          margin: 2,
+          top: 30,
+          right: 10,
+          zIndex: 1,
+          backgroundColor: 'papayawhip',
+          opacity: 0.8,
+          maxHeight: 800,
+          overflow: 'auto'
+        }}>
+          <CardContent sx={{ opacity: 1, justifyItems: 'center', maxHeight: 800, overflow: 'auto' }}>
+            <MemoHowlerGroup audioURLS={fileUrls} mutes={mutedChannels} spatialParams={spatialParams}
+                             fileLabels={fileLabels} />
+            <div style={{ width: 400, justifyContent: 'center', alignItems: 'center' }}>
+              {(taskToken) ?
+                <Button
+                  variant={'contained'}
+                  onClick={() => {
+                    handleSubmit();
+                  }}>
+                  Render High-Quality 3D Audio
+                </Button> : <p>Waiting for task token</p>
+              }
+              {fileUrls.map((url, index) => {
+                return (
+                  <Stack sx={{ padding: 2, justifyItems: 'center' }} spacing={2}>
+                    <Typography>{fileLabels[index]}</Typography>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
                           <Switch
                             onChange={(e, newValue) => {
-                              handleMute(e, newValue)
-                              }
+                              handleMute(e, newValue);
                             }
-                            inputProps={{ 'aria-label': `${url}` }}/>}
-                            label={`Mute`}
-                          />
-                      </FormGroup>
+                            }
+                            inputProps={{ 'aria-label': `${url}` }} />}
+                        label={`Mute`}
+                      />
+                    </FormGroup>
+                    <Stack
+                      direction={'row'}
+                      spacing={2}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      divider={<Divider orientation='vertical' flexItem={true} />}
+                    >
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Up
+                        </Typography>
+                      </div>
                       <Slider
                         min={-20} max={20} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_X'}
@@ -118,15 +153,51 @@ export function GetMain(
                         }
                         }
                       />
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Down
+                        </Typography>
+                      </div>
+                    </Stack>
+                    <Stack
+                      direction={'row'}
+                      spacing={2}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      divider={<Divider orientation='vertical' flexItem={true} />}
+                    >
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Right
+                        </Typography>
+                      </div>
                       <Slider
                         min={-20} max={20} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
                         value={spatialParams[fileLabels[index]]['Y']}
                         onChange={(e, newValue) => {
                           handleChange(e, newValue, fileLabels[index], 'Y');
-                          }
+                        }
                         }
                       />
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Left
+                        </Typography>
+                      </div>
+                    </Stack>
+                    <Stack
+                      direction={'row'}
+                      spacing={2}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      divider={<Divider orientation='vertical' flexItem={true} />}
+                    >
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Back
+                        </Typography>
+                      </div>
                       <Slider
                         min={-20} max={20} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_Z'}
@@ -135,25 +206,23 @@ export function GetMain(
                         onChange={(e, newValue) => {
                           handleChange(e, newValue, fileLabels[index], 'Z');
                         }
-                      }
+                        }
                       />
+                      <div style={{ width: 'min-content' }}>
+                        <Typography variant='caption' noWrap={true}>
+                          Forward
+                        </Typography>
+                      </div>
                     </Stack>
-                  );
-                })}
-
-                {(taskToken) ?
-                  <Button
-                      variant={'contained'}
-                      onClick={() => {
-                        handleSubmit();
-                      }}>
-                    Render High-Quality 3D Audio
-                  </Button> : <p>Waiting for task token</p>}
-              </div>
-            </CardContent>
-          </Card>
+                  </Stack>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
       }
-      {fileUrls && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}><Scene spatialParams={spatialParams} fileLabels={fileLabels} /></div>}
+      {fileUrls && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}><Scene
+        spatialParams={spatialParams} fileLabels={fileLabels} /></div>}
       {submitted &&
         <Card
           sx={{
@@ -162,17 +231,17 @@ export function GetMain(
             top: 30,
             right: 20,
             zIndex: 1,
-            backgroundColor: "papayawhip",
+            backgroundColor: 'papayawhip',
             opacity: 0.9
-        }}>
+          }}>
           <CardContent>
             {outputUrl ?
-              <MemoAudioFilePlayer audioURL={outputUrl}/> :
+              <MemoAudioFilePlayer audioURL={outputUrl} /> :
               <div style={{
                 display: 'block',
                 margin: 'auto',
                 padding: 100,
-                zIndex: 3,
+                zIndex: 3
               }}
               >
                 <Typography>
@@ -181,7 +250,7 @@ export function GetMain(
                 <CircularProgress
                   sx={{
                     display: 'block',
-                    margin: 'auto',
+                    margin: 'auto'
                   }}
                   size={60}
                 />

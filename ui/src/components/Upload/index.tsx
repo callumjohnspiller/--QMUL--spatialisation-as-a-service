@@ -93,9 +93,6 @@ function Uploader(props: UploaderProps) {
         {
           (!validFile) ? <Typography color={'red'}>Please upload either a .wav or .mp3 file</Typography> : <div></div>
         }
-        {
-          (validFile) ? <Typography>{file && `${file.name} - ${file.type}`}</Typography> : <div></div>
-        }
       </div>
     );
   };
@@ -112,8 +109,8 @@ function Uploader(props: UploaderProps) {
                 value={props.stemCount}
                 onChange={handleStemCountChange}
               >
-                <MenuItem value={2}>Two</MenuItem>
-                <MenuItem value={4}>Four</MenuItem>
+                <MenuItem value={2}>Two (Vocals/Rest)</MenuItem>
+                <MenuItem value={4}>Four (Vocals/Drums/Bass/Rest)</MenuItem>
               </Select>
             </FormControl>
             :

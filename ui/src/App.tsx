@@ -28,7 +28,7 @@ export default function App() {
 
 
     return (
-        <div className={"app"}>
+        <div id={'react-app'} className={"app"}>
             {!siteEntered && (
               <WelcomeScreen onClick={handleEntry} />
             )}
