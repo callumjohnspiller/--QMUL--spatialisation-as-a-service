@@ -160,12 +160,12 @@ export function GetMain(
                     </FormGroup>
                     <Stack
                       direction={'row'}
-                      spacing={2}
+                      spacing={1}
                       justifyContent={'center'}
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Up
                         </Typography>
@@ -180,7 +180,7 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Down
                         </Typography>
@@ -188,12 +188,12 @@ export function GetMain(
                     </Stack>
                     <Stack
                       direction={'row'}
-                      spacing={2}
+                      spacing={1}
                       justifyContent={'center'}
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Right
                         </Typography>
@@ -207,7 +207,7 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Left
                         </Typography>
@@ -215,12 +215,12 @@ export function GetMain(
                     </Stack>
                     <Stack
                       direction={'row'}
-                      spacing={2}
+                      spacing={1}
                       justifyContent={'center'}
                       alignItems={'center'}
                       divider={<Divider orientation='vertical' flexItem={true} />}
                     >
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Back
                         </Typography>
@@ -235,7 +235,7 @@ export function GetMain(
                         }
                         }
                       />
-                      <div style={{ width: 'min-content', minWidth: '50px' }}>
+                      <div style={{ width: 'min-content', minWidth: '40px' }}>
                         <Typography variant='caption' noWrap={true}>
                           Forward
                         </Typography>
