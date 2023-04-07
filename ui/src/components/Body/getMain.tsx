@@ -34,6 +34,7 @@ export function GetMain(
 ) {
 
   const [mutedChannels, setMutedChannels] = useState<string[]>([]);
+  const [channelSolo, setChannelSolo] = useState<boolean>(false);
 
   function handleMute(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
     if (newValue && !mutedChannels.includes(e!.target!.attributes!.item(2)!.value)) {
@@ -50,9 +51,11 @@ export function GetMain(
 
   function handleSolo(e: React.ChangeEvent<HTMLInputElement>, newValue: boolean | undefined) {
     if (!newValue) {
-      setMutedChannels([])
+      setMutedChannels([]);
+      setChannelSolo(false);
     }
     if (newValue) {
+      setChannelSolo(true);
       // @ts-ignore
       setMutedChannels(fileUrls.filter((val) => {
         return val !== e!.target!.attributes!.item(2)!.value;
@@ -135,7 +138,8 @@ export function GetMain(
                       <FormControlLabel
                         control={
                           <Switch
-                            value={mutedChannels.includes(url)}
+                            disabled={channelSolo && mutedChannels.includes(url)}
+                            // value={mutedChannels.includes(url)}
                             onChange={(e, newValue) => {
                               handleMute(e, newValue);
                             }
@@ -146,7 +150,7 @@ export function GetMain(
                       <FormControlLabel
                         control={
                           <Switch
-                            value={!mutedChannels.includes(url) && (mutedChannels.length === fileUrls.length - 1)}
+                            disabled={channelSolo && !mutedChannels.includes(url)}
                             onChange={(e, newValue) => {
                               handleSolo(e, newValue);
                             }
