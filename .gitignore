@@ -286,3 +286,4 @@ lambda/spatialisation/config
 /lambda/spatialisation/aws-lambda-cpp-runtime/
 /lambda/spatialisation/cmake-build-release/
 /ui/src/libs/creds.ts
+/docs/src/svg-inkscape/

@@ -4,16 +4,16 @@
 
 \normalsize
 
-Observe that ~\ref{fig:preliminary-design} details the initial design for the project’s cloud architecture.
+Observe that ~\ref{fig:preliminary-design} details the initial design for the project's cloud architecture.
 The diagram provides a high-level overview of the primary user journey,
 and the ~\gls{aws} products that were intended to meet the user requirements.
-However, this design was subject to change as development progressed, in accordance with the Agile methodology.
+However, this design was subject to change as development progressed, in accordance with the~\gls{agile} methodology.
 This section aims to describe how the initial design changed to accommodate the changing requirements of the project.
 
 \begin{figure}[!htb]
     \minipage{\textwidth}
     \includegraphics[width=\linewidth]{initial_architecture_diagram}
-    \caption{Preliminary Design for Cloud Architexture}\label{fig:preliminary-design}
+    \caption{Preliminary Design for Cloud Architecture}\label{fig:preliminary-design}
     \endminipage\hfill
 \end{figure}
 
@@ -60,10 +60,33 @@ The issue was solved by making use of the~\gls{aws-ecr} service.
 This service allows a developer to host and deploy~\glspl{container-image},
 crucially, with a size limit of 75 GB allowed for each image uploaded to the registry.
 Through the use of~\gls{docker} container images,
-the code for the Lambda functions were bundled into deployment packages
+the code for the Lambda functions was bundled into deployment packages
 that could be uploaded to a
 ~\gls{aws-ecr} and then linked to a Lambda function
-while staying well under the limit offered by the container registry.
-The dockerfiles for the source separation and spatialisation lambda functions can be found in~\ref{subsec:lambda-function-dockerfiles}.
+while staying well under the data limit offered by the container registry.
+The dockerfiles for the source separation and spatialisation lambda functions can be found in Appendix~\ref{subsec:lambda-function-dockerfiles}.
 Note the installation of the AWS Lambda runtime environment for both Python in Listing~\ref{lst:source-sep-dockerfile} and C++ in Listing~\ref{lst:spatialisation-dockerfile}.
 
+The next major revision to the architecture design came with the removal of the proposed~\gls{aws-api-gateway} interface.
+Since the~\gls{aws-step-function} requires input from the user to execute,
+the step function callback feature would need to be used to wait for an input message to the step function.
+Given this,
+the most elegant solution was
+to create a~\gls{aws-sqs} queue through which messages could be sent
+and retrieved asynchronously without the risk of losing information through API communication failure.
+This was implemented through the creation of a unique message queue per interaction with the product.
+A unique identification key is created in the~\gls{react} interface, which is then used
+to identify both the~\gls{aws-sqs} queue, and the resources uploaded and retrieved from the relevant~\gls{s3} buckets.
+
+With these changes, it became possible to define a final cloud architecture and workflow.
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includesvg[width=\linewidth]{saas_architecture_2.0}
+    \caption{Final cloud architecture diagram}\label{fig:final_design}
+    \endminipage\hfill
+\end{figure}
+
+Figure~\ref{fig:final_design} shows an implementation of a step function
+interacting with the front-end via a~\gls{aws-sqs} queue.
+Another change is that

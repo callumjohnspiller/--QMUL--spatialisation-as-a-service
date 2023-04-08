@@ -1,0 +1,133 @@
+{
+  "Comment": "State Machine for Spatialisation as a Service Application",
+  "StartAt": "Get Process SQS Queue Url",
+  "States": {
+    "Get Process SQS Queue Url": {
+      "Type": "Task",
+      "Parameters": {
+        "QueueName.$": "$.detail.object.key"
+      },
+      "Resource": "arn:aws:states:::aws-sdk:sqs:getQueueUrl",
+      "ResultPath": "$.queueUrl",
+      "Next": "Wait For Callback with Stemcount Params",
+      "Comment": "Fetches SQS URL created by frontend on upload."
+    },
+    "Wait For Callback with Stemcount Params": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "TimeoutSeconds": 1800,
+      "Parameters": {
+        "MessageBody": {
+          "TaskToken.$": "$$.Task.Token"
+        },
+        "QueueUrl.$": "$.queueUrl.QueueUrl"
+      },
+      "Next": "Source Separation",
+      "ResultSelector": {
+        "val.$": "$"
+      },
+      "ResultPath": "$.stem-count"
+    },
+    "Source Separation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:eu-west-2:024679833031:function:saas-source-separation:$LATEST",
+        "Payload.$": "$"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        },
+        {
+          "ErrorEquals": [
+            "TypeError"
+          ],
+          "BackoffRate": 2,
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2
+        }
+      ],
+      "Next": "Notify Front-End of Separation Output",
+      "ResultPath": "$.lambdaResult"
+    },
+    "Notify Front-End of Separation Output": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl.$": "$.queueUrl.QueueUrl",
+        "MessageBody": {
+          "detail.$": "$.detail",
+          "lambdaResult.$": "$.lambdaResult"
+        }
+      },
+      "Next": "Wait For Callback with Spatial Params",
+      "ResultPath": "$.notifyResult"
+    },
+    "Wait For Callback with Spatial Params": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "TimeoutSeconds": 3600,
+      "Parameters": {
+        "MessageBody": {
+          "TaskToken.$": "$$.Task.Token"
+        },
+        "QueueUrl.$": "$.queueUrl.QueueUrl"
+      },
+      "Next": "Spatialisation",
+      "ResultSelector": {
+        "spatialParams.$": "$"
+      },
+      "ResultPath": "$.params"
+    },
+    "Spatialisation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "arn:aws:lambda:eu-west-2:024679833031:function:saas-spatialisation:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "Notify Front-End of Spatialisation Output",
+      "ResultPath": "$.spatialisationOutput"
+    },
+    "Notify Front-End of Spatialisation Output": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl.$": "$.queueUrl.QueueUrl",
+        "MessageBody.$": "$"
+      },
+      "Next": "DeleteQueue",
+      "ResultPath": "$.notifyResult"
+    },
+    "DeleteQueue": {
+      "Type": "Task",
+      "End": true,
+      "Parameters": {
+        "QueueUrl.$": "$.queueUrl.QueueUrl"
+      },
+      "Resource": "arn:aws:states:::aws-sdk:sqs:deleteQueue"
+    }
+  }
+}
