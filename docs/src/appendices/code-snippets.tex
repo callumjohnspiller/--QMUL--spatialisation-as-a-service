@@ -1,0 +1,31 @@
+\appendix
+
+\section{Appendix: Code Snippets}\label{sec:appendix:-code-snippets}
+
+\subsection{Lambda Function Dockerfiles}\label{subsec:lambda-function-dockerfiles}
+
+\begin{longlisting}
+    \inputminted[
+        breaklines,
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+    ]{dockerfile}{../../lambda/source-separation/Dockerfile}
+    \caption{Dockerfile for source separation Lambda function that is hosted in the~\gls{aws-ecr}}
+    \label{lst:source-sep-dockerfile}
+\end{longlisting}
+
+\begin{longlisting}
+    \inputminted[
+        breaklines,
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+    ]{dockerfile}{../../lambda/spatialisation/Dockerfile}
+    \caption{Dockerfile for spatialisation Lambda function that is hosted in the~\gls{aws-ecr}}
+    \label{lst:spatialisation-dockerfile}
+\end{longlisting}

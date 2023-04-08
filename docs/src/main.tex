@@ -37,6 +37,13 @@
 % -- Visualise and change page layout
 \usepackage{layout}
 \usepackage{geometry}
+% -- Code formatting
+\usepackage{minted}
+\setminted{
+    linenos=true,
+    autogobble,
+}
+\newenvironment{longlisting}{\captionsetup{type=listing}}{}
 
 % Setup table column sizes (big and small)
 \newcolumntype{z}{X}
@@ -85,6 +92,7 @@
 
 %    Appendices
     \newpage
+    \input{./appendices/code-snippets}
     \phantomsection
     \addcontentsline{toc}{section}{References}
     \bibliographystyle{plainnat}
