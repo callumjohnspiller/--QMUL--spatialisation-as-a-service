@@ -20,7 +20,9 @@ function HowlerGroup(props: HowlerProps) {
       tmp[url] = new Howl({
         src: url,
         html5: true,
-        xhr: {withCredentials: true},
+        xhr: {
+          method: 'GET'
+        },
         onload: function() {
           setDuration(tmp[url].duration());
         }
