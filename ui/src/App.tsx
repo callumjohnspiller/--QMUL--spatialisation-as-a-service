@@ -1,72 +1,98 @@
-import React from "react";
-import {v4 as uuidv4} from 'uuid';
-import "./stylesheets/styles.scss";
-import Header from "./components/Header";
-import Body from "./components/Body";
-import {CreateQueueCommand, DeleteMessageCommand, ReceiveMessageCommand} from "@aws-sdk/client-sqs";
+import React, {useState} from "react";
+import {v4 as uuidv4} from "uuid";
+import {
+    CreateQueueCommand,
+    DeleteMessageCommand,
+    ReceiveMessageCommand,
+    ReceiveMessageResult
+} from "@aws-sdk/client-sqs";
 import {sqsClient} from "./libs/sqsClient";
-import {Container} from "@mui/material";
+import Body from "./components/Body";
+import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
+import { useSpring, animated } from '@react-spring/web';
+import Header from './components/Header/Header';
 
-export default class App extends React.Component<{}, { uuid: string }> {
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            uuid: uuidv4(),
-        };
-    }
+export default function App() {
+    const [siteEntered, setSiteEntered] = useState(false);
+    const [uuid, setUuid] = useState("");
 
-    render() {
-        return (
-            <Container id={"app-container"}>
-                <Header/>
-                <Body uuid={this.state.uuid}
-                      createSQSQueue={() => createSQSQueue(this.state.uuid)}
-                      getMessage={getMessage}
-                      deleteMessage={deleteMessage}
-                />
-            </Container>
-        );
-    }
+    const handleEntry = () => {
+        setSiteEntered(true);
+        setUuid(uuidv4());
+    };
+
+    const containerProps = useSpring({
+        opacity: siteEntered ? 1 : 0,
+        transform: siteEntered ? 'translateY(0)' : 'translateY(100px)',
+    });
+
+
+    return (
+        <div id={'react-app'} className={"app"}>
+            {!siteEntered && (
+              <WelcomeScreen onClick={handleEntry} />
+            )}
+            {siteEntered && (
+                <animated.div style={containerProps}>
+                    <main>
+                        {
+                          siteEntered
+                          &&
+                          <div>
+                              <Header/>
+                              <Body uuid={uuid!}
+                                    createSQSQueue={async () => await createSQSQueue(uuid!)}
+                                    getMessage={getMessage}
+                                    deleteMessage={deleteMessage}
+                              />
+                          </div>
+                        }
+                    </main>
+                </animated.div>
+            )}
+        </div>
+    )
 }
 
 async function createSQSQueue(uuid: string) {
     const params = {
-        QueueName: "upload_" + uuid, Attributes: {
+        QueueName: "upload_" + uuid,
+        Attributes: {
             DelaySeconds: "0", MessageRetentionPeriod: "86400"
         }
     };
 
     try {
-        const data = await sqsClient.send(new CreateQueueCommand(params));
-        return data;
-    } catch (err) {
-
+        return await sqsClient.send(new CreateQueueCommand(params));
+    } catch (err) { /* empty */
     }
 }
 
-async function getMessage(queueURL: string) {
+async function getMessage(queueURL: string | undefined): Promise<ReceiveMessageResult> {
     const params = {
         AttributeNames: ["SentTimestamp"],
         MaxNumberOfMessages: 1,
         MessageAttributeNames: ["All"],
         QueueUrl: queueURL,
-        WaitTimeSeconds: 20,
-    }
+        WaitTimeSeconds: 20
+    };
 
     try {
-        const data = await sqsClient.send(new ReceiveMessageCommand(params));
-        return data; // For unit tests.
-    } catch (err) {
+        return await sqsClient.send(new ReceiveMessageCommand(params));
+    } catch (err) { /* empty */
     }
+    return new class implements ReceiveMessageResult {
+
+    };
 }
 
-async function deleteMessage(queueURL: string, receiptHandle: string) {
+async function deleteMessage(queueUrl: string | undefined, receiptHandle: string): Promise<void> {
     const params = {
-        QueueUrl: queueURL, ReceiptHandle: receiptHandle
-    }
+        QueueUrl: queueUrl, ReceiptHandle: receiptHandle
+    };
 
     try {
-        const data = await sqsClient.send(new DeleteMessageCommand(params));
-    } catch (err) {
+        await sqsClient.send(new DeleteMessageCommand(params));
+    } catch (err) { /* empty */
     }
 }

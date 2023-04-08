@@ -2,6 +2,7 @@ import boto3
 import os
 import soundfile as sf
 import numpy as np
+from spleeter.utils.logging import configure_logger
 from spleeter.separator import Separator
 from spleeter.audio.adapter import AudioAdapter
 
@@ -10,6 +11,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 def handler(event, context):
+    configure_logger(True)
     session = boto3.Session(
         aws_access_key_id=ACCESS_KEY,
         aws_secret_access_key=SECRET_KEY,
