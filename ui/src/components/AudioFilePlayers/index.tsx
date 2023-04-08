@@ -11,6 +11,7 @@ function AudioFilePlayer(props: AudioFilePlayerProps) {
   const sound = new Howl({
     src: [props.audioURL],
     html5: true,
+    xhr: {withCredentials: true}
   });
 
   const playSound = () => {
