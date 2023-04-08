@@ -10,7 +10,7 @@ interface AudioFilePlayerProps {
 function AudioFilePlayer(props: AudioFilePlayerProps) {
   const sound = new Howl({
     src: [props.audioURL],
-    html5: true
+    html5: true,
   });
 
   const playSound = () => {
