@@ -132,7 +132,7 @@ export function GetMain(
                     setButtonClicked(true);
                     handleSubmit();
                   }}
-                  sx={{margin: 'auto'}}
+                  sx={{margin: '2', display: 'block'}}
                 >
                   Render High-Quality 3D Audio
                 </Button> : <p>Waiting for task token</p>
