@@ -4,4 +4,56 @@
 
 \normalsize
 
-As discussed in
+Primary functional requirements were well-defined.
+
+\subsection{User Personas}
+
+Persona of game developer:
+want to experience what spatial audio can do therefore the project must be able
+to take user input and render spatial audio based on that inputs as an MVP.
+
+Persona of audio enthusiast:not necessarily a game Dev but someone who is interested in audio development who might like to try playing around with different spatial audio API without setting anything up locally.
+
+Persona of the new user: Never experienced spatial audio, may not even know what it is.
+Using the product and expecting to know more about what it means, not just what is available to developers.
+
+Ultimately a rendering pipeline was needed in AWS. If the software can perform all audio processing in the cloud and deliver to frontend, that was MVP.
+
+The project had other stretch goals: have a user interface that allows the user to input values; expand the functionality by specifying HRTF files and SOFA environment files; allow for real-time previewing.
+
+These other goals were defined
+by asking potential users + also experts in the field of audio processing in addition to the literature review.
+
+Often more requirements came out in the form of user feedback.
+Once people saw an early build, they came up with other `nice to have' features and requirements that went beyond the MVP\@.
+
+MVP reqs:
+
+Functional:
+take user input.
+separate and render audio in the cloud using HRTF profiles.
+deliver output to frontend
+
+Non-functional:
+a UI to enter variables.
+an elucidation of what spatial audio means: meet the intended stakeholder's requirements.
+a 'good enough' delivery time - not so long that the user thinks it has failed
+
+Stretch goal reqs:
+
+Functional
+- Preview spatial rendering of individual stems
+- Real-time views of spatial audio
+-- security - files are managed and secured to protect user info
+- fast response time in rendering
+- visual representation of the spatial audio rendering in 3d space
+- allow user to upload and choose SOFA and BRIR files
+- allow multiple types of audio file upload
+
+Non functional
+-- fully explains spatial audio and how it works
+- a smooth looking ui - take it beyond basic to a potentially customer-facing product
+- reliable - minimal bugs in the programming that result in failure for the end user.
+- edge case handling
+
+
