@@ -277,7 +277,7 @@ TSWLatexianTemp*
 out/
 auxil/
 lambda/source-separation/app/pretrained_models/*
-.idea/*
+.idea/
 
 *.DS_Store
 
@@ -287,3 +287,5 @@ lambda/spatialisation/config
 /lambda/spatialisation/cmake-build-release/
 /ui/src/libs/creds.ts
 /docs/src/svg-inkscape/
+/docs/src/saas_architecture_2.0_svg-tex.pdf
+/docs/src/saas_architecture_2.0_svg-tex.pdf_tex
