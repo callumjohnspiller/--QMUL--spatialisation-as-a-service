@@ -29,3 +29,16 @@
     \caption{Dockerfile for spatialisation Lambda function that is hosted in the~\gls{aws-ecr}}
     \label{lst:spatialisation-dockerfile}
 \end{longlisting}
+
+\begin{longlisting}
+    \inputminted[
+        breaklines,
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+    ]{json}{../../step-function/spatialisation-as-a-service.json}
+    \caption{Amazon states language representation of the SaaS Step Function}
+    \label{lst:step-function-json}
+\end{longlisting}
