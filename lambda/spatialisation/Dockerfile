@@ -5,7 +5,7 @@ RUN yum install -y yum-utils
 
 # Install required tools
 RUN yum -y groupinstall "Development tools"
-RUN yum install -y gcc-c++ zlib-devel cmake3
+RUN yum install -y gcc-c++ zlib-devel cmake3 python3-pip
 
 # Specify compilers
 ENV CC=gcc CXX=g++
