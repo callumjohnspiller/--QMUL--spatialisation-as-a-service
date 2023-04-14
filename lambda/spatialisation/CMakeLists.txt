@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
 project(spatialisation LANGUAGES CXX)
+find_package(ZLIB REQUIRED)
 
 include_directories("../3dti_AudioToolkit/3dti_Toolkit")
 include_directories("../3dti_AudioToolkit/3dti_ResourceManager")
@@ -13,7 +14,6 @@ link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_librarie
 link_directories("../3dti_AudioToolkit/3dti_ResourceManager/third_party_libraries/sofacoustics/libsofa/dependencies/lib/linux")
 
 link_libraries(sofa hdf5 hdf5_hl netcdf netcdf_c++4 z)
-
 file(GLOB_RECURSE SOURCES
         ../3dti_AudioToolkit/3dti_Toolkit/BinauralSpatializer/*.cpp
         ../3dti_AudioToolkit/3dti_Toolkit/Common/*.cpp
