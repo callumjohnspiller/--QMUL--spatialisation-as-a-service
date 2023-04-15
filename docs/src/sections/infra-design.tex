@@ -79,6 +79,8 @@ This key is not the same as a session key and would regenerate if the user refre
 
 With these changes, it became possible to define a final cloud architecture and workflow.
 
+\subsection{Finalising the structure}\label{subsec:finalising-the-structure}
+
 \begin{figure}[!htb]
     \minipage{\textwidth}
     \includesvg[width=\linewidth]{saas_architecture_2.0}
@@ -86,9 +88,16 @@ With these changes, it became possible to define a final cloud architecture and 
     \endminipage\hfill
 \end{figure}
 
-Figure~\ref{fig:final_design} shows the final infrastructure of the project.
+Figure~\ref{fig:final_design} depicts the final infrastructure design of the project.
+The figure has been annotated with numbers to show the order in which data flows around the architecture.
+In addition to the changes mentioned above, there are a few other notable changes that are evidenced in the figure.
 
-The~\gls{aws-step-function} has been fleshed out
+\begin{itemize}
+    \item The~\gls{aws-step-function} has been fleshed out with the discrete steps of the workflow orchestration.
+    An Amazon States Language representation of the function can be found in Listing~\ref{lst:step-function-json}.
+    \item There are three~\gls{s3} buckets to hold the artefacts from each stage of the process.
+    \item The~\gls{react} frontend is now hosted in~\gls{amplify} instead of~\gls{ec2}; allowing for the implementation of~\gls{cicd} each time a commit is pushed to a branch in GitHub.
+\end{itemize}
 
-an implementation of a step function
-interacting with the front-end via a~\gls{aws-sqs} queue.
+\subsection{A fresh coat of paint}\label{subsec:a-fresh-coat-of-paint}
+
