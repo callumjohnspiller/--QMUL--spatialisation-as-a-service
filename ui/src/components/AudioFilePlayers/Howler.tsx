@@ -19,7 +19,7 @@ function HowlerGroup(props: HowlerProps) {
       let tmp = howls;
       tmp[url] = new Howl({
         src: url,
-        html5: true,
+        html5: false,
         xhr: {
           method: 'GET'
         },

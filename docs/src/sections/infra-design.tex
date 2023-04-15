@@ -4,11 +4,11 @@
 
 \normalsize
 
-Observe that Figure~\ref{fig:preliminary-design} details the initial design for the project's cloud architecture.
+Figure~\ref{fig:preliminary-design} details the initial design for the project's cloud architecture.
 The diagram provides a high-level overview of the primary user journey,
-and the ~\gls{aws} products that were intended to meet the user requirements.
-However, this design was subject to change as development progressed, in accordance with the~\gls{agile} methodology.
-This section aims to describe how the initial design changed to accommodate the changing requirements of the project.
+and displays the~\gls{aws} products that were intended to fulfil this journey.
+However, given that this project is executed using elements of the~\gls{agile} methodology,this design was subject to change as development progressed.
+This section aims to describe how the initial design evolved to accommodate the changing system requirements of the project.
 
 \begin{figure}[!htb]
     \minipage{\textwidth}
@@ -19,21 +19,20 @@ This section aims to describe how the initial design changed to accommodate the 
 
 \subsection{Best Laid Plans}\label{subsec:best-laid-plans}
 
-Given that the product is designed for use by users without an extensive knowledge of~\gls{spatial_audio},
-a web-hosted user interface was essential to the product.
-The user’s primary mode of interaction with the service would be through a website
+The product is designed for a wide range of users with varying knowledge of ~\gls{spatial_audio}.
+In order to accommodate as many potential users as possible, a web-hosted~\gls{ui} is considered essential.
+The user's primary mode of interaction with the service would be through a website
 built using the~\gls{react} front-end library.
 This library was chosen because of its ubiquity in modern web engineering; the depth of documentation available,
-and this author’s existing familiarity with the framework.
+and existing familiarity with the framework.
 
 The front-end was designed to make use of the~\gls{aws}~\gls{sdk} for~\gls{nodejs}.
 This would allow the interface to initiate and interact with the audio processing pipeline hosted in~\gls{aws}.
 
-It is also possible to see
-that Figure~\ref{fig:preliminary-design} displays the two ~\gls{aws-lambda} functions
+Figure~\ref{fig:preliminary-design} also displays the two~\gls{aws-lambda} functions
 that would comprise the backbone of the audio processing pipeline.
 Furthermore,
-these~\gls{aws-lambda} functions would be coordinated and executed using the ~\gls{aws-step-function} service.
+these~\gls{aws-lambda} functions would be coordinated and executed using the~\gls{aws-step-function} service.
 This service was highly desired for this purpose
 since the processing pipeline would follow a series of discrete steps that require input from the user.
 \glspl{aws-step-function} would be able to accommodate this easily.
@@ -45,7 +44,7 @@ was intended to form the most of the communication between the back and front en
 
 \subsection{Refinement}\label{subsec:refinement}
 
-As development progressed; it quickly became apparent that there were a number of issues with the initial design.
+As development progressed; it became apparent that there were issues with the initial design.
 
 The first problems arose with the development of the~\gls{aws-lambda} functions that would be used to process the audio.
 \gls{aws-lambda} functions
@@ -56,27 +55,27 @@ there is a limit of 50 MB on the size of the deployment packages that could be u
 Given that the 3D Tune-In Toolkit and the Spleeter source separation libraries have significant dependencies
 that are more than 50 MB when zipped, a re-design needed to occur.
 
-The issue was solved by making use of the~\gls{aws-ecr} service.
+This issue was solved by making use of the~\gls{aws-ecr} service.
 This service allows a developer to host and deploy~\glspl{container-image},
 crucially, with a size limit of 75 GB allowed for each image uploaded to the registry.
 Through the use of~\gls{docker} container images,
 the code for the Lambda functions was bundled into deployment packages
-that could be uploaded to a
-~\gls{aws-ecr} and then linked to a Lambda function
+that could be uploaded to an
+\gls{aws-ecr} and then linked to a Lambda function
 while staying well under the data limit offered by the container registry.
-The dockerfiles for the source separation and spatialisation lambda functions can be found in Appendix~\ref{subsec:lambda-function-dockerfiles}.
+The Dockerfiles for the source separation and spatialisation lambda functions can be found in Appendix~\ref{subsec:lambda-function-dockerfiles}.
 Note the installation of the AWS Lambda runtime environment for both Python in Listing~\ref{lst:source-sep-dockerfile} and C++ in Listing~\ref{lst:spatialisation-dockerfile}.
 
 The next major revision to the architecture design came with the removal of the proposed~\gls{aws-api-gateway} interface.
 Since the~\gls{aws-step-function} requires input from the user to execute,
-the step function callback feature would need to be used to wait for an input message to the step function.
-Given this,
-the most elegant solution was
+the step function callback feature would be used to wait for an input message from the front end to the step function.
+The most elegant solution for this problem was
 to create a~\gls{aws-sqs} queue through which messages could be sent
 and retrieved asynchronously without the risk of losing information through API communication failure.
 This was implemented through the creation of a unique message queue per interaction with the product.
 A unique identification key is created in the~\gls{react} interface, which is then used
 to identify both the~\gls{aws-sqs} queue, and the resources uploaded and retrieved from the relevant~\gls{s3} buckets.
+This key is not the same as a session key and would regenerate if the user refreshed the page to return to the start of the application.
 
 With these changes, it became possible to define a final cloud architecture and workflow.
 
@@ -87,6 +86,9 @@ With these changes, it became possible to define a final cloud architecture and 
     \endminipage\hfill
 \end{figure}
 
-Figure~\ref{fig:final_design} shows an implementation of a step function
+Figure~\ref{fig:final_design} shows the final infrastructure of the project.
+
+The~\gls{aws-step-function} has been fleshed out
+
+an implementation of a step function
 interacting with the front-end via a~\gls{aws-sqs} queue.
-Another change is that
