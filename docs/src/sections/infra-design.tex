@@ -1,6 +1,6 @@
 \thispagestyle{plain}
 \newpage
-\section{Infrastructure Design}\label{sec:infrastructure-design}
+\section{Infrastructure \& Design}\label{sec:infrastructure-design}
 
 \normalsize
 
@@ -101,3 +101,86 @@ In addition to the changes mentioned above, there are a few other notable change
 
 \subsection{A fresh coat of paint}\label{subsec:a-fresh-coat-of-paint}
 
+Early user testing of the product revealed that elements of the front-end interface needed improving\footnote{Further information on the testing and feedback process can be found in Section~\ref{sec:testing-and-evaluation}}.
+The initial interface was basic with minimal styling applied to the~\gls{react} interface.
+See Figure~\ref{fig:early-fe} for a screenshot of the interface's early form.
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{early-ui}
+    \caption{Early implementation of application frontend}\label{fig:early-fe}
+    \endminipage\hfill
+\end{figure}
+
+After the~\gls{mvp} was achieved, there was some additional capacity available to improve the frontend.
+
+\begin{itemize}
+    \item The project was adapted to use tools provided by~\gls{mui}, a~\gls{react} component library\footnote{https://mui.com/core/}, in order to better structure the project and improve the aesthetic feel.
+    See Figure~\ref{fig:ui-splash} for the improved welcome screen for the application.
+    \item A slideshow was developed using the component library that explained the theory behind spatial audio in an easy-to-understand manner and explains what the product aims to do (Figure~\ref{fig:ui-slideshow}).
+    \item The music file upload stage of the application was redesigned using~\gls{mui} and turned into a three-step process using the `Stepper' component (Figure~\ref{fig:ui-uploader}).
+    \item The `Spinner' component is used to help decorate the process of waiting for the stems to be separated out (Figure~\ref{fig:ui-spinner}).
+\end{itemize}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-splash}
+    \caption{Refined splash screen that greets the user}\label{fig:ui-splash}
+    \endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-slideshow}
+    \caption{One of the slides from the introductory explanation of the project}\label{fig:ui-slideshow}
+    \endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-uploader}
+    \caption{Audio upload stage remodelled using the~\gls{mui} Stepper component}\label{fig:ui-uploader}
+    \endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-spinner}
+    \caption{\gls{mui} Spinner and message displayed while audio stems are separated}\label{fig:ui-spinner}
+    \endminipage
+\end{figure}
+
+\subsection{No spatialisation without representation}\label{subsec:no-spatialisation-without-representation}
+An important piece of feedback on early demos of the product was that there was not enough visual or audio feedback on the user's input of the spatial parameters.
+As a result of this, the most significant redesign of the product allowed the user to experience and preview the effects of their input instead of being forced to wait for the final product to render and be delivered to the frontend.
+Using React Three Fiber, a~\gls{react} renderer for~\gls{threejs}\footnote{\citep{dirksen2023learn}}, a 3D model represents the positioning of the audio stems in the virtual spatial field that the application eventually renders.
+Previously only a list of sliders were shown for each stem, but the final version lets the user see and hear what changes are being made in real-time as the stems are being played back.
+Figures~\ref{fig:ui-3d-1},~\ref{fig:ui-3d-2}, and~\ref{fig:ui-3d-3} demonstrate how the 3D model displays the user's input on screen.
+The user is able to rotate and zoom in and out of the model to see where the stems are positioned in relation to the listening position at the origin of the model.
+In addition, instead of the stems being played separately as before, the stems synchronise to each other and the user can mute or `solo' each stem as they wish.
+This functionality is similar to that found in modern Digital Audio Workstations.
+The Howler.js library which is used for audio playback also allows the accessing of the spatial audio module in the Web Audio API\@.
+Because of this, the user can preview the audible position of each stem while they are playing in the application.
+However, the quality of this preview is not as high-quality as the final rendered output that is created using the 3D-TuneIn API;
+this justifies the retention of the option to render the audio using the workflow hosted in~\gls{aws-lambda}.
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-3d-1}
+    \caption{Perspective 1 of the 3D model interface}\label{fig:ui-3d-1}
+    \endminipage
+\end{figure}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-3d-2}
+    \caption{Perspective 2 of the 3D model interface}\label{fig:ui-3d-2}
+    \endminipage
+\end{figure}
+
+\begin{figure}[!htb]
+    \minipage{\textwidth}
+    \includegraphics[width=\linewidth]{ui-3d-3}
+    \caption{Perspective 3 of the 3D model interface}\label{fig:ui-3d-3}
+    \endminipage
+\end{figure}

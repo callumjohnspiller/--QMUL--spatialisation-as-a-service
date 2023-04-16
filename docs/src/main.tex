@@ -63,7 +63,7 @@
 % Import bibliography file
 \bibinput{main}
 % Glossary setup
-\loadglsentries{glossary.tex}
+\loadglsentries{appendices/glossary.tex}
 \makeglossaries
 
 % Document
@@ -73,7 +73,7 @@
     \newpage
 
 %    Abstract Page
-    \input{abstract}
+    \input{./sections/abstract}
     \newpage
 
 %    Contents
@@ -98,11 +98,11 @@
 
 %    Appendices
     \newpage
+    \input{appendices/acknowledgements}
     \input{./appendices/code-snippets}
     \phantomsection
     \addcontentsline{toc}{section}{References}
     \bibliographystyle{plainnat}
-    \bibliography{../../docs/src/main}
-    \input{./sections/acknowledgements}
+    \bibliography{main}
 
 \end{document}
