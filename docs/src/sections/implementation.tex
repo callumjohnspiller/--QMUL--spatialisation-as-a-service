@@ -78,17 +78,17 @@ this error was not noticed for at least a period of twenty minutes\footnote{As t
 This recursive invocation, despite triggering a number of Lambda throttles,
 resulted in a large bill from~\gls{aws} since there is a charge per invocation (Figure~\ref{fig:incident-invocations}).
 In addition,
-the size of the files created was 1.3TB
+the size of the files created was 1.3 TB,
 and there were additional charges from~\gls{s3} due to the amount of data created and stored via~\gls{api} calls
 (Figure~\ref{fig:incident-storage}).
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \includegraphics[height=20cm, keepaspectratio]{incident-invocations}
     \caption{A graph of the number of invocations and throttle over the time of the incident}\label{fig:incident-invocations}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \includegraphics[height=20cm, keepaspectratio]{incident-storage}
     \caption{The size of the total objects deleted from the~\gls{s3}} bucket\label{fig:incident-storage}
@@ -106,18 +106,26 @@ The breakdown of the usage costs on the day of the incident can be found in Figu
     \caption{A graph showing the distribution of accidental charges in a wider billing period}\label{fig:cost-graph}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
     \centering
     \includegraphics[height=20cm, keepaspectratio]{cost-breakdown}
     \caption{A granular breakdown of AWS costs on the day of the incident compared to the total costs for the duration of development. Fields with the value of \$0.00 mean that the service is in use, but hasn't used enough to incur charges}\label{fig:cost-breakdown}
 \end{figure}
 
+\subsubsection{Over-scoping}
 
+One of the unexpected tests in the product's development was learning the importance of the user experience with customer-facing products.
+As mentioned previously,
+user testing revealed that while the functionality of the product was solid,
+there was a lot of room for improvement in making the service effective at demonstrating the technology it uses.
+The re-design of the front-end was significant
+and required extra development time that put pressure on other areas of the project,
+such as writing the report and creating the presentation video.
+While the final product delivered the improvements requested from user testing,
+there was too much work that existed out of the feasible scope of the project.
 
-
--- after results of user testing I needed to refine the product.
-Front end component was missing - much more time needed to be put into react.js, MUI and playwrights test writing to accommodate new react components at the unit test level
--- not so much feature creep than lack of time for proposed complexity - desired features required much more learning than previously thought, especially in docker builds and cmake structures
--- local builds proved difficult for Dev purposes, often had to wait for docker images to be built and uploaded and changes to react to be built and deployed using amplify, lots of dev time eaten up waiting
-
-— Code refactor and documentation towards the end of the project to maximise readability
+As a part of this work, a host of new technologies needed to be learnt in order to deliver the final product.
+The amount of time needed for learning new technologies was not accounted for effectively in the planning stage.
+For many of these technologies, there was little or no experience developing with them
+and required significant time investment in order to use them effectively.
+Had they not been included in the scope of the project, far less time would have been required.
