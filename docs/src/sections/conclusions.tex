@@ -4,21 +4,12 @@
 
 \normalsize
 
-Success based on the initial criteria of the project. Met the core functional requirements and succeeded in creating a cloud-based service that is genuinely unique and allows easy access to trialling high-quality spatial audio to anyone with a browser and a music file.
+\subsection{Successes}\label{subsec:successes}
 
-Additionally, user feedback was very good - most were impressed with the core product despite having reservations about the user interface and its ability to convey information and instructions to the user.
+The complexity of the project proved to have its benefits and drawbacks.
+As a learning exercise, the project was extremely effective and required the engagement with a wide range of tools.
 
-However, the major issue with the project was in its inaccurate user requirements that needed redefining in the face of feedback. Initially was only concerned with the functionality for MVP. However didn't not fully consider the fact that it was real people using the project who may not initially understand what the software did. User experience was far more important than initially thought to user satisfaction. To the extent that some users did not understand the idea of spatial audio and confused the product with stereo music making software.
-
-Given this, I did a good job of pivoting and, once the core functionality of cloud architecture was finished, spent a lot more time refining the user experience. This resulted in: a slideshow explaining the process, a much more refined ui, and even a live mockup of the results, with previews of the individual stems and able to change the parameters and hearths results in real time. While this feature did not have the same level of quality as the 3dti render, it vastly improved the user experience and showed how sources can be moved around in the virtual 3d space.
-
-Overall I am very proud of the project and felt it hit all of the major requirements. I successfully managed to learn a bunch of new pieces of software and libraries, especially the services offered by AWS. I was able to avoid the normal pitfalls of waterfall development by adapting and meeting the need for altered requirements. The final software also showcases a good degree of skill in engineering, with code running efficiently and being well documented, in addition to following code style practises.
-
-Given another few weeks of development I would have done better refactoring and separating the concerns of my front end code, however, given the complexity of the proposed product it is a great achievement to get a finished product. Also able to stay on time and project wasn't derailed even when falling behind (like trips to LA lol)
-
-Possible to perform complex and compute-heavy audio processing activities in a public cloud environment, even including user input to guide the process. Main drawbacks are the fact that processing time can take a while in some activities. For example, tensorflow being used for audio stem separation. However, the project proved that such an architecture is possible and improves accessibility to those without the requisit hardware.
-
-The list of technologies used in the project are:
+The exhaustive list of technologies used in the project is as follows:
 
 \begin{itemize}
     \item Python
@@ -27,6 +18,7 @@ The list of technologies used in the project are:
     \item Node.js
     \item AWS API for Node.js
     \item React.js
+    \item Playwright
     \item MUI
     \item React Three Fiber
     \item Howler.js
@@ -41,8 +33,98 @@ The list of technologies used in the project are:
     \item AWS Event Bridge
     \item AWS SQS
     \item AWS Amplify
+    \item AWS ECR
     \item Git
     \item LaTeX
 \end{itemize}
 
-As a promotional product success was mixed. Significant amount of UX work was required to produce a product that was customer friendly, and in the context of SIEE, this was not given as much consideration as required. Future developments would focus on these issues as well as improving the performance of the overall processing pipeline.
+Such a deep tech stack allows for learning opportunities and the creation of a well-optimized development environment.
+The project makes all these technologies, and there is little to no redundancy in the libraries and modules used.
+
+With complexity, however, comes complication.
+The overall development process was relatively slow,
+and often fell behind the proposed timescales as seen in~\ref{sec:project-plan}.
+This was due in part to the unexpected need to learn new technologies such as Docker and React Three Fiber.
+However,
+the fact that this project was undertaken with respect to the~\gls{agile} methodology meant
+that pivoting to new requirements was expected, and,
+due to the iterative development procedures which were set in place,
+the new features could be completed on time.
+
+The main success of the project was
+that it was fully functional in terms of the system and user requirements laid out in~\ref{sec:requirement-capture}.
+Even with an early build of the product,
+user testing showed that users tend not to have easy access to spatial audio or even understand what it is doing.
+This system undeniably succeeds in increasing the access for users to experience and interact with spatial audio.
+
+The project also saw success in the extent of its development.
+The~\gls{mvp} for the project has been surpassed,
+and many features such as the 3D model and the introductory slideshow were added
+after the basic functionality had been established.
+This is testament to the methodology undertaken over the process of the project's duration.
+
+In addition, other than the incident described in~\ref{subsubsec:recursion-incident},
+costs for the project remained incredibly low.
+This is particularly important in the business context,
+and the fact that the project rarely raises costs over \$0.10 USD speaks to the efficacy of public cloud services
+in hosting and shaping business solutions.
+In the context of~\gls{sie},
+this project might be easily sent
+to~\glspl{pspartner} who don't have an active understanding of spatial audio,
+so they can get a better understanding of the~\gls{ps5}'s technical offering.
+
+Feedback from user testing was also, on the whole, positive.
+Constructive comments from the feedback were taken on board
+and were allowed to shape and define new requirements for the project, specifically the project's front-end interface.
+Feedback also confirmed that the project met the system requirements and highlighted how it missed user requirements.
+
+\subsection{Failures}\label{subsec:failures}
+
+
+However,
+the major issue with the project was in its inaccurate user requirements that needed redefining in the face of feedback.
+Initially was only concerned with the functionality for MVP.
+However didn't not fully consider the fact
+that it was real people using the project who may not initially understand what the software did.
+User experience was far more important than initially thought to user satisfaction.
+To the extent that some users didn't understand the idea of spatial audio
+and confused the product with stereo music making software.
+
+Given this, I did a good job of pivoting and, once the core functionality of cloud architecture was finished,
+spent a lot more time refining the user experience.
+This resulted in: a slideshow explaining the process, a much more refined ui, and even a live mockup of the results,
+with previews of the individual stems and able to change the parameters and hear the results in real time,
+which was never part of initial plan.
+While this feature didn't have the same level of quality as the 3dti render,
+it vastly improved the user experience and showed how sources can be moved around in the virtual 3d space.
+
+Overall I'm very proud of the project and felt it hit all of the major requirements.
+I successfully managed to learn a bunch of new pieces of software and libraries, especially the services offered by AWS.
+I was able
+to avoid the normal pitfalls of waterfall development by adapting and meeting the need for altered requirements.
+The final software also showcases a good degree of skill in engineering,
+with code running efficiently and being well documented, in addition to following code style practises.
+
+Given another few weeks of development I would have done better
+refactoring and separating the concerns of my front end code,
+however, given the complexity of the proposed product it is a great achievement to get a finished product.
+Also able to stay on time and project wasn't derailed even when falling behind (like trips to LA lol)
+
+Possible to perform complex and compute-heavy audio processing activities in a public cloud environment,
+even including user input to guide the process.
+Main drawbacks are the fact that processing time can take a while in some activities.
+For example, tensorflow being used for audio stem separation.
+However,
+the project proved that such an architecture is possible
+and improves accessibility to those without the requisit hardware.
+
+Could have used better users / more relevant and more of them
+
+better automated tests
+
+As a promotional product success was mixed.
+Significant amount of UX work was required to produce a product that was customer friendly,
+and in the context of SIEE, this wasn't given as much consideration as required.
+Future developments would focus on these issues as well as improving the performance of the overall processing pipeline.
+
+\subsection{Research Questions}\label{subsec:research-questions2}

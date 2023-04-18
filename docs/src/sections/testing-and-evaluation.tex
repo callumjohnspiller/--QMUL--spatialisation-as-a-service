@@ -4,15 +4,68 @@
 
 \normalsize
 
-Testing was a continuous process. Given the nature of the cloud environment things needed to be deployed in an environment so they could be tested.
-
-This is why CI/CD was used.
-Commits and pushes to AWS
-triggered redeployments and the ability
+Testing for the project was a continuous process.
+Given the nature of the cloud environment,
+components of the system needed to be deployed in an environment so that they could be tested.
+Section~\ref{subsec:continuous-integration-continuous-deployment} describes how the project was set up
+to automatically run tests on the system's functionality using the~\gls{playwright} framework.
+Commits to the GitHub repository for the project triggered redeployment and the ability
 to test changes in a cloud environment quickly in addition to running regression tests each time.
+However, for the success of the project, manual testing also needed to take place.
 
-Manual testing was required to ensure functionality was there but user testing was also used.
-A form and a link to an early build of the product were sent out and responses collected. These responses helped assess the effectiveness of the products functionality and guide future development processes.
+\subsection{Manual Testing}\label{subsec:manual-testing}
 
-Product was a success in not only delivering intended functionality but also extending it beyond the static spatial rendering but also preview the spatial audio in a real-time environment.
-Front end was far more in depth after refinement
+Manual testing was required to ensure that the functionality of the service was in place.
+Oftentimes,
+this took the form
+of deploying either a~\gls{docker} image
+to run in~\gls{aws-lambda} or the~\gls{react} front-end to~\gls{amplify} and
+then manually testing the changes that were made.
+Based on the results of the manual testing, the next stage of development would be determined,
+whether that be a failure in the newly deployed version, or moving onto another feature to develop.
+
+\subsection{User Testing}\label{subsec:user-testing}
+
+In order to identify potential issues and areas of improvement for early versions of the product,
+it was important to gather feedback from users who did not have intimate knowledge of the system.
+
+User testing was carried out
+by deploying a stable early version of the system to its own~\gls{amplify} environment
+and then sending out a link to that deployment along with a form that allowed testers to submit feedback.
+This form was made up of questions
+that solicited both qualitative and quantitative answers relating to the functionality of the system
+and how easy it was to use.
+The responses to this form can be found in~\ref{sec:appendix:-user-testing-responses}.
+
+The response gave a gauge not only on the success of the project, but on what further revisions could be made.
+All the respondents reported that the project functioned as expected with no failures reported.
+Most respondents reported an increase in understanding of what spatial audio was after using the product,
+however, some respondents self-reported that after having used the product,
+they did not know what was meant by spatial audio, with some confusing it still with stereo audio products.
+
+Many respondents noted
+the lack of development in the~\gls{ui} and requested a better understanding
+of what aspects of the program were performing which function through the use of more text or labelling.
+One user reported a playback bug that was fixed in later versions,
+and another requested real-time mixing of the audio signals, as in modern digital audio workstations.
+Crucially,
+all respondents were unable
+to describe a level of access to spatial audio that compared to the one the project offers,
+meaning that the project was successful in increasing access to customisable spatial audio.
+
+Requested features from testing:
+
+\begin{itemize}
+    \item A graphical user interface (Implemented).
+    \item Loading bar for separation progress.
+    \item Loading bar for stem playback (Implemented).
+    \item Guidance for playing around with the product's sliders.
+    \item Live feedback on spatial positions (Implemented).
+    \item Synchronised playback of stems (Implemented).
+    \item Mute and solo buttons for each stem during playback (Implemented).
+    \item Tidying of layout and formatting (Implemented).
+    \item Loading screen when uploading files (Implemented).
+\end{itemize}
+
+Having these requests made it easy to make improvements to the product that would improve the~\gls{ux}.
+It also resulted in a far more in-depth and refined final product.

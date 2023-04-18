@@ -16,6 +16,8 @@
 % -- Images from file
 \usepackage{graphicx}
 \usepackage{svg}
+% -- Pages from file
+\usepackage{pdfpages}
 % -- Better lists
 \usepackage{enumitem}
 % -- Bibliography format and access
@@ -98,7 +100,8 @@
 %    Appendices
     \newpage
     \input{appendices/acknowledgements}
-    \input{./appendices/code-snippets}
+    \input{appendices/code-snippets}
+    \input{appendices/other-appendices}
     \phantomsection
     \addcontentsline{toc}{section}{References}
     \bibliographystyle{plainnat}
