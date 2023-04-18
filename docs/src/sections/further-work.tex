@@ -4,30 +4,47 @@
 
 \normalsize
 
-Thankfully this project met a lot of the requirements, even the ones found after user testing.
+\subsection{Cold Starts}\label{subsec:cold-starts}
 
-However improvements could be made to the cold starts of the cloud rendering
-Initial separation of stems takes a long time because of cold starts and a way to reduce this would be most important could also add a load bar to track the progress of the lambda function would go a long way to I creasing user experience metrics
+When one is using the service, the least performant step is the stem separation stage.
+Since the source separation lambda function uses TensorFlow,
+its long initialisation time causes this stage of the process
+to run slowly as most of the wait time is dedicated to the initialisation of TensorFlow,
+rather than the processing time itself.
+This \textit{cold-start}
+time between initialisation and runtime is something
+that would be targeted for improvement in future versions of the project.
+Since this is the most impactful performance issue of the product, this would be the first priority.
 
-Demonstrate the capabilities of 3d toolkit better - allow changing of HRTF and BRIR profiles to the users tastes - this could be reflected in the 3d model also - it's good for basic demo but going a bit further would be great
+\subsection{Custom SOFA Files for HRTF and BRIR}\label{subsec:custom-hrtf-and-hrir-files}
 
-Finally; improve UI further - make more detailed and precise.
+One of the major benefits
+of using the 3D Tune-In Toolkit over the spatial module in the Web Audio API is that it allows the use of different~\gls{hrtf} profiles for spatialisation.
+The toolkit is customizable and offers a greater fidelity of spatialisation over Web Audio.
+A further improvement to the product would be
+to allow the use of user-specified SOFA files for the rendering of spatial audio.
+SOFA files contain the data necessary to produce the~\gls{hrtf} and~\gls{brir} necessary for the service's rendering of the audio.
+The ability
+for the user to upload their own files would greatly improve the depth of customization the product can offer.
 
-The project had other stretch goals: have a user interface that allows the user to input values; expand the functionality by specifying HRTF files and SOFA environment files; allow for real-time previewing.
+\subsection{Further UI Improvements}\label{subsec:ui-improvements}
 
-Stretch goal reqs:
+The remodelling of the initial user interface as described in~\ref{subsec:a-fresh-coat-of-paint} was extensive,
+however, it is clear there is still room for improvement.
+Some ideas for further~\gls{ui} and~\gls{ux} improvements are:
+\begin{itemize}
+    \item Add a loading bar to the source separation stage so that the user has an indication of when it will finish.
+    \item Make the 3D model change to match different~\gls{brir} if a custom SOFA file is uploaded for rendering.
+    \item Change the real-time preview of the spatialisation to use the 3D Tune-In Toolkit to increase the quality and accuracy of the preview.
+    \item Make the~\gls{ui} more detailed and precise; take it beyond a demonstration and make it more production-ready.
+\end{itemize}
 
-Functional
-- Preview spatial rendering of individual stems
-- Real-time views of spatial audio
--- security - files are managed and secured to protect user info
-- fast response time in rendering
-- visual representation of the spatial audio rendering in 3d space
-- allow user to upload and choose SOFA and BRIR files
-- allow multiple types of audio file upload
+\subsection{Functional Improvements}\label{subsec:functional-improvements}
 
-Non functional
--- fully explains spatial audio and how it works
-- a smooth looking ui - take it beyond basic to a potentially customer-facing product
-- reliable - minimal bugs in the programming that result in failure for the end user.
-- edge case handling
+More generally the product could improve the following aspects of its functionality:
+
+\begin{itemize}
+    \item Speed up the overall time it takes to separate the files and render the final audio
+    \item Provide more options for source separation; currently the service is only set up to separate music files with vocals and further support could be provided for instrumental tracks through training the TensorFlow model stored in the~\gls{aws-lambda} function.
+    \item Improve the security of the project by tightening the policies attached to the~\gls{s3} buckets holding the data, despite the lifecycle rules put in place.
+\end{itemize}
