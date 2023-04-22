@@ -6,8 +6,8 @@
 \subsection{Project Background}\label{subsec:project-background}
 \normalsize
 
-This project is a part of a degree apprenticeship hosted by~\gls{sie}.
-This project must therefore consider the business domain of the sponsoring company.
+This project forms part of a degree apprenticeship hosted by~\gls{sie}.
+Because of this, the business domain of the sponsoring company is considered.
 
 With the release of the~\gls{ps5} in November 2020,~\gls{spatial_audio} technology has become a key product for~\gls{sie} as game developers seek to leverage the~\gls{tempest_3d_audio} espoused by the video game console.
 In addition,~\gls{sie} is shifting to cloud-based infrastructure\footnote{like many other companies relying on web technology~\citep{cc_overview}} across the wider business in order to leverage the cost, flexibility, and reliability benefits that cloud technology affords~\citep{cc_overview}.
@@ -16,13 +16,15 @@ In response to these changes within the company, this project aims to engage bot
 
 \subsection{Problem Statement}\label{subsec:problem-statement}
 
-At the time of writing, the onboarding of~\glspl{pspartner} to the developer and publisher platforms managed by~\gls{sie} is an area in the company that has been targeted for improvement.
+At the time of writing,
+the onboarding of~\glspl{pspartner} to the developer and publisher platforms
+managed by~\gls{sie} is an area that has been targeted for improvement in the company.
 Getting~\glspl{pspartner} engaged with PlayStation's development and sales ecosystem faster and with less `friction' has been outlined as a major~\gls{sla}.
 
-This report argues that, despite the fact that the ~\gls{pspartner} onboarding process has been improved, the ability for ~\glspl{pspartner} to trial PlayStation's spatial audio technology is too restricted.
+This report argues that, despite the fact that the~\gls{pspartner} onboarding process has been improved, the ability for~\glspl{pspartner} to trial PlayStation's spatial audio technology is too restricted.
 There is currently a dependence on local hardware setup in order to experience PlayStation's~\gls{spatial_audio} in an interactive manner.
 
-Currently,~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must perform the following steps:
+Currently~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must perform the following steps:
 
 \begin{enumerate}
     \item Apply for and order a~\gls{ps5}~\gls{gdk}
@@ -33,8 +35,9 @@ Currently,~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} 
 
 This process is sub-optimal for a~\gls{pspartner} who wishes to get a quick insight into what is possible with~\gls{spatial_audio}.
 
-This project proposes an alternative solution where~\gls{spatial_audio} can be accessible as a web service, effectively eliminating the need for a~\gls{gdk}.
-The system would be accessible through a browser and will mean that the~\gls{pspartner} will be granted easier access, fulfilling the aforementioned~\gls{sla}.
+This project proposes an alternative solution where~\gls{spatial_audio} can be accessible as a web service,
+effectively eliminating the need for a~\gls{gdk} to test a certain area of~\gls{ps5} functionality.
+The system should be accessible through a browser, meaning that the~\gls{pspartner} will be granted easier access, fulfilling the aforementioned~\gls{sla}.
 
 \subsection{Project Aims}\label{subsec:aims}
 
@@ -42,12 +45,16 @@ The aim of this project is to research, design, and engineer a web service that 
 The intended complexity of this project concerns the cloud infrastructure design and implementation that forms the backbone of the\textit{\textquote{Spatialisation-as-a-Service}}~concept;
 the project seeks to move compute-heavy~\gls{dsp} tasks from local hardware to a cloud environment.
 The project can therefore be classified primarily as an infrastructure project, and discusses the topics and challenges relating to this area.
+The project has also been extended to consider issues of~\gls{ux} and how it influenced by~\glspl{ui}.
 
-The proposed workflow allows a user with a standard web browser\footnote{Chromium-based browsers and Firefox} to upload their own music file\footnote{Of either of the .mp3 or .wav format} to a website and ultimately receive back a new audio file that demonstrates~\gls{spatial_audio} as a customised transformation of the original file.
+The proposed workflow allows a user
+to upload a music file\footnote{Of either of the .mp3 or .wav format} of their choosing to a website using a standard web browser\footnote{Chromium-based browsers and Firefox}.
+The user will ultimately receive back a new audio file rendered by the service that demonstrates~\gls{spatial_audio} as a customised transformation of the original file.
 This new audio file will be constructed from the isolated `stems'\footnote{For example, we might separate a song into vocals, bass, and drums} of the original file which will be separated out from each other as a part of the~\gls{dsp} pipeline.
-The user will then choose where to `position' these stems in a virtual 3d space by setting spatial parameters for each stem.
-Finally, the rendering of the stems and their spatial parameters will take place using ~\glspl{hrtf} to render a `spatialised' version of the music file.
-All the audio processing will execute in~\gls{aws} cloud environments to circumvent any hardware requirements and challenges.
+The user will then choose where to `position' these stems in a virtual~\gls{3d} space by setting spatial parameters for each stem.
+Finally, the rendering of the stems and their spatial parameters will take place using~\glspl{hrtf} to produce a `spatialised' version of the music file.
+A goal of the project is to circumvent any hardware requirements the~\gls{dsp} pipeline may have;
+as such, all the audio processing will be executed in~\gls{aws} cloud environments.
 
 For information security reasons, the prototype produced as a part of this project will~\textit{not} feature any proprietary~\gls{sie} software and use only libraries and code that exist in the public domain.
 Because of this, the prototype can be considered a~\gls{poc} where, if successful,~\gls{sie} software might be transplanted into the serverless~\gls{dsp} pipeline.
@@ -57,19 +64,19 @@ Because of this, the prototype can be considered a~\gls{poc} where, if successfu
 In order to achieve the aims set out in~\ref{subsec:aims} the project must produce a number of deliverables:
 
 \begin{enumerate}
-    \item A project plan which outlines the timeline of both the research and development of the project.
+    \item A project plan which outlines the timeline of both the research and development of the project
     \item A review of pertinent literature relating primarily to:
     \begin{itemize}
         \item Public Cloud infrastructure and services (especially those available from~\gls{aws})
         \item Audio spatialisation
         \item Web audio~\glspl{api} and front-end technology
     \end{itemize}
-    \item A review of existing stereo-to-spatial services and technologies.
-    \item A functioning stereo-to-spatial serverless pipeline.
-    \item A frontend that enables a user to interact with the conversion pipeline by uploading and downloading audio files, as well as setting parameters for conversion through a web~\gls{api}.
-    \item A testing framework that supports iterative development.
-    \item A report on user testing.
-    \item A review and analysis of how the produced system has met or missed the targets.
+    \item A review of existing stereo-to-spatial services and technologies
+    \item A functioning stereo-to-spatial serverless pipeline
+    \item A frontend that enables a user to interact with the conversion pipeline by uploading and downloading audio files, as well as setting parameters for conversion through a web~\gls{api}
+    \item A testing framework that supports iterative development
+    \item A report on user testing
+    \item A review and analysis of how the produced system has met or missed targets
 \end{enumerate}
 
 \subsection{Research Questions}\label{subsec:research-questions}
