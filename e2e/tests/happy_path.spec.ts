@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({page}) => {
-  await page.goto('https://main.d3lmyn7tuolkx3.amplifyapp.com/');
+  await page.goto('https://main.d3lmyn7tuolkx3.amplifyapp.com/', {waitUntil: "networkidle"});
 })
 
 test('Splash page loads', async ({ page }) => {
   await expect(page.getByText('Spatialisation As A Service')).toBeVisible();
   await expect(page.getByRole('button', {name: 'Enter'})).toBeVisible();
   await expect(page.getByRole('button', {name: 'Skip Introduction'})).toBeVisible();
-  await expect(page).toHaveScreenshot();
+  await page.waitForTimeout(3000);
+  await expect(page).toHaveScreenshot({fullPage: true});
 });
 
 test('Intro slideshow', async ({page}) => {
