@@ -178,7 +178,7 @@ export function GetMain(
                         </Typography>
                       </div>
                       <Slider
-                        min={-20} max={20} defaultValue={0} step={0.1}
+                        min={-10} max={10} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_X'}
                         valueLabelDisplay={'auto'}
                         value={spatialParams[fileLabels[index]]['X']}
@@ -206,7 +206,7 @@ export function GetMain(
                         </Typography>
                       </div>
                       <Slider
-                        min={-20} max={20} defaultValue={0} step={0.1}
+                        min={-10} max={10} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_Y'} valueLabelDisplay={'auto'}
                         value={spatialParams[fileLabels[index]]['Y']}
                         onChange={(e, newValue) => {
@@ -233,7 +233,7 @@ export function GetMain(
                         </Typography>
                       </div>
                       <Slider
-                        min={-20} max={20} defaultValue={0} step={0.1}
+                        min={-10} max={10} defaultValue={0} step={0.1}
                         aria-label={fileLabels[index] + '_Z'}
                         valueLabelDisplay='auto'
                         value={spatialParams[fileLabels[index]]['Z']}
