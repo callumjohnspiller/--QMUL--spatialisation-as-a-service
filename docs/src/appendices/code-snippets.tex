@@ -17,6 +17,7 @@
 \begin{longlisting}
     \inputminted[
         breaklines,
+        breakafter=d,
         frame=lines,
         framesep=2mm,
         baselinestretch=1.2,
@@ -38,4 +39,33 @@
         linenos,
     ]{json}{../../step-function/spatialisation-as-a-service.json}
     \caption{Amazon states language representation of the SaaS Step Function}\label{lst:step-function-json}
+\end{longlisting}
+
+\subsection{Playwright Test File}\label{subsec:playwright-test-file}
+
+\begin{longlisting}
+    \inputminted[
+        breaklines,
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+    ]{typescript}{../../e2e/tests/happy_path.spec.ts}
+    \caption{An automated test function that uses the Playwright automation framework}\label{lst:playwright-test}
+\end{longlisting}
+
+\subsection{CMake File}\label{subsec:cmake-file}
+
+\begin{longlisting}
+    \inputminted[
+        breaklines,
+        breakafter=d,
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+    ]{cmake}{../../lambda/spatialisation/CMakeLists.txt}
+    \caption{A CMake file used to compile the C++ Lambda Function}\label{lst:cmake}
 \end{longlisting}
