@@ -27,6 +27,8 @@
 \usepackage[abbreviations]{glossaries-extra}
 % -- Allow tables to cross pages
 \usepackage{ltablex}
+% -- Better table formatting
+\usepackage{booktabs}
 % -- Inline and display quotations
 \usepackage[autostyle]{csquotes}
 % -- Defines relative textsize commands
@@ -46,6 +48,7 @@
     linenos=true,
     autogobble,
 }
+% -- Make environment to allow code to cross pages
 \newenvironment{longlisting}{\captionsetup{type=listing}}{}
 
 % Setup table column sizes (big and small)
