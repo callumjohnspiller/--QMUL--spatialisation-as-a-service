@@ -22,9 +22,9 @@ managed by~\gls{sie} is an area that has been targeted for improvement in the co
 Getting~\glspl{pspartner} engaged with PlayStation's development and sales ecosystem faster and with less friction has been outlined as a major~\gls{sla}.
 
 This report argues that, despite the fact that the~\gls{pspartner} onboarding process has been improved, the ability for~\glspl{pspartner} to trial PlayStation's spatial audio technology is too restricted.
-There is currently a dependence on local hardware setup in order to experience PlayStation's~\gls{spatial_audio} in an interactive manner.
+There is currently an over-dependence on local hardware in order to experience PlayStation's~\gls{spatial_audio} in an interactive manner.
 
-Currently~\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must perform the following steps:
+\glspl{pspartner} who want to experiment with~\gls{tempest_3d_audio} must perform the following steps:
 
 \begin{enumerate}
     \item Apply for and order a~\gls{ps5}~\gls{gdk}
@@ -42,7 +42,7 @@ The system should be accessible through a browser, meaning that the~\gls{pspartn
 \subsection{Project Aims}\label{subsec:aims}
 
 The aim of this project is to research, design, and engineer a web service that allows a user to experience~\gls{spatial_audio} in a way that reacts to their input.
-The intended complexity of this project concerns the cloud infrastructure design and implementation that forms the backbone of the\textit{\textquote{Spatialisation-as-a-Service}}~concept;
+The intended complexity of this project concerns the cloud infrastructure design and implementation that forms the backbone of the\textit{Spatialisation-as-a-Service} concept;
 the project seeks to move compute-heavy~\gls{dsp} tasks from local hardware to a cloud environment.
 The project can therefore be classified primarily as an infrastructure project, and discusses the topics and challenges relating to this area.
 The project has also been extended to consider issues of~\gls{ux} and how it influenced by~\glspl{ui}.
@@ -67,12 +67,12 @@ In order to achieve the aims set out in~\ref{subsec:aims} the project must produ
     \item A project plan which outlines the timeline of both the research and development of the project
     \item A review of pertinent literature relating primarily to:
     \begin{itemize}
-        \item Public Cloud infrastructure and services (especially those available from~\gls{aws})
+        \item Public cloud infrastructure and services (especially those available from~\gls{aws})
         \item Audio spatialisation
         \item Web audio~\glspl{api} and front-end technology
     \end{itemize}
     \item A functioning stereo-to-spatial serverless pipeline
-    \item A frontend that enables a user to interact with the conversion pipeline by uploading and downloading audio files, as well as setting parameters for conversion through a web~\gls{api}
+    \item A frontend that enables a user to interact with the conversion pipeline by uploading and downloading audio files, as well as setting parameters for conversion to spatial audio
     \item A testing framework that supports iterative development
     \item A report on user testing
     \item A review and analysis of how the produced system has met or missed targets
