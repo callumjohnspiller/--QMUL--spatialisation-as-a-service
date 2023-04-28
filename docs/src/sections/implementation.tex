@@ -69,11 +69,11 @@ A previous version of the orchestrating~\gls{aws-step-function} was triggered
 when a file was uploaded to a~\gls{s3} bucket.
 The~\gls{aws-step-function} then triggered the source-separation~\gls{aws-lambda} function
 which contained a bug where the output of the function was deposited to the originating s3 bucket.
-The depositing of the resultant stems then triggered another~\gls{aws-step-function} for each stem
+The depositing of the resultant~\glspl{stem} then triggered another~\gls{aws-step-function} for each~\gls{stem}
 deposited because of the aforementioned triggering rule.
-Since the output of the source separation function was (at this point) two stems,
+Since the output of the source separation function was (at this point) two~\glspl{stem},
 there was a recursive re-triggering of the step function
-which increased the number of invocations and stored output stems at a quadratic rate.
+which increased the number of invocations and stored output~\glspl{stem} at a quadratic rate.
 Making matters worse,
 this error was not noticed for at least a period of twenty minutes\footnote{As this author was on the London Underground!}.
 This recursive invocation, despite triggering a number of Lambda throttles,

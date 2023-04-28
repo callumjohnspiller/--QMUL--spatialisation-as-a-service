@@ -127,7 +127,7 @@ After the~\gls{mvp} was achieved, there was some additional capacity available t
     See Figure~\ref{fig:ui-splash} for the improved welcome screen for the application.
     \item A slideshow was developed using the component library that explained the theory behind spatial audio in an easy-to-understand manner and explains what the product aims to do (Figure~\ref{fig:ui-slideshow}).
     \item The music file upload stage of the application was redesigned using~\gls{mui} and turned into a three-step process using the `Stepper' component (Figure~\ref{fig:ui-uploader}).
-    \item The `Spinner' component is used to help decorate the process of waiting for the stems to be separated out (Figure~\ref{fig:ui-spinner}).
+    \item The `Spinner' component is used to help decorate the process of waiting for the~\glspl{stem} to be separated out (Figure~\ref{fig:ui-spinner}).
 \end{itemize}
 
 \begin{figure}[!htb]
@@ -154,7 +154,7 @@ After the~\gls{mvp} was achieved, there was some additional capacity available t
 \begin{figure}[!htb]
     \minipage{\textwidth}
     \includegraphics[width=\linewidth]{ui-spinner}
-    \caption{\gls{mui} Spinner and message displayed while audio stems are separated}\label{fig:ui-spinner}
+    \caption{\gls{mui} Spinner and message displayed while audio~\glspl{stem} are separated}\label{fig:ui-spinner}
     \endminipage
 \end{figure}
 
@@ -165,23 +165,23 @@ the most significant redesign of the product allowed the user
 to experience and preview the effects of their input
 instead of being forced to wait for the final product to render and be delivered to the frontend.
 Using React Three Fiber, a~\gls{react} renderer for~\gls{threejs}\footnote{\citep{dirksen2023learn}},
-a 3D model represents the positioning of the audio stems in the virtual spatial field
+a 3D model represents the positioning of the audio~\glspl{stem} in the virtual spatial field
 that the application eventually renders.
-The input fields for each stem's spatial positions are now overlaid on top of the model.
-Previously only lists of sliders were shown for each stem,
+The input fields for each~\gls{stem}'s spatial positions are now overlaid on top of the model.
+Previously only lists of sliders were shown for each~\gls{stem},
 but the final version lets
-the user see and hear what changes are being made in real-time as the stems are being played back.
+the user see and hear what changes are being made in real-time as the~\glspl{stem} are being played back.
 Figures~\ref{fig:ui-3d-1},~\ref{fig:ui-3d-2},
 and~\ref{fig:ui-3d-3} demonstrate how the 3D model displays the user's input on screen.
 The user is able
 to rotate and zoom in and out of the model
-to see where the stems are positioned in relation to the listening position at the origin of the model.
-In addition, instead of the stems being played separately as before, the stems synchronise to each other,
-and the user can mute or `solo' each stem as they wish.
+to see where the~\glspl{stem} are positioned in relation to the listening position at the origin of the model.
+In addition, instead of the~\glspl{stem} being played separately as before, the~\glspl{stem} synchronise to each other,
+and the user can mute or `solo' each~\gls{stem} as they wish.
 This functionality is similar to that found in modern Digital Audio Workstations.
 The Howler.js library,
 which is used for audio playback, allows the accessing of the spatial audio module in the Web Audio API\@.
-Because of this, the user can preview the audible position of each stem while they are playing in the application.
+Because of this, the user can preview the audible position of each~\gls{stem} while they are playing in the application.
 However,
 the quality of this preview is not as high-quality as the final rendered output that is created using the 3D-TuneIn API\@;
 this justifies the retention of the option to render the audio using the workflow hosted in~\gls{aws-lambda}.

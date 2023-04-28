@@ -9,7 +9,7 @@
 This project forms part of a degree apprenticeship hosted by~\gls{sie}.
 Because of this, the business domain of the sponsoring company is considered.
 
-With the release of the~\gls{ps5} in November 2020,~\gls{spatial_audio} technology has become a key product for~\gls{sie} as game developers seek to leverage the~\gls{tempest_3d_audio} espoused by the video game console.
+With the release of the~\gls{ps5} in November 2020,~\gls{spatial_audio} technology has become a key product for~\gls{sie} as game developers seek to leverage the~\gls{tempest_3d_audio} used by the video game console.
 In addition,~\gls{sie} is shifting to cloud-based infrastructure\footnote{like many other companies relying on web technology~\citep{cc_overview}} across the wider business in order to leverage the cost, flexibility, and reliability benefits that cloud technology affords~\citep{cc_overview}.
 
 In response to these changes within the company, this project aims to engage both of these emergent technologies in order to address one of~\gls{sie}'s major~\glspl{sla} with a software solution.
@@ -48,11 +48,11 @@ The project can therefore be classified primarily as an infrastructure project, 
 The project has also been extended to consider issues of~\gls{ux} and how it influenced by~\glspl{ui}.
 
 The proposed workflow allows a user
-to upload an audio file\footnote{Of either of the~\gls{mp3} or~\gls{wav} format} of their choosing to a website using a standard web browser\footnote{Chromium-based browsers and Firefox}.
+to upload an audio file\footnote{Of either of the type of~\gls{mp3} or~\gls{wav}} of their choosing to a website using a standard web browser\footnote{Chromium-based browsers and Firefox}.
 The user will ultimately receive back a new audio file rendered by the service that demonstrates~\gls{spatial_audio} as a customised transformation of the original file.
-This new audio file will be constructed from the isolated `stems'\footnote{For example, we might separate a song into vocals, bass, and drums} of the original file which will be separated out from each other as a part of the~\gls{dsp} pipeline.
-The user will then choose where to `position' these stems in a virtual~\gls{3d} space by setting spatial parameters for each stem.
-Finally, the rendering of the stems and their spatial parameters will take place using~\glspl{hrtf} to produce a `spatialised' version of the music file.
+This new audio file will be constructed from the isolated `\glspl{stem}'\footnote{For example, we might separate a song into vocals, bass, and drums} of the original file which will be separated out from each other as a part of the~\gls{dsp} pipeline.
+The user will then choose where to `position' these~\glspl{stem} in a virtual~\gls{3d} space by setting spatial parameters for each~\gls{stem}.
+Finally, the rendering of the~\glspl{stem} and their spatial parameters will take place using~\glspl{hrtf} to produce a `spatialised' version of the music file.
 A goal of the project is to circumvent any hardware requirements the~\gls{dsp} pipeline may have;
 as such, all the audio processing will be executed in~\gls{aws} cloud environments.
 
