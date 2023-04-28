@@ -33,6 +33,10 @@ Similarly, testing at the component level has also been implemented using Playwr
 The component test files can be found in the ```ui/``` directory at the same level as the components themselves.
 Test all components by running ```npm run test-ct``` in the ```ui/``` directory.
 
+To count lines of code in the project, make sure cloc is installed then run:
+```cloc $(git ls-files) --exclude-list-file=.clocignore > cloc_output.txt```.
+This command excludes package-lock.json files and any .svg files used in the report.
+
 ## Lambda
 
 Two Lambda functions have been implemented as Docker Images and can be found in the ```lambda/``` directory along with their source code and resources.

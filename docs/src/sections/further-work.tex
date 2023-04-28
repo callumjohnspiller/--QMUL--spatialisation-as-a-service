@@ -4,6 +4,9 @@
 
 \normalsize
 
+While a significant amount of development has taken place by the end of the project\footnote{See~\ref{subsec:lines-of-code}},
+there were still some areas for improvement left outstanding.
+
 \subsection{Cold Starts}\label{subsec:cold-starts}
 
 When one is using the service, the least performant step is the~\gls{stem} separation stage.
@@ -14,6 +17,9 @@ rather than the processing time itself.
 This \textit{cold-start}
 time between initialisation and runtime is something
 that would be targeted for improvement in future versions of the project.
+This would most likely happen
+by triggering the Lambda function earlier in the user interaction,
+ensuring that the function would be live by the time the user submits their file.
 Since this is the most impactful performance issue of the product, this would be the first priority.
 
 \subsection{Custom SOFA Files for HRTF and BRIR}\label{subsec:custom-hrtf-and-hrir-files}
@@ -24,8 +30,7 @@ The toolkit is customizable and offers a greater fidelity of spatialisation over
 A further improvement to the product would be
 to allow the use of user-specified SOFA files for the rendering of spatial audio.
 SOFA files contain the data necessary to produce the~\gls{hrtf} and~\gls{brir} necessary for the service's rendering of the audio.
-The ability
-for the user to upload their own files would greatly improve the depth of customization the product can offer.
+The ability to choose between different files would greatly improve the depth of experience the product can offer.
 
 \subsection{Further UI Improvements}\label{subsec:ui-improvements}
 
@@ -45,6 +50,6 @@ More generally the product could improve the following aspects of its functional
 
 \begin{itemize}
     \item Speed up the overall time it takes to separate the files and render the final audio
-    \item Provide more options for source separation; currently the service is only set up to separate music files with vocals and further support could be provided for instrumental tracks through training the TensorFlow model stored in the~\gls{aws-lambda} function.
+    \item Provide more options for source separation; currently the service is only set up to separate music files with vocals and further support could be provided for instrumental tracks through offering different machine learning models in the~\gls{aws-lambda} function.
     \item Improve the security of the project by tightening the policies attached to the~\gls{s3} buckets holding the data, despite the lifecycle rules put in place.
 \end{itemize}
