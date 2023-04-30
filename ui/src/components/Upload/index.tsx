@@ -45,7 +45,7 @@ function Uploader(props: UploaderProps) {
     if (event.target.files) {
       console.log(event.target.files[0].type)
       switch (event.target.files[0].type) {
-        case 'audio/x-wav':
+        case 'audio/wav':
           setFile(event.target.files[0]);
           setValidFile(true);
           break;
