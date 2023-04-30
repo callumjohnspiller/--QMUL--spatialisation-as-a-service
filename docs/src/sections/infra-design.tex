@@ -36,13 +36,13 @@ that would comprise the backbone of the audio processing pipeline.
 Furthermore,
 these~\gls{aws-lambda} functions would be coordinated and executed using the~\gls{aws-step-function} service.
 This service was highly desired for this purpose
-since the processing pipeline would follow a series of discrete steps that require input from the user.
-\glspl{aws-step-function} would be able to accommodate this easily.
+since the processing pipeline would follow a series of discrete steps that require input from the user;
+an~\gls{aws-step-function} would be able to accommodate this easily.
 
 The entire service was initially intended
-to be coordinated solely through the use of the internal messaging service:~\gls{aws-eventbridge}.
+to be coordinated solely through the use of the internal~\gls{aws} messaging service:~\gls{aws-eventbridge}.
 This service, in conjunction with~\gls{aws-api-gateway},
-was intended to form most of the communication between the back and front ends of the application.
+was intended to form most of the communication between the back-end and the front-end of the application.
 
 \subsection{Refinement}\label{subsec:refinement}
 
@@ -56,7 +56,7 @@ and then uploaded to~\gls{aws} in order for the function to have the resources i
 A fact that was not known previously is that
 there is a limit of 50 MB on the size of the deployment packages that could be uploaded directly to~\gls{aws-lambda}.
 Given that the 3D Tune-In Toolkit and the Spleeter source separation libraries have significant dependencies
-that are more than 50 MB when zipped, a re-design needed to occur.
+that exceed 50 MB when compressed, a re-design needed to occur.
 
 This issue was solved by making use of the~\gls{aws-ecr} service.
 This service allows a developer to host and deploy~\glspl{container-image},
@@ -74,8 +74,8 @@ Since the~\gls{aws-step-function} requires input from the user to execute,
 the step function callback feature would be used to wait for an input message from the front end to the step function.
 The most elegant solution for this problem was
 to create a~\gls{aws-sqs} queue through which messages could be sent
-and retrieved asynchronously without the risk of losing information through API communication failure.
-This was implemented through the creation of a unique message queue per interaction with the product.
+and retrieved asynchronously without the risk of losing information through~\gls{api} communication failure.
+This was implemented through the creation of a unique message queue per interaction with the website.
 A unique identification key is created in the~\gls{react} interface, which is then used
 to identify both the~\gls{aws-sqs} queue and the resources uploaded and retrieved from the relevant~\gls{s3} buckets.
 This key is not the same as a session key
@@ -98,16 +98,16 @@ In addition to the changes mentioned above, there are a few other notable change
 
 \begin{itemize}
     \item The~\gls{aws-step-function} has been fleshed out with the discrete steps of the workflow orchestration.
-    An Amazon States Language representation of the function can be found in Listing~\ref{lst:step-function-json}.
-    \item There are three~\gls{s3} buckets to hold the artefacts from each stage of the process.
+    An Amazon States Language representation of the function can be found in Listing~\ref{lst:step-function-json}
+    \item There are three~\gls{s3} buckets to store and retrieve the artefacts from each stage of the process
     \item The~\gls{react} frontend is now hosted in~\gls{amplify} instead of~\gls{ec2};
-    allowing for the implementation of~\gls{cicd} each time a commit is pushed to a branch in GitHub.
+    allowing for the implementation of~\gls{cicd} each time a commit is pushed to a branch in GitHub
 \end{itemize}
 
 \subsection{A fresh coat of paint}\label{subsec:a-fresh-coat-of-paint}
 
 Early user testing of the product revealed
-that elements of the front-end interface needed improving\footnote{Further information on the testing and feedback process can be found in Section~\ref{sec:testing}}.
+that elements of the front-end interface needed improving\footnote{Further information on the testing and feedback process can be found in~\ref{sec:testing}}.
 The initial interface was basic with minimal styling applied to the~\gls{react} interface.
 See Figure~\ref{fig:early-fe} for a screenshot of the interface's early form.
 
@@ -124,10 +124,10 @@ After the~\gls{mvp} was achieved, there was some additional capacity available t
     \item The project was adapted to use tools provided by~\gls{mui},
     a~\gls{react} component library\footnote{https://mui.com/core/},
     in order to better structure the project and improve the aesthetic feel.
-    See Figure~\ref{fig:ui-splash} for the improved welcome screen for the application.
-    \item A slideshow was developed using the component library that explained the theory behind spatial audio in an easy-to-understand manner and explains what the product aims to do (Figure~\ref{fig:ui-slideshow}).
-    \item The music file upload stage of the application was redesigned using~\gls{mui} and turned into a three-step process using the `Stepper' component (Figure~\ref{fig:ui-uploader}).
-    \item The `Spinner' component is used to help decorate the process of waiting for the~\glspl{stem} to be separated out (Figure~\ref{fig:ui-spinner}).
+    See Figure~\ref{fig:ui-splash} for the improved welcome screen for the application
+    \item A slideshow was developed using the component library that explained the theory behind spatial audio in an easy-to-understand manner and explains what the product aims to do (Figure~\ref{fig:ui-slideshow})
+    \item The music file upload stage of the application was redesigned using~\gls{mui} and turned into a three-step process using the `Stepper' component (Figure~\ref{fig:ui-uploader})
+    \item The `Spinner' component is used to help decorate the process of waiting for the~\glspl{stem} to be separated out (Figure~\ref{fig:ui-spinner})
 \end{itemize}
 
 \begin{figure}[!htb]
@@ -165,14 +165,14 @@ the most significant redesign of the product allowed the user
 to experience and preview the effects of their input
 instead of being forced to wait for the final product to render and be delivered to the frontend.
 Using React Three Fiber, a~\gls{react} renderer for~\gls{threejs}~\citep{dirksen2023learn},
-a 3D model represents the positioning of the audio~\glspl{stem} in the virtual spatial field
+a~\gls{3d} model represents the positioning of the audio~\glspl{stem} in the virtual spatial field
 that the application eventually renders.
 The input fields for each~\gls{stem}'s spatial positions are now overlaid on top of the model.
 Previously only lists of sliders were shown for each~\gls{stem},
 but the final version lets
 the user see and hear what changes are being made in real-time as the~\glspl{stem} are being played back.
 Figures~\ref{fig:ui-3d-1},~\ref{fig:ui-3d-2},
-and~\ref{fig:ui-3d-3} demonstrate how the 3D model displays the user's input on screen.
+and~\ref{fig:ui-3d-3} demonstrate how the~\gls{3d} model displays the user's input on screen.
 The user is able
 to rotate and zoom in and out of the model
 to see where the~\glspl{stem} are positioned in relation to the listening position at the origin of the model.
@@ -182,8 +182,7 @@ This functionality is similar to that found in modern Digital Audio Workstations
 The Howler.js library,
 which is used for audio playback, allows the accessing of the spatial audio module in the Web Audio API\@.
 Because of this, the user can preview the audible position of each~\gls{stem} while they are playing in the application.
-However,
-the quality of this preview is not as high-quality as the final rendered output that is created using the 3D-TuneIn API\@;
+However, this preview is not as high-quality as the final rendered output that is created using the 3D-TuneIn API\@;
 this justifies the retention of the option to render the audio using the workflow hosted in~\gls{aws-lambda}.
 
 \begin{figure}[!htb]
