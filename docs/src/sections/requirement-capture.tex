@@ -11,11 +11,11 @@ It is the combination of the gathered requirements that informs the product's de
 
 \subsection{The Case For Business}\label{subsec:the-business-case}
 
-\citet{wiegers_hokanson_2023} state in their new book that enterprise software product requirements~\gls{stem} from the core business requirements.
+\citet{wiegers_hokanson_2023} state in their new book that enterprise software product requirements stem from the core business requirements.
 These business requirements inform resultant system, user, and solution requirements.
 See Figure~\ref{fig:requirements-diagram} for Wiegers' and Hokanson's representation of this influence.
 In addition, due to the nature of enterprise, certain business rules and constraints will influence the solution requirements.
-\gls{sie}'s PlayStation is a high-profile brand, so additional considerations must be taken when operating in this space.
+\gls{sie}'s PlayStation is a high-profile brand, so additional considerations must be observed when operating in this space.
 See Table~\ref{tab:business-requirements} for the business requirements that help inform the other requirements of the project.
 
 \begin{figure}[!htb]
@@ -37,9 +37,9 @@ See Table~\ref{tab:business-requirements} for the business requirements that hel
 \end{tabularx}
 
 \subsection{System Requirements}\label{subsec:system-requirements}
-The problem statement in~\ref{subsec:problem-statement} makes things easy for the formulation of the key \textit{system} requirements\footnote{\citet{wiegers_hokanson_2023} define system requirements as: \textquote{A description of a top-level capability or characteristic of a complex system that has multiple subsystems, often including both hardware and software elements.}} for this system.
-This project defines the~\gls{mvp} in terms of the minimal functionality the system must have in order for the project to be considered successful.
-These requirements can be found in Table~\ref{tab:system-requirements} and cover the technical requirements for the solution in relation to the business requirement.
+The problem statement in~\ref{subsec:problem-statement} makes things easy for the formulation of the key \textit{system} requirements\footnote{\citet{wiegers_hokanson_2023} define system requirements as: \textquote{A description of a top-level capability or characteristic of a complex system that has multiple subsystems, often including both hardware and software elements.}} for this project.
+The~\gls{mvp} is defined in terms of the minimal functionality the system must have in order for the project to be considered successful.
+These requirements can be found in Table~\ref{tab:system-requirements} and cover the technical requirements for the solution in relation to business requirements.
 
 \begin{tabularx}{\textwidth}{szs}
     \caption{System Requirements}\label{tab:system-requirements}\\
@@ -64,9 +64,9 @@ The concept of `user stories' has faced criticism in the literature for over-foc
 Three personae were formulated as potential users of the project, each with their own background and motivations:
 
 \begin{enumerate}
-    \item Game Developer\textemdash wants to develop a game using spatial audio\textemdash they not yet onboarded with PlayStation partners, and want to see a demonstration of what the PlayStation platform can offer in terms of its spatial audio capabilities\textemdash this will inform their future choice of development platform.
+    \item Game Developer\textemdash wants to develop a game using spatial audio\textemdash they have not yet onboarded with PlayStation partners, and want to see a demonstration of what the PlayStation platform can offer in terms of its spatial audio capabilities\textemdash this will inform their future choice of development platform.
     \item Audio Enthusiast\textemdash has prior experience with stereo audio\textemdash wants to experience spatial audio applied to their favorite song.
-    \item Novice\textemdash stumbled across the feature\textemdash no prior experience of spatial audio or even game development\textemdash likes immersive media experience so feels an interest towards the concept of spatial audio.
+    \item Novice\textemdash stumbled across the feature\textemdash no prior experience of spatial audio or even game development\textemdash likes immersive media experiences so feels an interest towards the concept of spatial audio.
 \end{enumerate}
 
 The user requirements were formulated with these three personae in mind.
@@ -88,10 +88,10 @@ The product is intended to be a customer-facing one so consideration towards a w
 Finally, the system's design must also take into account the operation of~\gls{sie} as a company in its design:
 
 \begin{itemize}
-    \item The proprietary spatialisation software that is used by the~\gls{ps5} is a company secret, therefore the system should not use it in this prototype.
-    \item \gls{sie} is concerned with being profitable, therefore costs should be minimised in the development and running of the service.
-    \item The creation of the prototype should not be done in the~\gls{sie}~\gls{aws} environment.
-    \item \gls{sie} retains tight control over the PlayStation~\gls{ip} therefore its branding should not be present in the prototype.
+    \item The proprietary spatialisation software that is used by the~\gls{ps5} is a company secret, therefore the system should not use it in this prototype
+    \item \gls{sie} is concerned with being profitable, therefore costs should be minimised in the development and running of the service
+    \item For security and cost reasons, the creation of the prototype should not be done in the~\gls{sie}~\gls{aws} environment
+    \item \gls{sie} retains tight control over the PlayStation~\gls{ip} therefore its branding should not be present in the prototype
 \end{itemize}
 
 These business rules will inform the design and the development practises of the project, particularly in relation to security and cost management.
