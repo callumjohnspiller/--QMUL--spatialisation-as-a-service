@@ -9,6 +9,7 @@ all the deliverables outlined in~\ref{subsec:project-objectives} have been produ
 A functional web service has been developed
 and deployed to a live environment,
 and users are able to trial spatial audio using their own music files and input spatial parameters to their liking.
+These features alone meet many of the requirements specified in~\ref{subsec:system-requirements}.
 
 However, despite the project's successes,
 there were a number of issues encountered along the way
@@ -17,7 +18,7 @@ which suggest ways in which the planning and execution of the project could have
 \subsection{Successes}\label{subsec:successes}
 
 The main success of the project was that a functionally complete product\footnote{Defined in~\ref{sec:requirement-capture}} was produced by the end of the development phase.
-Despite a big shift in the requirements of the project after user feedback,
+Despite a big shift in the requirements of the project following user feedback,
 a significant amount of effort was put in to meet these new requirements.
 The revising of, and adaption to, new requirements also highlighted the benefits
 of successfully adopting an~\gls{agile} development methodology.
@@ -29,8 +30,8 @@ This resulted in the successful creation of a~\gls{poc} that
 may be adapted
 to hosting proprietary software created by~\gls{sie} in order to demonstrate~\gls{ps5} capabilities to~\glspl{pspartner}.
 However,
-the issue of cloud vendor locking may need to be considered in this case
-if the pipeline needs to be ported to another cloud service.
+the issue of cloud vendor-locking may need to be considered in the case
+that the pipeline needs to be ported to another cloud provider.
 
 As a learning exercise, the project was extremely effective and required engagement with a wide range of tools.
 The project's proposal was complex and ambitious considering the time available.
@@ -65,12 +66,14 @@ The exhaustive list of technologies used in the project is as follows:
 \end{itemize}
 
 Such a deep tech stack
-allowed for excellent and continuous learning opportunities and the creation of a well-optimized development environment.
-The project makes use of all these technologies, and there is little to no redundancy in the libraries and modules used.
+allowed for excellent and continuous learning opportunities,
+in addition to the creation of a well-optimized development environment.
+The project makes effective use of all these technologies,
+and there is little to no redundancy in the libraries and modules used.
 Additionally,
 the fact
 that many of these technologies weren't planned for use at the outset of the project\footnote{As outlined in~\ref{sec:project-plan}},
-shows the successes in quickly obtaining the requisite knowledge for the completion of the project.
+shows the successes in quickly obtaining requisite knowledge for the completion of the project.
 
 Feedback from user testing was, on the whole, positive.
 Constructive comments from the feedback were taken on board
@@ -87,7 +90,7 @@ using the web audio~\gls{api}.
 This meant the user could hear previews of the individual~\glspl{stem} with spatialisation applied
 and be able to change the parameters and hear the results in real time.
 While this feature didn't have the same level of quality as the 3DTI Toolkit render,
-it vastly improved the user experience and showed how sources can be moved around in the virtual 3d space.
+it vastly improved the user experience and showed how sources can be moved around in the virtual~\gls{3d} space.
 These features were never part of the initial specification.
 
 The project was also successful in highlighting gaps in user's access to spatial audio.
@@ -112,7 +115,7 @@ in hosting and shaping business solutions.
 
 The majority of problems with the project stemmed from the inaccurate user requirements
 defined at the outset of the project.
-Had the initial specification been more conscious of the user experience from the outset\footnote{See~\ref{subsec:web-interfaces}},
+Had the initial specification been more conscious of the user experience from the start\footnote{See~\ref{subsec:web-interfaces}},
 the project's plan might have been scoped more effectively for the development of an effective~\gls{ui}.
 
 Initially, the project was primarily focused on the functionality required for the~\gls{mvp}.
@@ -129,7 +132,7 @@ leading to unwarranted pressure on development.
 In addition, delays to the project's completion can be traced back to the overall complexity of the project.
 While the ambition of the project allowed for a significant amount of learning,
 it also meant that the velocity of development was reduced.
-The project often fell behind the proposed timescales as seen in~\ref{sec:project-plan}.
+The project often fell behind the proposed timescales listed in~\ref{sec:project-plan}.
 This was due, in part, to the unexpected need to learn new technologies such as Docker and React Three Fiber.
 However,
 the fact that this project was undertaken with respect to the~\gls{agile} methodology meant
@@ -140,10 +143,12 @@ the new features could be completed on time, if behind schedule.
 The project's security might also be called into question.
 While the recursion incident was already covered in~\ref{subsubsec:recursion-incident},
 there were also two instances of~\gls{aws} credentials being leaked.
-The accidental committing of code that contained credentials led to delays
-in which the credentials needed to be revoked and cycled,
-with further audit and revision being done on the GitHub repo where code was being stored publicly.
-Thankfully, notifications had been set up to catch any commits of credentials;
+The accidental committing of code that contained credentials led to delays.
+The credentials needed to be revoked and cycled,
+with further audit and revision being performed on the GitHub repository where code was publicly stored.
+Thankfully,
+notifications had been set up
+to catch any commits of credentials\footnote{Following the preventative actions listed in~\ref{subsec:business-risks}.};
 however, the fact this still occurred meant
 that more care should have been taken in reviewing commits to any public branches.
 
@@ -163,13 +168,14 @@ Audio processing pipelines require a significant amount of preparation to execut
 This is shown by the need
 to package large dependencies for the processing libraries (\ref{subsec:lambda-function-dockerfiles}).
 In addition, pipelines require careful orchestration in order to accept user input (\ref{subsec:best-laid-plans}).
-In the case of slow-starting processing functions, optimization needs to take place (\ref{subsec:functional-improvements})
+In the case of slow-starting processing functions,
+optimization needs to take place (\ref{subsec:functional-improvements})
 
 \subsubsection{What is the impact of cloud technology in addressing physical hardware and software limitations?}
 
 The nature of cloud services means those users
 who don't have access to hardware or software capable of undertaking spatial audio processing,
-are able to access these features by using a browser to access~\gls{saas} products (\ref{subsec:cloud-computing}).
+are able to access these features by using a web browser to access~\gls{saas} products (\ref{subsec:cloud-computing}).
 
 \subsubsection{How effective is cloud infrastructure in facilitating the execution of compute-heavy audio pipelines?}
 
@@ -180,29 +186,30 @@ This enables users to manipulate audio into a spatial format using parameters of
 \subsubsection{How can the leveraging of cloud technology improve the experience of the users of~\glspl{sie}~\gls{pspartner} platform?}
 
 Using cloud technology in the ways
-demonstrated in this project means that individual employees of~\gls{pspartner} teams can quickly gain access to demonstrations of~\gls{ps5} capabilities without going through the arduous process
-of obtaining a~\gls{gdk}.
+demonstrated in this project means that individual employees of~\gls{pspartner} teams can quickly gain access to demonstrations of~\gls{ps5} capabilities
+without going through the arduous process
+of accessing a~\gls{gdk}.
 In addition,
 those not intimately familiar with the theory behind specific aspects of~\gls{sie} products can improve their understanding
 using a~\gls{saas} product that is accessible via web browser.
 
 \subsection{Personal Thoughts}\label{subsec:personal-thoughts}
 
-Overall I'm very proud of the project and felt it accomplished the goals I had set out for it.
+Overall I'm proud of the project and felt that it accomplished the goals I had set out for it.
 I managed to use the project to expand my knowledge of both audio processing and cloud technology,
 which are areas of personal interest for me.
 
-I managed to avoid the normal pitfalls of waterfall development by adapting to,
+I managed to avoid the pitfalls of waterfall development by adapting to,
 and meeting the need for, altered requirements.
 The final code repository showcases a good degree of skill in software engineering;
-code runs efficiently and is well documented.
+code runs efficiently and is well-documented.
 
 That being said, given some more time to develop the project, I would have done better
-refactoring of the code and made sure it followed code conventions better.
-However, given the complexity of the proposed product,
-I consider it an achievement to get it to a finished state in the proposed timeframe.
+refactoring of the code and made sure it followed code conventions more strictly.
+However, given the complexity of the product,
+I consider it an achievement to get it to a finished state in the planned timeframe.
 
 I'm also happy with the way I was able to catch up when the project fell behind schedule.
-Unexpected events\footnote{Such as last-minute work trips to LA} did not completely derail the project.
+Unexpected events\footnote{Such as last-minute work trips to LA(!)} did not completely derail the project.
 
 Most importantly, I had a lot of fun doing it!
