@@ -4,21 +4,22 @@
 
 \normalsize
 
-While a significant amount of development has taken place by the end of the project\footnote{See~\ref{subsec:lines-of-code}},
+While a significant amount of development had taken place by the end of the project\footnote{See~\ref{subsec:lines-of-code}},
 there were still some areas for improvement left outstanding.
 
 \subsection{Cold Starts}\label{subsec:cold-starts}
 
-When one is using the service, the least performant step is the~\gls{stem} separation stage.
+The service's least performant step is the~\gls{stem} separation stage.
 Since the source separation lambda function uses TensorFlow,
 its long initialisation time causes this stage of the process
-to run slowly as most of the wait time is dedicated to the initialisation of TensorFlow,
+to run slowly;
+most of the wait time is dedicated to the initialisation of TensorFlow,
 rather than the processing time itself.
 This \textit{cold-start}
 time between initialisation and runtime is something
 that would be targeted for improvement in future versions of the project.
 This would most likely happen
-by triggering the Lambda function earlier in the user interaction,
+by triggering the lambda function earlier in the user interaction,
 ensuring that the function would be live by the time the user submits their file.
 Since this is the most impactful performance issue of the product, this would be the first priority.
 
@@ -26,10 +27,10 @@ Since this is the most impactful performance issue of the product, this would be
 
 One of the major benefits
 of using the 3D Tune-In Toolkit over the spatial module in the Web Audio API is that it allows the use of different~\gls{hrtf} profiles for spatialisation.
-The toolkit is customizable and offers a greater fidelity of spatialisation over Web Audio.
+The toolkit is customizable and offers a greater fidelity of spatialisation than Web Audio.
 A further improvement to the product would be
-to allow the use of user-specified SOFA files for the rendering of spatial audio.
-SOFA files contain the data necessary to produce the~\gls{hrtf} and~\gls{brir} necessary for the service's rendering of the audio.
+to offer a choice of SOFA files for the rendering of spatial audio.
+SOFA files contain the data necessary to produce the~\glspl{hrtf} and~\glspl{brir} necessary for the service's rendering of the spatial audio.
 The ability to choose between different files would greatly improve the depth of experience the product can offer.
 
 \subsection{Further UI Improvements}\label{subsec:ui-improvements}
@@ -38,10 +39,10 @@ The remodelling of the initial user interface as described in~\ref{subsec:a-fres
 however, it is clear there is still room for improvement.
 Some ideas for further~\gls{ui} and~\gls{ux} improvements are:
 \begin{itemize}
-    \item Add a loading bar to the source separation stage so that the user has an indication of when it will finish.
-    \item Make the 3D model change to match different~\gls{brir} if a custom SOFA file is uploaded for rendering.
-    \item Change the real-time preview of the spatialisation to use the 3D Tune-In Toolkit to increase the quality and accuracy of the preview.
-    \item Make the~\gls{ui} more detailed and precise; take it beyond a demonstration and make it more production-ready.
+    \item Add a loading bar to the source separation stage so that the user has an indication of when it will finish
+    \item Make the~\gls{3d} model change to match different~\glspl{brir} if a custom SOFA file is used for rendering
+    \item Change the real-time preview of the spatialisation to use the 3D Tune-In Toolkit to increase the quality and accuracy of the preview
+    \item Make the~\gls{ui} more detailed and precise; take it beyond a demonstration and make it production-ready
 \end{itemize}
 
 \subsection{Functional Improvements}\label{subsec:functional-improvements}
@@ -50,6 +51,6 @@ More generally the product could improve the following aspects of its functional
 
 \begin{itemize}
     \item Speed up the overall time it takes to separate the files and render the final audio
-    \item Provide more options for source separation; currently the service is only set up to separate music files with vocals and further support could be provided for instrumental tracks through offering different machine learning models in the~\gls{aws-lambda} function.
-    \item Improve the security of the project by tightening the policies attached to the~\gls{s3} buckets holding the data, despite the lifecycle rules put in place.
+    \item Provide more options for source separation; currently the service is only set up to separate music files with vocals and further support could be provided for instrumental tracks through offering different machine learning models in the~\gls{aws-lambda} function
+    \item Improve the security of the project by tightening the policies attached to the~\gls{s3} buckets holding the data, despite the daily data lifecycle rules put in place
 \end{itemize}
