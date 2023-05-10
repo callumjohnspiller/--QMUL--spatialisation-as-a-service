@@ -2,7 +2,7 @@
 
 An AWS-hosted web service to convert a music file into a spatialised format.
 
-The service comprises serveral modules:
+The service comprises several modules:
 
 1. A React.js front-end component
 2. An AWS Lambda function to split the original music file and output several mono stems
